@@ -6,13 +6,13 @@ import java.math.BigInteger
 
 data class Account(
     @SerializedName("address")
-    private val address: String,
+    val address: String,
     @SerializedName("path")
-    private val path: String,
+    val path: String,
     @SerializedName("name")
-    private val name: String,
+    val name: String,
     @SerializedName("timestamp")
-    private val timestamp: BigInteger
+    val timestamp: BigInteger
 ) {
     companion object {
         fun fromJson(json: String): Account {
