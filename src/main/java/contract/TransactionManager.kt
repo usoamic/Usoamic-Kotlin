@@ -21,9 +21,7 @@ import org.web3j.tx.gas.DefaultGasProvider.GAS_PRICE
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount
 import java.math.BigInteger
 
-class TransactionManager(
-    account: Account
-) : AccountManager(account) {
+class TransactionManager : AccountManager() {
     @Throws(Exception::class)
     fun executeCall(function: Function): MutableList<Type<Any>>? {
         val encodedFunction = FunctionEncoder.encode(function)

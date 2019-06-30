@@ -10,8 +10,12 @@ import org.web3j.protocol.http.HttpService
 import other.Config
 import java.io.IOException
 import java.math.BigInteger
+import javax.inject.Inject
 
-open class AccountManager(protected val account: Account) {
+open class AccountManager {
+    @Inject
+    lateinit var account: Account
+
     protected val web3j: Web3j = Web3j.build(HttpService(Config.NODE))
 
     @Throws(Exception::class)
