@@ -1,5 +1,6 @@
 package contract
 
+import model.Account
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.http.HttpService
 import other.Config
@@ -20,15 +21,15 @@ import org.web3j.tx.gas.DefaultGasProvider.GAS_PRICE
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount
 import java.math.BigInteger
 
-class TransactionManager(private val web3j: Web3j, private val address: String) : AccountManager(web3j, address) {
-//    private val web3j: Web3j = Web3j.build(HttpService(Config.NODE))
-
+class TransactionManager(
+    account: Account
+) : AccountManager(account) {
     @Throws(Exception::class)
     fun executeCall(function: Function): MutableList<Type<Any>>? {
         val encodedFunction = FunctionEncoder.encode(function)
 
         val ethCall = web3j.ethCall(
-            Transaction.createEthCallTransaction(address, CONTRACT_ADDRESS, encodedFunction),
+            Transaction.createEthCallTransaction(account.address, CONTRACT_ADDRESS, encodedFunction),
             DefaultBlockParameterName.LATEST
         ).send()
 
@@ -74,13 +75,7 @@ class TransactionManager(private val web3j: Web3j, private val address: String) 
 
     @Throws(Exception::class)
     private fun getNonce(address: String): BigInteger {
-        val ethGetTransactionCount =
-            web3j.ethGetTransactionCount(address, DefaultBlockParameterName.LATEST).sendAsync().get()
+        val ethGetTransactionCount = web3j.ethGetTransactionCount(address, DefaultBlockParameterName.LATEST).sendAsync().get()
         return ethGetTransactionCount.transactionCount
-    }
-
-    @Throws(IOException::class, CipherException::class)
-    private fun getCredentials(password: String): Credentials {
-        return WalletUtils.loadCredentials(password, ".ethereum/wallet.json")
     }
 }
