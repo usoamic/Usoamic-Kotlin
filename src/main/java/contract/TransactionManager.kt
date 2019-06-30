@@ -36,14 +36,6 @@ class TransactionManager(
         return FunctionReturnDecoder.decode(ethCall.value, function.outputParameters);
     }
 
-    /*
-    @Throws(IOException::class)
-    protected fun <T : Type<Any>> executeCallSingleValueReturn(function: Function): T? {
-        val values = executeCall(function)
-        return if(values.isEmpty()) values[0] else null
-    }
-    */
-
     @Throws(Exception::class)
     private fun executeTransaction(password: String, function: Function): String {
         val credentials = getCredentials(password)
