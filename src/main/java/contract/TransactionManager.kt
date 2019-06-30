@@ -1,24 +1,16 @@
 package contract
 
-import model.Account
-import org.web3j.protocol.Web3j
-import org.web3j.protocol.http.HttpService
-import other.Config
-import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.abi.FunctionEncoder
 import org.web3j.abi.FunctionReturnDecoder
-import org.web3j.abi.datatypes.Bool
 import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.Type
-import org.web3j.crypto.*
+import org.web3j.crypto.RawTransaction
+import org.web3j.crypto.TransactionEncoder
+import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.core.methods.request.Transaction
-import other.Config.Companion.CONTRACT_ADDRESS
-import java.io.IOException
-import org.web3j.protocol.core.methods.response.EthSendTransaction
-import org.web3j.utils.Numeric
-import org.web3j.protocol.core.methods.response.EthEstimateGas
 import org.web3j.tx.gas.DefaultGasProvider.GAS_PRICE
-import org.web3j.protocol.core.methods.response.EthGetTransactionCount
+import org.web3j.utils.Numeric
+import other.Config.Companion.CONTRACT_ADDRESS
 import java.math.BigInteger
 
 class TransactionManager : AccountManager() {
