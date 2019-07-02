@@ -18,6 +18,10 @@ open class AccountManager {
 
     protected val web3j: Web3j = Web3j.build(HttpService(Config.NODE))
 
+    init {
+        Usoamic.component.inject(this)
+    }
+
     @Throws(Exception::class)
     protected fun getBalance(): BigInteger {
         return web3j.ethGetBalance(account.address, DefaultBlockParameterName.LATEST).send().balance

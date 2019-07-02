@@ -15,5 +15,15 @@ class AccountModule {
     fun provideAccount(): Account {
         val json = Files.readString(Path.of(Config.ACCOUNT_FILENAME))
         return Account.fromJson(json)
+        /*
+            @SerializedName("address")
+    val address: String,
+    @SerializedName("path")
+    val path: String,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("timestamp")
+    val timestamp: BigInteger
+         */
     }
 }
