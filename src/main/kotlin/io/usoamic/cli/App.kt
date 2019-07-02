@@ -1,20 +1,22 @@
-import contract.AccountManager
-import di.AccountModule
-import di.AppComponent
-import di.DaggerAppComponent
+package io.usoamic.cli
 
-object Usoamic {
+import io.usoamic.cli.di.AppComponent
+import io.usoamic.cli.di.ContractModule
+import io.usoamic.cli.di.DaggerAppComponent
+
+object App {
     lateinit var component: AppComponent
 
     private fun prepareDagger() {
         component = DaggerAppComponent
             .builder()
-            .accountModule(AccountModule())
+            .contractModule(ContractModule())
             .build()
     }
 
     @JvmStatic
     fun main(args: Array<String>) {
         prepareDagger()
+        Usoamic()
     }
 }

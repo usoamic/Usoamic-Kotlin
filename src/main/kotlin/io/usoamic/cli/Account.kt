@@ -1,4 +1,4 @@
-package model
+package io.usoamic.cli
 
 import com.google.gson.Gson
 

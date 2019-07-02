@@ -1,25 +1,31 @@
-package contract
+package io.usoamic.cli.contract
 
-import model.Account
+import io.usoamic.cli.Account
 import org.web3j.crypto.CipherException
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.WalletUtils
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
-import other.Config
+import io.usoamic.cli.Config
 import java.io.IOException
 import java.math.BigInteger
-import javax.inject.Inject
+import java.nio.file.Files
+import java.nio.file.Path
 
-open class AccountManager {
-    @Inject
-    lateinit var account: Account
-
+open class AccountManager(private val filename: String) {
     protected val web3j: Web3j = Web3j.build(HttpService(Config.NODE))
+    lateinit var _account: Account
+    public val account: Account get() {
+        if (!::_account.isInitialized) {
+            val json = Files.readString(Path.of(filename))
+            _account = Account.fromJson(json)
+        }
+        return _account
+    }
 
-    init {
-        Usoamic.component.inject(this)
+    fun getAddress(): String {
+        return account.address
     }
 
     @Throws(Exception::class)

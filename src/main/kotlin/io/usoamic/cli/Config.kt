@@ -1,4 +1,4 @@
-package other
+package io.usoamic.cli
 
 class Config {
     companion object {
