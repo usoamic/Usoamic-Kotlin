@@ -16,7 +16,13 @@ import java.math.BigInteger
 
 open class TransactionManager(filename: String) : AccountManager(filename) {
     @Throws(Exception::class)
-    fun executeCall(function: Function): MutableList<Type<Any>>? {
+    fun executeCallSingleValueReturn(function: Function): Any? {
+        val values = executeCall(function)
+        return if(values.isNotEmpty()) values[0].value else null
+    }
+
+    @Throws(Exception::class)
+    fun executeCall(function: Function): MutableList<Type<Any>> {
         val encodedFunction = FunctionEncoder.encode(function)
 
         val ethCall = web3j.ethCall(
