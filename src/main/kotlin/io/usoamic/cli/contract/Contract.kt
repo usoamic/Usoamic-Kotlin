@@ -1,11 +1,8 @@
 package io.usoamic.cli.contract
 
-import io.usoamic.cli.Account
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
-import java.util.*
-import java.util.Collections
 import org.web3j.abi.datatypes.Function
 
 

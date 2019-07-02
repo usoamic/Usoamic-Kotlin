@@ -1,13 +1,13 @@
 package io.usoamic.cli.contract
 
-import io.usoamic.cli.Account
+import io.usoamic.cli.model.Account
+import io.usoamic.cli.other.Config
 import org.web3j.crypto.CipherException
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.WalletUtils
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
-import io.usoamic.cli.Config
 import java.io.IOException
 import java.math.BigInteger
 import java.nio.file.Files

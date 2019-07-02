@@ -1,6 +1,5 @@
 package io.usoamic.cli.contract
 
-import io.usoamic.cli.Account
 import org.web3j.abi.FunctionEncoder
 import org.web3j.abi.FunctionReturnDecoder
 import org.web3j.abi.datatypes.Function
