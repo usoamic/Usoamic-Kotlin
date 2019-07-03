@@ -1,6 +1,6 @@
 package io.usoamic.cli.di
 
-import io.usoamic.cli.contract.Contract
+import io.usoamic.cli.contract.Usoamic
 import dagger.Module
 import dagger.Provides
 import io.usoamic.cli.other.Config
@@ -8,7 +8,7 @@ import io.usoamic.cli.other.Config
 @Module
 class ContractModule {
     @Provides
-    fun provideContract(): Contract {
-        return Contract(Config.ACCOUNT_FILENAME)
+    fun provideContract(): Usoamic {
+        return Usoamic(Config.ACCOUNT_FILENAME)
     }
 }

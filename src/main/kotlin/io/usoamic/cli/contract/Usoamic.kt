@@ -6,7 +6,7 @@ import java.math.BigInteger
 import org.web3j.abi.datatypes.Function
 
 
-class Contract constructor(filename: String) : TransactionManager(filename) {
+class Usoamic constructor(filename: String) : TransactionManager(filename) {
     init {
 
     }

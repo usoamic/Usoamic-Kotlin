@@ -17,6 +17,6 @@ object App {
     @JvmStatic
     fun main(args: Array<String>) {
         prepareDagger()
-        Usoamic()
+        UsoWalletCli()
     }
 }
