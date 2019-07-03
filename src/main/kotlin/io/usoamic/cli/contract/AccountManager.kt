@@ -24,10 +24,6 @@ open class AccountManager(private val filename: String) {
         return _account
     }
 
-    fun getAddress(): String {
-        return account.address
-    }
-
     @Throws(Exception::class)
     protected fun getBalance(): BigInteger {
         return web3j.ethGetBalance(account.address, DefaultBlockParameterName.LATEST).send().balance
