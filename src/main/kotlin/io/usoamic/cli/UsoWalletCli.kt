@@ -6,12 +6,12 @@ import javax.inject.Inject
 
 class UsoWalletCli {
     @Inject
-    lateinit var contract: Usoamic
+    lateinit var usoamic: Usoamic
 
     init {
         App.component.inject(this)
 
-//        val addr = contract.getAddress()
+//        val addr = usoamic.getAddress()
 //        println(addr)
     }
 }
