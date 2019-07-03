@@ -15,13 +15,13 @@ import java.math.BigInteger
 
 open class TransactionManager(filename: String) : AccountWrapper(filename) {
     @Throws(Exception::class)
-    fun executeCallSingleValueReturn(function: Function): Any? {
+    protected fun executeCallSingleValueReturn(function: Function): Any? {
         val values = executeCall(function)
         return if(values.isNotEmpty()) values[0].value else null
     }
 
     @Throws(Exception::class)
-    fun executeCall(function: Function): MutableList<Type<Any>> {
+    protected fun executeCall(function: Function): MutableList<Type<Any>> {
         val encodedFunction = FunctionEncoder.encode(function)
 
         val ethCall = web3j.ethCall(
@@ -33,7 +33,7 @@ open class TransactionManager(filename: String) : AccountWrapper(filename) {
     }
 
     @Throws(Exception::class)
-    private fun executeTransaction(password: String, function: Function): String {
+    protected fun executeTransaction(password: String, function: Function): String {
         val credentials = getCredentials(password)
         val nonce = getNonce(credentials.address)
         val encodedFunction = FunctionEncoder.encode(function)
