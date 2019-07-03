@@ -17,6 +17,7 @@ open class TransactionManager(filename: String) : AccountWrapper(filename) {
     @Throws(Exception::class)
     fun executeCallSingleValueReturn(function: Function): Any? {
         val values = executeCall(function)
+
         return if(values.isNotEmpty()) values[0].value else null
     }
 
@@ -29,7 +30,7 @@ open class TransactionManager(filename: String) : AccountWrapper(filename) {
             DefaultBlockParameterName.LATEST
         ).send()
 
-        return FunctionReturnDecoder.decode(ethCall.value, function.outputParameters);
+        return FunctionReturnDecoder.decode(ethCall.value, function.outputParameters)
     }
 
     @Throws(Exception::class)
