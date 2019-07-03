@@ -5,6 +5,8 @@ import java.io.FileWriter
 import java.math.BigInteger
 import javax.inject.Inject
 import com.google.gson.GsonBuilder
+import io.usoamic.cli.model.Account
+import io.usoamic.cli.other.Config
 
 
 class Usoamic {
@@ -17,7 +19,7 @@ class Usoamic {
             val gson = GsonBuilder().create()
             gson.toJson(Account("address", "path", "name", BigInteger.TWO), writer)
         }
-        val addr = contract.getAddress()
-        println(addr)
+//        val addr = contract.getAddress()
+//        println(addr)
     }
 }
