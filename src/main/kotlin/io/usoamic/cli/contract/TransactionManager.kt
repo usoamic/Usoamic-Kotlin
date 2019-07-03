@@ -1,5 +1,6 @@
 package io.usoamic.cli.contract
 
+import io.usoamic.cli.other.Config.Companion.CONTRACT_ADDRESS
 import org.web3j.abi.FunctionEncoder
 import org.web3j.abi.FunctionReturnDecoder
 import org.web3j.abi.datatypes.Function
@@ -10,10 +11,9 @@ import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.core.methods.request.Transaction
 import org.web3j.tx.gas.DefaultGasProvider.GAS_PRICE
 import org.web3j.utils.Numeric
-import io.usoamic.cli.Config.Companion.CONTRACT_ADDRESS
 import java.math.BigInteger
 
-open class TransactionManager(filename: String) : AccountManager(filename) {
+open class TransactionManager(filename: String) : AccountWrapper(filename) {
     @Throws(Exception::class)
     fun executeCallSingleValueReturn(function: Function): Any? {
         val values = executeCall(function)
