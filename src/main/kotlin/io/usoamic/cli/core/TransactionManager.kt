@@ -1,4 +1,4 @@
-package io.usoamic.cli.contract
+package io.usoamic.cli.core
 
 import io.usoamic.cli.other.Config.Companion.CONTRACT_ADDRESS
 import org.web3j.abi.FunctionEncoder
@@ -17,7 +17,6 @@ open class TransactionManager(filename: String) : AccountWrapper(filename) {
     @Throws(Exception::class)
     fun executeCallSingleValueReturn(function: Function): Any? {
         val values = executeCall(function)
-
         return if(values.isNotEmpty()) values[0].value else null
     }
 

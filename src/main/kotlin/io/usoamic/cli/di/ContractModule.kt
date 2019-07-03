@@ -1,6 +1,6 @@
 package io.usoamic.cli.di
 
-import io.usoamic.cli.contract.Usoamic
+import io.usoamic.cli.core.Usoamic
 import dagger.Module
 import dagger.Provides
 import io.usoamic.cli.other.Config

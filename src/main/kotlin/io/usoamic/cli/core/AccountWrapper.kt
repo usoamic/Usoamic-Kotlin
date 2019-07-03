@@ -1,4 +1,4 @@
-package io.usoamic.cli.contract
+package io.usoamic.cli.core
 
 import io.usoamic.cli.model.Account
 import io.usoamic.cli.other.Config
@@ -25,8 +25,12 @@ open class AccountWrapper(private val filename: String) : AccountManager(filenam
     }
 
     @Throws(Exception::class)
-    protected fun getBalance(): BigInteger {
-        return web3j.ethGetBalance(account.address, DefaultBlockParameterName.LATEST).send().balance
+    public fun getBalance(): BigInteger {
+        return getBalance(account.address)
+    }
+
+    public fun getBalance(address: String): BigInteger {
+        return web3j.ethGetBalance(address, DefaultBlockParameterName.LATEST).send().balance
     }
 
     @Throws(IOException::class, CipherException::class)

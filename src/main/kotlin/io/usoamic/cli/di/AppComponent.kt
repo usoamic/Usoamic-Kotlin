@@ -1,10 +1,10 @@
 package io.usoamic.cli.di
 
-import io.usoamic.cli.contract.AccountWrapper
-import io.usoamic.cli.contract.TransactionManager
+import io.usoamic.cli.core.AccountWrapper
+import io.usoamic.cli.core.TransactionManager
 import dagger.Component
 import io.usoamic.cli.UsoWalletCli
-import io.usoamic.cli.contract.Usoamic
+import io.usoamic.cli.core.Usoamic
 import javax.inject.Singleton
 
 @Singleton

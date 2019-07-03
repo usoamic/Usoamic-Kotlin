@@ -1,4 +1,4 @@
-package io.usoamic.cli.contract
+package io.usoamic.cli.core
 
 import com.google.gson.Gson
 import io.usoamic.cli.exception.InvalidMnemonicPhraseException
