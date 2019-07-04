@@ -5,6 +5,7 @@ import org.web3j.abi.FunctionEncoder
 import org.web3j.abi.FunctionReturnDecoder
 import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.Type
+import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.crypto.RawTransaction
 import org.web3j.crypto.TransactionEncoder
 import org.web3j.protocol.core.DefaultBlockParameterName
@@ -30,6 +31,16 @@ open class TransactionManager(filename: String) : AccountWrapper(filename) {
         ).send()
 
         return FunctionReturnDecoder.decode(ethCall.value, function.outputParameters)
+    }
+
+    @Throws(Exception::class)
+    protected fun executeTransaction(password: String, name: String, inputParameters: List<Type<out Any>>): String {
+        val function = Function(
+            name,
+            inputParameters,
+            emptyList()
+        )
+        return executeTransaction(password, function)
     }
 
     @Throws(Exception::class)
