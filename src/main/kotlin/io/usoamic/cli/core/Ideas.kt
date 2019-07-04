@@ -1,6 +1,7 @@
 package io.usoamic.cli.core
 
 import io.usoamic.cli.enum.IdeaStatus
+import io.usoamic.cli.enum.VoteType
 import io.usoamic.cli.model.Idea
 import io.usoamic.cli.model.Vote
 import org.web3j.abi.TypeReference
@@ -78,12 +79,14 @@ open class Ideas constructor(filename: String) : TransactionManager(filename) {
         )
         val result = executeCall(function)
 
+        val voteTypeId = result[4].value as BigInteger
+
         return Vote.Builder()
             .setIsExist(result[0].value as Boolean)
             .setIdeaId(result[1].value as BigInteger)
             .setVoteId(result[2].value as BigInteger)
             .setVoter(result[3].value as String)
-            .setVoteType(result[4].value as String)
+            .setVoteType(VoteType.values()[voteTypeId.toInt()])
             .setComment(result[5].value as String)
             .build()
     }

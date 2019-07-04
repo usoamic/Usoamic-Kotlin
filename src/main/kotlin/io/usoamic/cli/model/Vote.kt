@@ -1,5 +1,6 @@
 package io.usoamic.cli.model
 
+import io.usoamic.cli.enum.VoteType
 import java.math.BigInteger
 
 data class Vote constructor(
@@ -7,7 +8,7 @@ data class Vote constructor(
     val ideaId: BigInteger,
     val voteId: BigInteger,
     val voter: String,
-    val voteType: String, //TODO: Change to enum VoteType
+    val voteType: VoteType, //TODO: Change to enum VoteType
     val comment: String
 ) {
     class Builder {
@@ -15,7 +16,7 @@ data class Vote constructor(
         private lateinit var ideaId: BigInteger
         private lateinit var voteId: BigInteger
         private lateinit var voter: String
-        private lateinit var voteType: String
+        private lateinit var voteType: VoteType
         private lateinit var comment: String
 
         fun setIsExist(exist: Boolean) = apply {
@@ -34,7 +35,7 @@ data class Vote constructor(
             this.voter = address
         }
 
-        fun setVoteType(voteType: String) = apply {
+        fun setVoteType(voteType: VoteType) = apply {
             this.voteType = voteType
         }
 
