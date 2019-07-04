@@ -16,9 +16,13 @@ open class Swap constructor(filename: String) : TransactionManager(filename) {
 
     fun burnSwap(password: String, value: BigInteger): String = executeTransaction(
             password,
-            "withdrawEth",
+            "burnSwap",
             listOf(Uint256(value))
     )
 
-
+    fun setSwapRate(password: String, swapRate: BigInteger): String = executeTransaction(
+        password,
+        "setSwapRate",
+        listOf(Uint256(swapRate))
+    )
 }
