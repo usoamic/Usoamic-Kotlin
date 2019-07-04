@@ -25,6 +25,29 @@ open class Ideas constructor(filename: String) : TransactionManager(filename) {
         return executeTransaction(password, function)
     }
 
+    fun supportIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.SUPPORT, ideaId, comment)
+
+    fun abstainIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.ABSTAIN, ideaId, comment)
+
+    fun againstIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.AGAINST, ideaId, comment)
+
+    @Throws(Exception::class)
+    private fun voteForIdea(password: String, voteType: VoteType, ideaId: BigInteger, comment: String): String {
+        val function = Function(
+            when(voteType) {
+                VoteType.SUPPORT -> "supportIdea"
+                VoteType.ABSTAIN -> "abstainIdea"
+                VoteType.AGAINST -> "againstIdea"
+            },
+            listOf(
+                Uint256(ideaId),
+                Utf8String(comment)
+            ),
+            emptyList()
+        )
+        return executeTransaction(password, function)
+    }
+
     @Throws(Exception::class)
     fun getIdea(ideaId: BigInteger): Idea {
         val function = Function(
