@@ -8,12 +8,17 @@ import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
 open class Swap constructor(filename: String) : TransactionManager(filename) {
-    fun withdrawEth(password: String, value: BigInteger): String {
-        val function = Function(
+    fun withdrawEth(password: String, value: BigInteger): String = executeTransaction(
+            password,
             "withdrawEth",
-            listOf(Uint256(value)),
-            emptyList()
-        )
-        return executeTransaction(password, function)
-    }
+            listOf(Uint256(value))
+    )
+
+    fun burnSwap(password: String, value: BigInteger): String = executeTransaction(
+            password,
+            "withdrawEth",
+            listOf(Uint256(value))
+    )
+
+
 }
