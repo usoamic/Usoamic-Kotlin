@@ -111,12 +111,5 @@ open class Ideas constructor(filename: String) : TransactionManager(filename) {
     }
 
     @Throws(Exception::class)
-    fun getNumberOfIdeas(): BigInteger? {
-        val function = Function(
-            "getNumberOfIdeas",
-            emptyList(),
-            listOf(object: TypeReference<Uint256>() { })
-        )
-        return executeCallSingleValueReturn(function)
-    }
+    fun getNumberOfIdeas(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfIdeas")
 }

@@ -48,12 +48,5 @@ open class Purchases constructor(filename: String) : TransactionManager(filename
             .build()
     }
 
-    fun getNumberOfPurchaseByAddress(): BigInteger? {
-        val function = Function(
-            "getNumberOfPurchaseByAddress",
-            emptyList(),
-            listOf(object: TypeReference<Uint256>() { })
-        )
-        return executeCallSingleValueReturn(function)
-    }
+    fun getNumberOfPurchaseByAddress(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfPurchaseByAddress")
 }
