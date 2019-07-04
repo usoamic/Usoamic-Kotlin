@@ -66,4 +66,33 @@ class Usoamic constructor(filename: String) : TransactionManager(filename) {
             .setNumberOfParticipants(result[9] as BigInteger)
             .build()
     }
+
+    @Throws(Exception::class)
+    fun getVote(ideaId: BigInteger, voteId: BigInteger): Vote {
+        val function = Function(
+            "getVote",
+            listOf(
+                Uint256(ideaId),
+                Uint256(voteId)
+            ),
+            listOf(
+                object: TypeReference<Bool>() { },
+                object: TypeReference<Uint256>() { },
+                object: TypeReference<Uint256>() { },
+                object: TypeReference<Address>() { },
+                object: TypeReference<Utf8String>() { },
+                object: TypeReference<Utf8String>() { }
+            )
+        )
+        val result = executeCall(function)
+
+        return Vote.Builder()
+            .setIsExist(result[0] as Boolean)
+            .setIdeaId(result[1] as BigInteger)
+            .setVoteId(result[2] as BigInteger)
+            .setVoter(result[3] as String)
+            .setVoteType(result[4] as String)
+            .setComment(result[5] as String)
+            .build()
+    }
 }
