@@ -1,5 +1,6 @@
 package io.usoamic.cli.model
 
+import io.usoamic.cli.enum.IdeaStatus
 import java.math.BigInteger
 import java.sql.Timestamp
 
@@ -8,7 +9,7 @@ data class Idea constructor(
     val ideaId: BigInteger,
     val author: String,
     val description: String,
-    val ideaStatus: String,
+    val ideaStatus: IdeaStatus,
     val timestamp: BigInteger,
     val numberOfSupporters: BigInteger,
     val numberOfAbstained: BigInteger,
@@ -20,7 +21,7 @@ data class Idea constructor(
         private lateinit var ideaId: BigInteger
         private lateinit var author: String
         private lateinit var description: String
-        private lateinit var ideaStatus: String
+        private lateinit var ideaStatus: IdeaStatus
         private lateinit var timestamp: BigInteger
         private lateinit var numberOfSupporters: BigInteger
         private lateinit var numberOfAbstained: BigInteger
@@ -43,7 +44,7 @@ data class Idea constructor(
             this.description = description
         }
 
-        fun setIdeaStatus(ideaStatus: String) = apply {
+        fun setIdeaStatus(ideaStatus: IdeaStatus) = apply {
             this.ideaStatus = ideaStatus
         }
 
