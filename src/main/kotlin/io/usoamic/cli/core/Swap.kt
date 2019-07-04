@@ -40,4 +40,13 @@ open class Swap constructor(filename: String) : TransactionManager(filename) {
         )
         return executeCallSingleValueReturn(function)
     }
+
+    fun getSwapRate(): BigInteger? {
+        val function = Function(
+            "getSwapRate",
+            emptyList(),
+            listOf(object: TypeReference<Uint256>() {})
+        )
+        return executeCallSingleValueReturn(function)
+    }
 }
