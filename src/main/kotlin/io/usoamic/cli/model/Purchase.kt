@@ -42,5 +42,14 @@ data class Purchase constructor(
         fun setTimestamp(timestamp: BigInteger) = apply {
             this.timestamp = timestamp
         }
+
+        fun build() = Purchase(
+            isExist,
+            id,
+            purchaseId,
+            appId,
+            cost,
+            timestamp
+        )
     }
 }
