@@ -38,12 +38,12 @@ open class Purchases constructor(filename: String) : TransactionManager(filename
                 Uint256(id)
             ),
             listOf(
-                object : TypeReference<Bool>() {},
-                object : TypeReference<Uint256>() {},
-                object : TypeReference<Utf8String>() {},
-                object : TypeReference<Utf8String>() {},
-                object : TypeReference<Uint256>() {},
-                object : TypeReference<Uint256>() {}
+                object: TypeReference<Bool>() {},
+                object: TypeReference<Uint256>() {},
+                object: TypeReference<Utf8String>() {},
+                object: TypeReference<Utf8String>() {},
+                object: TypeReference<Uint256>() {},
+                object: TypeReference<Uint256>() {}
             )
         )
         val result = executeCall(function)
@@ -56,5 +56,15 @@ open class Purchases constructor(filename: String) : TransactionManager(filename
             .setCost(result[4] as BigInteger)
             .setTimestamp(result[5] as BigInteger)
             .build()
+    }
+
+    fun getNumberOfPurchaseByAddress(): BigInteger? {
+        val function = Function(
+            "getNumberOfPurchaseByAddress",
+            emptyList(),
+            listOf(object: TypeReference<Uint256>() { })
+        )
+        val result = executeCallSingleValueReturn(function)
+        return if(result == null) null else (result as BigInteger)
     }
 }
