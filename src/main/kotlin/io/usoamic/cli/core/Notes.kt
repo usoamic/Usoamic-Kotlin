@@ -1,13 +1,10 @@
 package io.usoamic.cli.core
 
 import io.usoamic.cli.enum.NoteVisibility
-import io.usoamic.cli.enum.VoteType
 import io.usoamic.cli.model.Note
 import org.web3j.abi.TypeReference
-import org.web3j.abi.datatypes.Address
-import org.web3j.abi.datatypes.Bool
+import org.web3j.abi.datatypes.*
 import org.web3j.abi.datatypes.Function
-import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.abi.datatypes.generated.Uint8
 import java.math.BigInteger
@@ -33,13 +30,23 @@ open class Notes constructor(filename: String) : TransactionManager(filename) {
     }
 
     @Throws(Exception::class)
-    fun getNoteByAddress(author: String, noteId: BigInteger): Note {
-        val function = Function(
+    fun getNoteByAddress(author: String, noteId: BigInteger): Note =
+        getAndPrepareNote(
             "getNoteByAddress",
             listOf(
                 Utf8String(author),
                 Uint256(noteId)
-            ),
+            )
+        )
+
+    @Throws(Exception::class)
+    fun getNote(noteId: BigInteger): Note = getAndPrepareNote("getAndPrepareNote", listOf(Uint256(noteId)))
+
+    @Throws(Exception::class)
+    private fun getAndPrepareNote(name: String, inputParameters: List<Type<out Any>>): Note {
+        val function = Function(
+            name,
+            inputParameters,
             listOf(
                 object: TypeReference<Bool>() { },
                 object: TypeReference<Uint256>() { },
