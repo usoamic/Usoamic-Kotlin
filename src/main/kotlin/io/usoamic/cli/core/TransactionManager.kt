@@ -3,6 +3,7 @@ package io.usoamic.cli.core
 import io.usoamic.cli.other.Config.Companion.CONTRACT_ADDRESS
 import org.web3j.abi.FunctionEncoder
 import org.web3j.abi.FunctionReturnDecoder
+import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.Type
 import org.web3j.abi.datatypes.generated.Uint256
@@ -19,6 +20,26 @@ open class TransactionManager(filename: String) : AccountWrapper(filename) {
     protected fun <T : Any?>executeCallSingleValueReturn(function: Function): T? {
         val values = executeCall(function)
         return if(values.isNotEmpty()) (values[0].value as T) else null
+    }
+
+    @Throws(Exception::class)
+    protected fun <T : Any?>executeCallEmptyPassValueAndSingleValueReturn(name: String, outputParameters: List<TypeReference<*>>): T? {
+        val function = Function(
+            name,
+            emptyList(),
+            outputParameters
+        )
+        return executeCallSingleValueReturn(function)
+    }
+
+    @Throws(Exception::class)
+    protected fun <T : Any?>executeCallEmptyPassValueAndUint256Return(name: String): T? {
+        val function = Function(
+            name,
+            emptyList(),
+            listOf(object: TypeReference<Uint256>() {})
+        )
+        return executeCallSingleValueReturn(function)
     }
 
     @Throws(Exception::class)
