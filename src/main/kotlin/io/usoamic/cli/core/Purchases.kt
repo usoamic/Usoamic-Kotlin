@@ -10,18 +10,15 @@ import java.math.BigInteger
 import org.web3j.abi.datatypes.Function
 
 open class Purchases constructor(filename: String) : TransactionManager(filename) {
-    fun makePurchase(password: String, appId: String, purchaseId: String, cost: BigInteger): String {
-        val function = Function(
-            "makePurchase",
-            listOf(
-                Utf8String(appId),
-                Utf8String(purchaseId),
-                Uint256(cost)
-            ),
-            emptyList()
+    fun makePurchase(password: String, appId: String, purchaseId: String, cost: BigInteger): String = executeTransaction(
+        password,
+        "makePurchase",
+        listOf(
+            Utf8String(appId),
+            Utf8String(purchaseId),
+            Uint256(cost)
         )
-        return executeTransaction(password, function)
-    }
+    )
 
     fun getPurchaseByAddress(address: String, id: BigInteger): Purchase {
         val function = Function(

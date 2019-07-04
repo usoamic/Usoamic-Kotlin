@@ -16,14 +16,11 @@ import java.math.BigInteger
 
 open class Ideas constructor(filename: String) : TransactionManager(filename) {
     @Throws(Exception::class)
-    fun addIdea(password: String, description: String): String {
-        val function = Function(
-            "addIdea",
-            listOf(Utf8String(description)),
-            emptyList()
-        )
-        return executeTransaction(password, function)
-    }
+    fun addIdea(password: String, description: String): String = executeTransaction(
+        password,
+        "addIdea",
+        listOf(Utf8String(description))
+    )
 
     @Throws(Exception::class)
     fun supportIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.SUPPORT, ideaId, comment)
@@ -35,22 +32,18 @@ open class Ideas constructor(filename: String) : TransactionManager(filename) {
     fun againstIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.AGAINST, ideaId, comment)
 
     @Throws(Exception::class)
-    private fun voteForIdea(password: String, voteType: VoteType, ideaId: BigInteger, comment: String): String {
-        val function = Function(
-            when(voteType) {
-                VoteType.SUPPORT -> "supportIdea"
-                VoteType.ABSTAIN -> "abstainIdea"
-                VoteType.AGAINST -> "againstIdea"
-            },
-            listOf(
-                Uint256(ideaId),
-                Utf8String(comment)
-            ),
-            emptyList()
+    private fun voteForIdea(password: String, voteType: VoteType, ideaId: BigInteger, comment: String): String = executeTransaction(
+        password,
+        when(voteType) {
+            VoteType.SUPPORT -> "supportIdea"
+            VoteType.ABSTAIN -> "abstainIdea"
+            VoteType.AGAINST -> "againstIdea"
+        },
+        listOf(
+            Uint256(ideaId),
+            Utf8String(comment)
         )
-        return executeTransaction(password, function)
-    }
-
+    )
     @Throws(Exception::class)
     fun getIdea(ideaId: BigInteger): Idea {
         val function = Function(

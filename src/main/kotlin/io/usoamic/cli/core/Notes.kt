@@ -17,17 +17,14 @@ open class Notes constructor(filename: String) : TransactionManager(filename) {
     fun addUnlistedNote(password: String, content: String): String = addNote(password, NoteVisibility.UNLISTED, content)
 
     @Throws(Exception::class)
-    private fun addNote(password: String, noteVisibility: NoteVisibility, content: String): String {
-        val function = Function(
-            when(noteVisibility) {
-                NoteVisibility.PUBLIC -> "addPublicNote"
-                NoteVisibility.UNLISTED -> "addUnlistedNote"
-            },
-            listOf(Utf8String(content)),
-            emptyList()
-        )
-        return executeTransaction(password, function)
-    }
+    private fun addNote(password: String, noteVisibility: NoteVisibility, content: String): String = executeTransaction(
+        password,
+        when(noteVisibility) {
+            NoteVisibility.PUBLIC -> "addPublicNote"
+            NoteVisibility.UNLISTED -> "addUnlistedNote"
+        },
+        listOf(Utf8String(content))
+    )
 
     @Throws(Exception::class)
     fun getNoteByAddress(author: String, noteId: BigInteger): Note =
