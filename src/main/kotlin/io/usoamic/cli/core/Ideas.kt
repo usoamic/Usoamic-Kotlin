@@ -124,7 +124,6 @@ open class Ideas constructor(filename: String) : TransactionManager(filename) {
             emptyList(),
             listOf(object: TypeReference<Uint256>() { })
         )
-        val result = executeCallSingleValueReturn(function)
-        return if (result == null) null else result as BigInteger
+        return executeCallSingleValueReturn(function)
     }
 }

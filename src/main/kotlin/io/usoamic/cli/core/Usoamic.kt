@@ -26,7 +26,6 @@ class Usoamic constructor(filename: String) : Ideas(filename) {
             listOf(Address(address)),
             listOf(object: TypeReference<Uint256>() { })
         )
-        val result = executeCallSingleValueReturn(function)
-        return if(result == null) result else result as BigInteger
+        return executeCallSingleValueReturn(function)
     }
 }

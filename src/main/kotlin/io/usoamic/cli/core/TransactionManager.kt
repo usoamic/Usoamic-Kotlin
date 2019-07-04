@@ -15,9 +15,9 @@ import java.math.BigInteger
 
 open class TransactionManager(filename: String) : AccountWrapper(filename) {
     @Throws(Exception::class)
-    protected fun executeCallSingleValueReturn(function: Function): Any? {
+    protected fun <T : Any?>executeCallSingleValueReturn(function: Function): T? {
         val values = executeCall(function)
-        return if(values.isNotEmpty()) values[0].value else null
+        return if(values.isNotEmpty()) (values[0].value as T) else null
     }
 
     @Throws(Exception::class)
