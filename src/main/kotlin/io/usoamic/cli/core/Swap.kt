@@ -32,5 +32,12 @@ open class Swap constructor(filename: String) : TransactionManager(filename) {
         listOf(Bool(swappable))
     )
 
-
+    fun getSwapBalance(): BigInteger? {
+        val function = Function(
+            "getSwapBalance",
+            emptyList(),
+            listOf(object: TypeReference<Uint256>() {})
+        )
+        return executeCallSingleValueReturn(function)
+    }
 }
