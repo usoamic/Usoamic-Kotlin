@@ -1,54 +1,83 @@
 package io.usoamic.cli.model
 
 import java.math.BigInteger
+import java.sql.Timestamp
 
 data class Idea constructor(
     val isExist: Boolean,
     val ideaId: BigInteger,
-    val voteId: BigInteger,
-    val address: String,
-    val voteType: String, //TODO: Change to enum VoteType
-    val comment: String
+    val author: String,
+    val description: String,
+    val ideaStatus: String,
+    val timestamp: BigInteger,
+    val numberOfSupporters: BigInteger,
+    val numberOfAbstained: BigInteger,
+    val numberOfVotedAgainst: BigInteger,
+    val numberOfParticipants: BigInteger
 ) {
     class Builder {
         private var isExist: Boolean = false
         private lateinit var ideaId: BigInteger
-        private lateinit var voteId: BigInteger
-        private lateinit var address: String
-        private lateinit var voteType: String
-        private lateinit var comment: String
+        private lateinit var author: String
+        private lateinit var description: String
+        private lateinit var ideaStatus: String
+        private lateinit var timestamp: BigInteger
+        private lateinit var numberOfSupporters: BigInteger
+        private lateinit var numberOfAbstained: BigInteger
+        private lateinit var numberOfVotedAgainst: BigInteger
+        private lateinit var numberOfParticipants: BigInteger
 
-        fun setIsExist(exist: Boolean) = apply {
-            this.isExist = exist
+        fun setIsExist(isExist: Boolean) = apply {
+            this.isExist = isExist
         }
 
         fun setIdeaId(ideaId: BigInteger) = apply {
             this.ideaId = ideaId
         }
 
-        fun setVoteId(voteId: BigInteger) = apply {
-            this.voteId = voteId
+        fun setAuthor(author: String) = apply {
+            this.author = author
         }
 
-        fun setAddress(address: String) = apply {
-            this.address = address
+        fun setDescription(description: String) = apply {
+            this.description = description
         }
 
-        fun setVoteType(voteType: String) = apply {
-            this.voteType = voteType
+        fun setIdeaStatus(ideaStatus: String) = apply {
+            this.ideaStatus = ideaStatus
         }
 
-        fun setComment(comment: String) = apply {
-            this.comment = comment
+        fun setTimestamp(timestamp: BigInteger) = apply {
+            this.timestamp = timestamp
+        }
+
+        fun setNumberOfSupporters(numberOfSupporters: BigInteger) = apply {
+            this.numberOfSupporters = numberOfSupporters
+        }
+
+        fun setNumberOfAbstained(numberOfAbstained: BigInteger) = apply {
+            this.numberOfAbstained = numberOfAbstained
+        }
+
+        fun setNumberOfVotedAgainst(numberOfVotedAgainst: BigInteger) = apply {
+            this.numberOfVotedAgainst = numberOfVotedAgainst
+        }
+
+        fun setNumberOfParticipants(numberOfParticipants: BigInteger) = apply {
+            this.numberOfParticipants = numberOfParticipants
         }
 
         fun build() = Idea(
             isExist,
             ideaId,
-            voteId,
-            address,
-            voteType,
-            comment
+            author,
+            description,
+            ideaStatus,
+            timestamp,
+            numberOfSupporters,
+            numberOfAbstained,
+            numberOfVotedAgainst,
+            numberOfParticipants
         )
     }
 }
