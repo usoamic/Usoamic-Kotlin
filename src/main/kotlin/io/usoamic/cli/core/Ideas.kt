@@ -25,10 +25,13 @@ open class Ideas constructor(filename: String) : TransactionManager(filename) {
         return executeTransaction(password, function)
     }
 
+    @Throws(Exception::class)
     fun supportIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.SUPPORT, ideaId, comment)
 
+    @Throws(Exception::class)
     fun abstainIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.ABSTAIN, ideaId, comment)
 
+    @Throws(Exception::class)
     fun againstIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.AGAINST, ideaId, comment)
 
     @Throws(Exception::class)
@@ -112,5 +115,16 @@ open class Ideas constructor(filename: String) : TransactionManager(filename) {
             .setVoteType(VoteType.values()[voteTypeId.toInt()])
             .setComment(result[5].value as String)
             .build()
+    }
+
+    @Throws(Exception::class)
+    fun getNumberOfIdeas(): BigInteger? {
+        val function = Function(
+            "getNumberOfIdeas",
+            emptyList(),
+            listOf(object: TypeReference<Uint256>() { })
+        )
+        val result = executeCallSingleValueReturn(function)
+        return if (result == null) null else result as BigInteger
     }
 }
