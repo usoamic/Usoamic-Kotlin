@@ -1,5 +1,6 @@
 package io.usoamic.cli.core
 
+import io.usoamic.cli.enum.IdeaStatus
 import io.usoamic.cli.model.Idea
 import io.usoamic.cli.model.Vote
 import org.web3j.abi.TypeReference
@@ -9,6 +10,7 @@ import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.Utf8String
+import org.web3j.abi.datatypes.generated.Uint8
 import java.lang.Exception
 
 
@@ -48,7 +50,7 @@ class Usoamic constructor(filename: String) : TransactionManager(filename) {
                 object: TypeReference<Uint256>() { },
                 object: TypeReference<Address>() { },
                 object: TypeReference<Utf8String>() { },
-                object: TypeReference<Utf8String>() { },
+                object: TypeReference<Uint8>() { },
                 object: TypeReference<Uint256>() { },
                 object: TypeReference<Uint256>() { },
                 object: TypeReference<Uint256>() { },
@@ -57,17 +59,19 @@ class Usoamic constructor(filename: String) : TransactionManager(filename) {
             )
         )
         val result = executeCall(function)
+        val ideaStatusId = result[4].value as BigInteger
+
         return Idea.Builder()
-            .setIsExist(result[0] as Boolean)
-            .setIdeaId(result[1] as BigInteger)
-            .setAuthor(result[2] as String)
-            .setDescription(result[3] as String)
-            .setIdeaStatus(result[4] as String)
-            .setTimestamp(result[5] as BigInteger)
-            .setNumberOfSupporters(result[6] as BigInteger)
-            .setNumberOfAbstained(result[7] as BigInteger)
-            .setNumberOfVotedAgainst(result[8] as BigInteger)
-            .setNumberOfParticipants(result[9] as BigInteger)
+            .setIsExist(result[0].value as Boolean)
+            .setIdeaId(result[1].value as BigInteger)
+            .setAuthor(result[2].value as String)
+            .setDescription(result[3].value as String)
+            .setIdeaStatus(IdeaStatus.values()[ideaStatusId.toInt()])
+            .setTimestamp(result[5].value as BigInteger)
+            .setNumberOfSupporters(result[6].value as BigInteger)
+            .setNumberOfAbstained(result[7].value as BigInteger)
+            .setNumberOfVotedAgainst(result[8].value as BigInteger)
+            .setNumberOfParticipants(result[9].value as BigInteger)
             .build()
     }
 
@@ -91,12 +95,12 @@ class Usoamic constructor(filename: String) : TransactionManager(filename) {
         val result = executeCall(function)
 
         return Vote.Builder()
-            .setIsExist(result[0] as Boolean)
-            .setIdeaId(result[1] as BigInteger)
-            .setVoteId(result[2] as BigInteger)
-            .setVoter(result[3] as String)
-            .setVoteType(result[4] as String)
-            .setComment(result[5] as String)
+            .setIsExist(result[0].value as Boolean)
+            .setIdeaId(result[1].value as BigInteger)
+            .setVoteId(result[2].value as BigInteger)
+            .setVoter(result[3].value as String)
+            .setVoteType(result[4].value as String)
+            .setComment(result[5].value as String)
             .build()
     }
 }
