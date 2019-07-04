@@ -25,4 +25,12 @@ open class Swap constructor(filename: String) : TransactionManager(filename) {
         "setSwapRate",
         listOf(Uint256(swapRate))
     )
+
+    fun setSwappable(password: String, swappable: Boolean): String = executeTransaction(
+        password,
+        "setSwappable",
+        listOf(Bool(swappable))
+    )
+
+
 }
