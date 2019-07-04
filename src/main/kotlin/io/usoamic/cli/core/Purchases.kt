@@ -18,14 +18,7 @@ open class Purchases constructor(filename: String) : TransactionManager(filename
                 Utf8String(purchaseId),
                 Uint256(cost)
             ),
-            listOf(
-                object: TypeReference<Bool>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Utf8String>() { },
-                object: TypeReference<Utf8String>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Uint256>() { }
-            )
+            emptyList()
         )
         return executeTransaction(password, function)
     }
