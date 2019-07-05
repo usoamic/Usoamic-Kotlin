@@ -7,11 +7,13 @@ import org.web3j.abi.datatypes.Bool
 import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
+import java.lang.Exception
 import java.math.BigInteger
 
 // bool exist, uint256 txId, address from, address to, uint256 value, uint256 timestamp
 
 open class TransactionExplorer constructor(filename: String) : TransactionManager(filename) {
+    @Throws(Exception::class)
     fun getTransaction(txId: BigInteger): Transaction {
         val function = Function(
             "getTransaction",
@@ -36,7 +38,9 @@ open class TransactionExplorer constructor(filename: String) : TransactionManage
             .build()
     }
 
+    @Throws(Exception::class)
     fun getNumberOfTransactions(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfTransactions")
 
+    @Throws(Exception::class)
     fun getNumberOfTransactionsByAddress(owner: String): BigInteger? = executeCallUint256ValueReturn("getNumberOfTransactionsByAddress", listOf(Address(owner)))
 }

@@ -29,6 +29,7 @@ open class AccountWrapper(private val filename: String) : AccountManager(filenam
         return getBalance(account.address)
     }
 
+    @Throws(java.lang.Exception::class)
     public fun getBalance(address: String): BigInteger {
         return web3j.ethGetBalance(address, DefaultBlockParameterName.LATEST).send().balance
     }

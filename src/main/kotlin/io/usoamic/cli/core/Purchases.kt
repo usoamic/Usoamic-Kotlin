@@ -8,8 +8,10 @@ import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 import org.web3j.abi.datatypes.Function
+import java.lang.Exception
 
 open class Purchases constructor(filename: String) : TransactionManager(filename) {
+    @Throws(Exception::class)
     fun makePurchase(password: String, appId: String, purchaseId: String, cost: BigInteger): String = executeTransaction(
         password,
         "makePurchase",
@@ -20,6 +22,7 @@ open class Purchases constructor(filename: String) : TransactionManager(filename
         )
     )
 
+    @Throws(Exception::class)
     fun getPurchaseByAddress(address: String, id: BigInteger): Purchase {
         val function = Function(
             "getPurchaseByAddress",
@@ -48,5 +51,6 @@ open class Purchases constructor(filename: String) : TransactionManager(filename
             .build()
     }
 
+    @Throws(Exception::class)
     fun getNumberOfPurchaseByAddress(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfPurchaseByAddress")
 }
