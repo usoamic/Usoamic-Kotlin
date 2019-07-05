@@ -31,4 +31,17 @@ class Usoamic constructor(filename: String) : Ideas(filename) {
         )
         return executeTransaction(password, function)
     }
+
+    @Throws(Exception::class)
+    fun transfer(password: String, to: String, value: BigInteger): String? {
+        val function = Function(
+            "transfer",
+            listOf(
+                Address(to),
+                Uint256(value)
+            ),
+            emptyList()
+        )
+        return executeTransaction(password, function)
+    }
 }
