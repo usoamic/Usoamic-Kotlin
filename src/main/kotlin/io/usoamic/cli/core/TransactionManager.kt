@@ -97,6 +97,18 @@ open class TransactionManager(filename: String, node: String) : AccountWrapper(f
     }
 
     @Throws(Exception::class)
+    public fun waitTransactionReceipt(txHash: String, callback: () -> Unit) {
+        while (true) {
+            val transactionReceipt = web3j.ethGetTransactionReceipt(txHash).send()
+            if (transactionReceipt.result != null) {
+                break
+            }
+            Thread.sleep(15000)
+            callback()
+        }
+    }
+
+    @Throws(Exception::class)
     private fun getNonce(address: String): BigInteger {
         val ethGetTransactionCount = web3j.ethGetTransactionCount(address, DefaultBlockParameterName.LATEST).sendAsync().get()
         return ethGetTransactionCount.transactionCount
