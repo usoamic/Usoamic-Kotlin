@@ -10,7 +10,7 @@ object App {
     private fun prepareDagger() {
         component = DaggerAppComponent
             .builder()
-            .contractModule(UsoamicModule())
+            .usoamicModule(UsoamicModule())
             .build()
     }
 
