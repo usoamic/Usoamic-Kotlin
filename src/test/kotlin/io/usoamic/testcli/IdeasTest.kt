@@ -3,9 +3,14 @@ package io.usoamic.testcli
 import io.usoamic.cli.core.Usoamic
 import io.usoamic.cli.enum.IdeaStatus
 import io.usoamic.cli.enum.VoteType
+import io.usoamic.cli.exception.InvalidMnemonicPhraseException
 import io.usoamic.testcli.other.TestConfig
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.web3j.exceptions.MessageDecodingException
 import org.web3j.protocol.Web3j
+import java.lang.Exception
 import java.math.BigInteger
 import javax.inject.Inject
 import kotlin.random.Random
@@ -61,11 +66,7 @@ class IdeasTest {
 
             println("IdeaId: $ideaId; Comment: $comment")
 
-            val voteTxHash = when (voteType) {
-                VoteType.SUPPORT -> usoamic.supportIdea(TestConfig.PASSWORD, ideaId, comment)
-                VoteType.ABSTAIN -> usoamic.abstainIdea(TestConfig.PASSWORD, ideaId, comment)
-                VoteType.AGAINST -> usoamic.againstIdea(TestConfig.PASSWORD, ideaId, comment)
-            }
+            val voteTxHash = voteForIdea(voteType, ideaId, comment)
             usoamic.waitTransactionReceipt(voteTxHash) {
                 val idea = usoamic.getIdea(ideaId)
 
@@ -86,7 +87,19 @@ class IdeasTest {
                 assert(vote.comment == comment)
                 assert(vote.voteType == voteType)
                 assert(vote.voter == usoamic.account.address)
+
+                Assertions.assertThrows(MessageDecodingException::class.java) {
+                    voteForIdea(voteType, ideaId, comment)
+                }
             }
+        }
+    }
+
+    private fun voteForIdea(voteType: VoteType, ideaId: BigInteger, comment: String): String {
+        return when (voteType) {
+            VoteType.SUPPORT -> usoamic.supportIdea(TestConfig.PASSWORD, ideaId, comment)
+            VoteType.ABSTAIN -> usoamic.abstainIdea(TestConfig.PASSWORD, ideaId, comment)
+            VoteType.AGAINST -> usoamic.againstIdea(TestConfig.PASSWORD, ideaId, comment)
         }
     }
 
