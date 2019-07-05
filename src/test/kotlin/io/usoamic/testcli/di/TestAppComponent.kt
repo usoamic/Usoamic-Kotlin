@@ -14,4 +14,5 @@ interface TestAppComponent {
     fun inject(clazz: SwapTest)
     fun inject(clazz: TransactionExplorerTest)
     fun inject(clazz: UsoamicTest)
+    fun inject(clazz: IdeasTest)
 }
