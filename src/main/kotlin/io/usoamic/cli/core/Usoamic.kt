@@ -20,12 +20,5 @@ class Usoamic constructor(filename: String) : Ideas(filename) {
     }
 
     @Throws(Exception::class)
-    fun balanceOf(address: String): BigInteger? {
-        val function = Function(
-            "balanceOf",
-            listOf(Address(address)),
-            listOf(object: TypeReference<Uint256>() { })
-        )
-        return executeCallSingleValueReturn(function)
-    }
+    fun balanceOf(address: String): BigInteger? = executeCallUint256ValueReturn("balanceOf", listOf(Address(address)))
 }
