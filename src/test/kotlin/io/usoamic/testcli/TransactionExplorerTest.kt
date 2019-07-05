@@ -39,22 +39,15 @@ class TransactionExplorerTest {
 
         val txHash = usoamic.transfer(TestConfig.PASSWORD, credentials.address, value)
 
-        while (true) {
-            val transactionReceipt = web3j.ethGetTransactionReceipt(txHash).send()
-            if (transactionReceipt.result != null) {
-                break
-            }
-            println("Waiting confirmation...")
-            Thread.sleep(15000)
+        usoamic.waitTransactionReceipt(txHash) {
+            val numberOfTx = usoamic.getNumberOfTransactions()!!.subtract(BigInteger.ONE)
+            val transaction = usoamic.getTransaction(numberOfTx)
+            println("Transaction: $transaction")
+            assert(transaction.isExist)
+            assert(transaction.from == TestConfig.DEFAULT_ADDRESS)
+            assert(transaction.to == credentials.address)
+            assert(transaction.txId == numberOfTx)
+            assert(transaction.value == value)
         }
-
-        val numberOfTx = usoamic.getNumberOfTransactions()!!.subtract(BigInteger.ONE)
-        val transaction = usoamic.getTransaction(numberOfTx)
-        println("Transaction: $transaction")
-        assert(transaction.isExist)
-        assert(transaction.from == TestConfig.DEFAULT_ADDRESS)
-        assert(transaction.to == credentials.address)
-        assert(transaction.txId == numberOfTx)
-        assert(transaction.value == value)
     }
 }

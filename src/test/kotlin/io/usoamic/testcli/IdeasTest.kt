@@ -26,22 +26,15 @@ class IdeasTest {
         val description = generateIdeaDescription()
         val txHash = usoamic.addIdea(TestConfig.PASSWORD, description)
 
-        while (true) {
-            val transactionReceipt = web3j.ethGetTransactionReceipt(txHash).send()
-            if (transactionReceipt.result != null) {
-                break
-            }
-            println("Waiting confirmation...")
-            Thread.sleep(15000)
+        usoamic.waitTransactionReceipt(txHash) {
+            val ideaId = getLastIdeaId()
+            val idea = usoamic.getIdea(ideaId)
+            assert(idea.isExist)
+            assert(idea.author == usoamic.account.address)
+            assert(idea.description == description)
+            assert(idea.ideaId == ideaId)
+            assert(idea.ideaStatus == IdeaStatus.DISCUSSION)
         }
-
-        val ideaId = getLastIdeaId()
-        val idea = usoamic.getIdea(ideaId)
-        assert(idea.isExist)
-        assert(idea.author == usoamic.account.address)
-        assert(idea.description == description)
-        assert(idea.ideaId == ideaId)
-        assert(idea.ideaStatus == IdeaStatus.DISCUSSION)
     }
 
     @Test

@@ -93,23 +93,16 @@ class UsoamicTest {
         println("Need Bob Balance: $needBobBalance")
 
         val txHash = usoamic.transfer(TestConfig.PASSWORD, bob, value)
-        while (true) {
-            val transactionReceipt = web3j.ethGetTransactionReceipt(txHash).send()
-            if (transactionReceipt.result != null) {
-                break
-            }
-            println("Waiting confirmation...")
-            Thread.sleep(15000)
+        usoamic.waitTransactionReceipt(txHash) {
+            val newAliceBalance = usoamic.balanceOf(alice)
+            val newBobBalance = usoamic.balanceOf(bob)
+
+            println("New Alice Balance: $newAliceBalance")
+            println("New Bob Balance: $newBobBalance")
+
+            assert(needAliceBalance?.compareTo(newAliceBalance) == 0)
+            assert(needBobBalance?.compareTo(newBobBalance) == 0)
         }
-
-        val newAliceBalance = usoamic.balanceOf(alice)
-        val newBobBalance = usoamic.balanceOf(bob)
-
-        println("New Alice Balance: $newAliceBalance")
-        println("New Bob Balance: $newBobBalance")
-
-        assert(needAliceBalance?.compareTo(newAliceBalance) == 0)
-        assert(needBobBalance?.compareTo(newBobBalance) == 0)
     }
 
     @Test
