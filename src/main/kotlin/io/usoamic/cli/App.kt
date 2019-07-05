@@ -1,7 +1,7 @@
 package io.usoamic.cli
 
 import io.usoamic.cli.di.AppComponent
-import io.usoamic.cli.di.ContractModule
+import io.usoamic.cli.di.UsoamicModule
 import io.usoamic.cli.di.DaggerAppComponent
 
 object App {
@@ -10,7 +10,7 @@ object App {
     private fun prepareDagger() {
         component = DaggerAppComponent
             .builder()
-            .contractModule(ContractModule())
+            .contractModule(UsoamicModule())
             .build()
     }
 

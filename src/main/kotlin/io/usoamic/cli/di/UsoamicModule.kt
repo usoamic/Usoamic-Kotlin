@@ -6,7 +6,7 @@ import dagger.Provides
 import io.usoamic.cli.other.Config
 
 @Module
-class ContractModule {
+class UsoamicModule {
     @Provides
     fun provideContract(): Usoamic {
         return Usoamic(Config.ACCOUNT_FILENAME)

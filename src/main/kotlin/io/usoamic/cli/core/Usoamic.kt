@@ -8,10 +8,6 @@ import java.lang.Exception
 
 
 class Usoamic constructor(filename: String) : Swap(filename) {
-    init {
-
-    }
-
     @Throws(Exception::class)
     fun balanceOf(address: String): BigInteger? = executeCallUint256ValueReturn("balanceOf", listOf(Address(address)))
 

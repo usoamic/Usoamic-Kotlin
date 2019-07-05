@@ -8,7 +8,7 @@ import io.usoamic.cli.core.Usoamic
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ContractModule::class])
+@Component(modules = [UsoamicModule::class])
 interface AppComponent {
     fun inject(clazz: Usoamic)
     fun inject(clazz: AccountWrapper)
