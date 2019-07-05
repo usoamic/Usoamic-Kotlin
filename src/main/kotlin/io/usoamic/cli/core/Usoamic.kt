@@ -18,7 +18,7 @@ class Usoamic constructor(filename: String, node: String) : Swap(filename, node)
     fun burn(password: String, value: BigInteger): String? = executeTransaction(password, "burn", listOf(Uint256(value)))
 
     @Throws(Exception::class)
-    fun transfer(password: String, to: String, value: BigInteger): String? = executeTransaction(
+    fun transfer(password: String, to: String, value: BigInteger): String = executeTransaction(
         password,
         "transfer",
         listOf(
