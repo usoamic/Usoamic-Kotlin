@@ -57,7 +57,7 @@ class IdeasTest {
 
         usoamic.waitTransactionReceipt(ideaTxHash) {
             val ideaId = usoamic.getLastIdeaId()
-            val comment = ("Comment #" + Random.nextInt())
+            val comment = generateComment()
 
             println("IdeaId: $ideaId; Comment: $comment")
 
@@ -81,11 +81,19 @@ class IdeasTest {
                     }
                 }
                 assert(idea.numberOfParticipants > BigInteger.ZERO)
+
+                val vote = usoamic.getVote(ideaId, BigInteger.ZERO)
+                assert(vote.comment == comment)
+                assert(vote.voteType == voteType)
+                assert(vote.voter == usoamic.account.address)
             }
         }
     }
 
+    private fun generateComment(): String {
+        return ("Comment #" + Random.nextInt())
+    }
     private fun generateIdeaDescription(): String {
-        return "Idea #" + Random.nextInt()
+        return ("Idea #" + Random.nextInt())
     }
 }
