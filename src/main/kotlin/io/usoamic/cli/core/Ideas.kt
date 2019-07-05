@@ -94,7 +94,7 @@ open class Ideas constructor(filename: String, node: String) : Owner(filename, n
                 object: TypeReference<Uint256>() { },
                 object: TypeReference<Uint256>() { },
                 object: TypeReference<Address>() { },
-                object: TypeReference<Utf8String>() { },
+                object: TypeReference<Uint256>() { },
                 object: TypeReference<Utf8String>() { }
             )
         )
