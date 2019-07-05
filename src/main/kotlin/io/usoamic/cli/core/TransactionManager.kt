@@ -33,10 +33,13 @@ open class TransactionManager(filename: String) : AccountWrapper(filename) {
     }
 
     @Throws(Exception::class)
-    protected fun <T : Any?>executeCallEmptyPassValueAndUint256Return(name: String): T? {
+    protected fun <T : Any?>executeCallEmptyPassValueAndUint256Return(name: String): T? = executeCallUint256ValueReturn(name, emptyList())
+
+    @Throws(Exception::class)
+    protected fun <T : Any?>executeCallUint256ValueReturn(name: String, inputParameters: List<Type<out Any>>): T? {
         val function = Function(
             name,
-            emptyList(),
+            inputParameters,
             listOf(object: TypeReference<Uint256>() {})
         )
         return executeCallSingleValueReturn(function)
