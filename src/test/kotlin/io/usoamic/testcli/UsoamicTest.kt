@@ -15,7 +15,6 @@ import java.math.BigInteger
 import java.nio.file.Files
 import java.nio.file.Path
 import javax.inject.Inject
-import kotlin.test.BeforeTest
 
 class UsoamicTest {
     @Inject
@@ -99,7 +98,7 @@ class UsoamicTest {
             if (transactionReceipt.result != null) {
                 break
             }
-            println("Waiting confirmation")
+            println("Waiting confirmation...")
             Thread.sleep(15000)
         }
 
