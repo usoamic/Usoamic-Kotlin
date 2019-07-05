@@ -29,12 +29,12 @@ open class TransactionExplorer constructor(filename: String, node: String) : Pur
         )
         val result = executeCall(function)
         return Transaction.Builder()
-            .setExist(result[0] as Boolean)
-            .setTxId(result[1] as BigInteger)
-            .setFrom(result[2] as String)
-            .setTo(result[3] as String)
-            .setValue(result[4] as BigInteger)
-            .setTimestamp(result[5] as BigInteger)
+            .setExist(result[0].value as Boolean)
+            .setTxId(result[1].value as BigInteger)
+            .setFrom(result[2].value as String)
+            .setTo(result[3].value as String)
+            .setValue(result[4].value as BigInteger)
+            .setTimestamp(result[5].value as BigInteger)
             .build()
     }
 

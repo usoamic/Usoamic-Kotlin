@@ -42,12 +42,12 @@ open class Purchases constructor(filename: String, node: String) : Notes(filenam
         val result = executeCall(function)
 
         return Purchase.Builder()
-            .setIsExist(result[0] as Boolean)
-            .setId(result[1] as BigInteger)
-            .setPurchaseId(result[2] as String)
-            .setAppId(result[3] as String)
-            .setCost(result[4] as BigInteger)
-            .setTimestamp(result[5] as BigInteger)
+            .setIsExist(result[0].value as Boolean)
+            .setId(result[1].value as BigInteger)
+            .setPurchaseId(result[2].value as String)
+            .setAppId(result[3].value as String)
+            .setCost(result[4].value as BigInteger)
+            .setTimestamp(result[5].value as BigInteger)
             .build()
     }
 
