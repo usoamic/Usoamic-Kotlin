@@ -7,7 +7,7 @@ import org.web3j.abi.datatypes.Function
 import java.lang.Exception
 
 
-class Usoamic constructor(filename: String) : Ideas(filename) {
+class Usoamic constructor(filename: String) : Swap(filename) {
     init {
 
     }

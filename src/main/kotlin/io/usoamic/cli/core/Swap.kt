@@ -5,7 +5,7 @@ import org.web3j.abi.datatypes.generated.Uint256
 import java.lang.Exception
 import java.math.BigInteger
 
-open class Swap constructor(filename: String) : TransactionManager(filename) {
+open class Swap constructor(filename: String) : TransactionExplorer(filename) {
     @Throws(Exception::class)
     fun withdrawEth(password: String, value: BigInteger): String = executeTransaction(
             password,
