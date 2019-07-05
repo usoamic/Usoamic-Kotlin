@@ -1,6 +1,6 @@
 package io.usoamic.cli
 
-import io.usoamic.cli.contract.Usoamic
+import io.usoamic.cli.core.Usoamic
 import javax.inject.Inject
 
 
@@ -10,8 +10,5 @@ class UsoWalletCli {
 
     init {
         App.component.inject(this)
-
-//        val addr = usoamic.getAddress()
-//        println(addr)
     }
 }
