@@ -21,4 +21,14 @@ class Usoamic constructor(filename: String) : Ideas(filename) {
 
     @Throws(Exception::class)
     fun balanceOf(address: String): BigInteger? = executeCallUint256ValueReturn("balanceOf", listOf(Address(address)))
+
+    @Throws(Exception::class)
+    fun burn(password: String, value: BigInteger): String? {
+        val function = Function(
+            "burn",
+            listOf(Uint256(value)),
+            emptyList()
+        )
+        return executeTransaction(password, function)
+    }
 }
