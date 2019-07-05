@@ -1,7 +1,10 @@
+package io.usoamic.cli
+
 import io.usoamic.cli.core.Usoamic
 import javax.inject.Inject
 
-class PurchasesTest {
+class IdeasTest {
     @Inject
     private lateinit var usoamic: Usoamic
+
 }
