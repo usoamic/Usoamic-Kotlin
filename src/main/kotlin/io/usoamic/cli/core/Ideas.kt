@@ -45,6 +45,7 @@ open class Ideas constructor(filename: String, node: String) : Owner(filename, n
             Utf8String(comment)
         )
     )
+
     @Throws(Exception::class)
     fun getIdea(ideaId: BigInteger): Idea {
         val function = Function(
