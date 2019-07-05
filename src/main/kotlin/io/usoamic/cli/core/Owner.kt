@@ -6,9 +6,9 @@ import org.web3j.abi.datatypes.Function
 
 open class Owner constructor(filename: String) : TransactionManager(filename) {
     @Throws(Exception::class)
-    fun setFronzen(password: String, frozen: Boolean): String {
+    fun setFrozen(password: String, frozen: Boolean): String {
         val function = Function(
-            "setFronzen",
+            "setFronzen",//TODO: Fix typo after release new contract version
             listOf(Bool(frozen)),
             emptyList()
         )
