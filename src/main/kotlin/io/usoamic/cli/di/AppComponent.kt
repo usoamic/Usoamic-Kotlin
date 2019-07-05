@@ -5,10 +5,11 @@ import io.usoamic.cli.core.TransactionManager
 import dagger.Component
 import io.usoamic.cli.UsoWalletCli
 import io.usoamic.cli.core.Usoamic
+import io.usoamic.cli.enum.IdeaStatus
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [UsoamicModule::class, Web3jModule::class])
+@Component(modules = [UsoamicModule::class])
 interface AppComponent {
     fun inject(clazz: Usoamic)
     fun inject(clazz: AccountWrapper)
