@@ -18,6 +18,9 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.23.2'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation "com.google.dagger:dagger:2.23.2"
+    kaptTest 'com.google.dagger:dagger-compiler:2.23.2'
+    testAnnotationProcessor "com.google.dagger:dagger-compiler:2.23.2"
 }
 
 compileKotlin {
