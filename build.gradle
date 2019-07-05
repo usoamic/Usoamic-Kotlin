@@ -16,6 +16,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'org.web3j:core:4.3.1'
     kapt 'com.google.dagger:dagger-compiler:2.23.2'
+
+    testImplementation 'junit:junit:4.12'
 }
 
 compileKotlin {
