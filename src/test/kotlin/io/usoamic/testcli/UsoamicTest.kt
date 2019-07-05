@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
+import org.web3j.crypto.WalletUtils
 import org.web3j.protocol.Web3j
 import java.math.BigInteger
 import java.nio.file.Files
@@ -37,7 +38,15 @@ class UsoamicTest {
         val fileName = usoamic.importMnemonic(TestConfig.PASSWORD, mnemonicPhrase)
         println("File name: $fileName")
         println("Usoamic File name: ${usoamic.account.name}")
-        assert(usoamic.account.address == "0x8b27fa2987630a1acd8d868ba84b2928de737bc2")
+        assert(WalletUtils.isValidAddress(usoamic.account.address))
+        assert(usoamic.account.address == TestConfig.DEFAULT_ADDRESS)
+    }
+
+    @Test
+    @RepeatedTest(5)
+    fun testAddresses() {
+        val credentials = Credentials.create(Keys.createEcKeyPair())
+        assert(WalletUtils.isValidAddress(credentials.address) && WalletUtils.isValidPrivateKey(credentials.ecKeyPair.privateKey.toString(16)))
     }
 
     @Test
