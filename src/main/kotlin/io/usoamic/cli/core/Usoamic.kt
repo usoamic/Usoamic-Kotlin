@@ -7,7 +7,7 @@ import org.web3j.abi.datatypes.Function
 import java.lang.Exception
 
 
-class Usoamic constructor(filename: String) : Swap(filename) {
+class Usoamic constructor(filename: String, node: String) : Swap(filename, node) {
     @Throws(Exception::class)
     fun balanceOf(address: String): BigInteger? = executeCallUint256ValueReturn("balanceOf", listOf(Address(address)))
 

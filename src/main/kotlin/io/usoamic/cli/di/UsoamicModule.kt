@@ -11,6 +11,6 @@ class UsoamicModule {
     @Provides
     @Singleton
     fun provideContract(): Usoamic {
-        return Usoamic(Config.ACCOUNT_FILENAME)
+        return Usoamic(Config.ACCOUNT_FILENAME, Config.NODE)
     }
 }

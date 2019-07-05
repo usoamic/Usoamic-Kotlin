@@ -15,7 +15,7 @@ import org.web3j.tx.gas.DefaultGasProvider.GAS_PRICE
 import org.web3j.utils.Numeric
 import java.math.BigInteger
 
-open class TransactionManager(filename: String) : AccountWrapper(filename) {
+open class TransactionManager(filename: String, node: String) : AccountWrapper(filename, node) {
     @Throws(Exception::class)
     protected fun <T : Any?>executeCallSingleValueReturn(function: Function): T? {
         val values = executeCall(function)

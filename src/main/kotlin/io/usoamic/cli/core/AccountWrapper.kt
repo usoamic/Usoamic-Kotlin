@@ -13,8 +13,8 @@ import java.math.BigInteger
 import java.nio.file.Files
 import java.nio.file.Path
 
-open class AccountWrapper(private val filename: String) : AccountManager(filename) {
-    protected val web3j: Web3j = Web3j.build(HttpService(Config.NODE))
+open class AccountWrapper(private val filename: String, node: String) : AccountManager(filename) {
+    protected val web3j: Web3j = Web3j.build(HttpService(node))
     private lateinit var _account: Account
     public val account: Account get() {
         if (!::_account.isInitialized) {
