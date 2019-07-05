@@ -64,11 +64,11 @@ open class TransactionManager(filename: String) : AccountWrapper(filename) {
             inputParameters,
             emptyList()
         )
-        return executeTransaction(password, function)
+        return executeTransactionFunctionPassValue(password, function)
     }
 
     @Throws(Exception::class)
-    protected fun executeTransaction(password: String, function: Function): String {
+    protected fun executeTransactionFunctionPassValue(password: String, function: Function): String {
         val credentials = getCredentials(password)
         val nonce = getNonce(credentials.address)
         val encodedFunction = FunctionEncoder.encode(function)
