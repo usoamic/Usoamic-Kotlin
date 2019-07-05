@@ -27,7 +27,7 @@ class IdeasTest {
         val txHash = usoamic.addIdea(TestConfig.PASSWORD, description)
 
         usoamic.waitTransactionReceipt(txHash) {
-            val ideaId = getLastIdeaId()
+            val ideaId = usoamic.getLastIdeaId()
             val idea = usoamic.getIdea(ideaId)
             assert(idea.isExist)
             assert(idea.author == usoamic.account.address)
@@ -56,7 +56,7 @@ class IdeasTest {
         val ideaTxHash = usoamic.addIdea(TestConfig.PASSWORD, generateIdeaDescription())
 
         usoamic.waitTransactionReceipt(ideaTxHash) {
-            val ideaId = getLastIdeaId()
+            val ideaId = usoamic.getLastIdeaId()
             val comment = ("Comment #" + Random.nextInt())
 
             println("IdeaId: $ideaId; Comment: $comment")
@@ -83,10 +83,6 @@ class IdeasTest {
                 assert(idea.numberOfParticipants > BigInteger.ZERO)
             }
         }
-    }
-
-    private fun getLastIdeaId(): BigInteger {
-        return usoamic.getNumberOfIdeas()!!.subtract(BigInteger.ONE)
     }
 
     private fun generateIdeaDescription(): String {

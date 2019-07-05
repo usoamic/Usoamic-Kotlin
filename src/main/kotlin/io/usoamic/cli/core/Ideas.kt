@@ -114,4 +114,7 @@ open class Ideas constructor(filename: String, node: String) : Owner(filename, n
 
     @Throws(Exception::class)
     fun getNumberOfIdeas(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfIdeas")
+
+    @Throws(Exception::class)
+    fun getLastIdeaId(): BigInteger = getNumberOfIdeas()!!.subtract(BigInteger.ONE)
 }
