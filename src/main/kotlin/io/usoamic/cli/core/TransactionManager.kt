@@ -100,12 +100,14 @@ open class TransactionManager(filename: String, node: String) : AccountWrapper(f
     public fun waitTransactionReceipt(txHash: String, callback: () -> Unit) {
         while (true) {
             val transactionReceipt = web3j.ethGetTransactionReceipt(txHash).send()
+
             if (transactionReceipt.result != null) {
                 break
             }
+
             Thread.sleep(15000)
-            callback()
         }
+        callback()
     }
 
     @Throws(Exception::class)
