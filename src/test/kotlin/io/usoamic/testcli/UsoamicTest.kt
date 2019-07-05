@@ -4,9 +4,9 @@ import io.usoamic.cli.core.Usoamic
 import io.usoamic.cli.exception.InvalidMnemonicPhraseException
 import io.usoamic.cli.util.Coin
 import io.usoamic.testcli.other.TestConfig
-import org.junit.FixMethodOrder
-import org.junit.Test
-import org.junit.runners.MethodSorters
+import org.junit.jupiter.api.*
+
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
 import org.web3j.protocol.Web3j
@@ -14,8 +14,8 @@ import java.math.BigInteger
 import java.nio.file.Files
 import java.nio.file.Path
 import javax.inject.Inject
+import kotlin.test.BeforeTest
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 class UsoamicTest {
     @Inject
     lateinit var usoamic: Usoamic
@@ -27,27 +27,35 @@ class UsoamicTest {
         BaseUnitTest.componentTest.inject(this)
     }
 
-    @Test(expected = InvalidMnemonicPhraseException::class)
-    fun a_accountTestWhenMnemonicPhraseIsEmpty() {
-        usoamic.importMnemonic(TestConfig.PASSWORD, "")
-    }
-
-    @Test(expected = InvalidMnemonicPhraseException::class)
-    fun b_accountTestWhenMnemonicPhraseIsInvalid() {
-        usoamic.importMnemonic(TestConfig.PASSWORD, "culture into")
-    }
-
     @Test
-    fun c_accountTest() {
-//        Files.delete(Path.of(TestConfig.ACCOUNT_FILENAME))
+    fun accountTest() {
+        val path = Path.of(TestConfig.ACCOUNT_FILENAME)
+        if(Files.exists(path)) {
+            Files.delete(path)
+        }
         val mnemonicPhrase = "denial wrist culture into guess parade lesson black member shove wisdom strike"
         val fileName = usoamic.importMnemonic(TestConfig.PASSWORD, mnemonicPhrase)
-        assert(usoamic.account.name == fileName)
+        println("File name: $fileName")
+        println("Usoamic File name: ${usoamic.account.name}")
         assert(usoamic.account.address == "0x8b27fa2987630a1acd8d868ba84b2928de737bc2")
     }
 
     @Test
-    fun d_transferTest() {
+    fun accountTestWhenMnemonicPhraseIsEmpty() {
+        assertThrows(InvalidMnemonicPhraseException::class.java) {
+            usoamic.importMnemonic(TestConfig.PASSWORD, "")
+        }
+    }
+
+    @Test
+    fun accountTestWhenMnemonicPhraseIsInvalid() {
+        assertThrows(InvalidMnemonicPhraseException::class.java) {
+            usoamic.importMnemonic(TestConfig.PASSWORD, "culture into")
+        }
+    }
+
+    @Test
+    fun transferTest() {
         val bobCredentials = Credentials.create(Keys.createEcKeyPair())
         println("BobPrivateKey: ${bobCredentials.ecKeyPair.privateKey}")
 
@@ -94,5 +102,11 @@ class UsoamicTest {
 
         assert(needAliceBalance?.compareTo(newAliceBalance) == 0)
         assert(needBobBalance?.compareTo(newBobBalance) == 0)
+    }
+
+    @Test
+    fun versionTest() {
+        val version = usoamic.getVersion()
+        require(version == TestConfig.VERSION)
     }
 }
