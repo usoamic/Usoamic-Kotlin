@@ -17,6 +17,10 @@ class IdeasTest {
     @Inject
     lateinit var web3j: Web3j
 
+    init {
+        BaseUnitTest.componentTest.inject(this)
+    }
+
     @Test
     fun addIdeaTest() {
         val description = generateIdeaDescription()
@@ -41,38 +45,50 @@ class IdeasTest {
     }
 
     @Test
-    fun voteForIdeaTest() {
-        for(item in VoteType.values()) {
-            val ideaTxHash = usoamic.addIdea(TestConfig.PASSWORD, generateIdeaDescription())
+    fun supportIdea() {
+        voteForIdeaTest(VoteType.SUPPORT)
+    }
 
-            usoamic.waitTransactionReceipt(ideaTxHash) {
-                val ideaId = getLastIdeaId()
-                val comment = ("Comment #" + Random.nextInt())
-                val voteTxHash = when(item) {
-                    VoteType.SUPPORT -> usoamic.supportIdea(TestConfig.PASSWORD, ideaId, comment)
-                    VoteType.ABSTAIN -> usoamic.abstainIdea(TestConfig.PASSWORD, ideaId, comment)
-                    VoteType.AGAINST -> usoamic.againstIdea(TestConfig.PASSWORD, ideaId, comment)
-                }
-                usoamic.waitTransactionReceipt(voteTxHash) {
-                    val idea = usoamic.getIdea(ideaId)
+    @Test
+    fun abstainIdea() {
+        voteForIdeaTest(VoteType.ABSTAIN)
+    }
 
-                    when(item) {
-                        VoteType.SUPPORT -> {
-                            assert(idea.numberOfSupporters > BigInteger.ZERO)
-                        }
-                        VoteType.ABSTAIN -> {
-                            assert(idea.numberOfAbstained > BigInteger.ZERO)
-                        }
-                        VoteType.AGAINST -> {
-                            assert(idea.numberOfVotedAgainst > BigInteger.ZERO)
-                        }
-                    }
-                    assert(idea.numberOfParticipants > BigInteger.ZERO)
-                }
+    @Test
+    fun againstIdea() {
+        voteForIdeaTest(VoteType.AGAINST)
+    }
+
+    private fun voteForIdeaTest(voteType: VoteType) {
+        val ideaTxHash = usoamic.addIdea(TestConfig.PASSWORD, generateIdeaDescription())
+
+        usoamic.waitTransactionReceipt(ideaTxHash) {
+            val ideaId = getLastIdeaId()
+            val comment = ("Comment #" + Random.nextInt())
+
+            println("IdeaId: $ideaId; Comment: $comment")
+
+            val voteTxHash = when (voteType) {
+                VoteType.SUPPORT -> usoamic.supportIdea(TestConfig.PASSWORD, ideaId, comment)
+                VoteType.ABSTAIN -> usoamic.abstainIdea(TestConfig.PASSWORD, ideaId, comment)
+                VoteType.AGAINST -> usoamic.againstIdea(TestConfig.PASSWORD, ideaId, comment)
             }
+            usoamic.waitTransactionReceipt(voteTxHash) {
+                val idea = usoamic.getIdea(ideaId)
 
-
-
+                when (voteType) {
+                    VoteType.SUPPORT -> {
+                        assert(idea.numberOfSupporters > BigInteger.ZERO)
+                    }
+                    VoteType.ABSTAIN -> {
+                        assert(idea.numberOfAbstained > BigInteger.ZERO)
+                    }
+                    VoteType.AGAINST -> {
+                        assert(idea.numberOfVotedAgainst > BigInteger.ZERO)
+                    }
+                }
+                assert(idea.numberOfParticipants > BigInteger.ZERO)
+            }
         }
     }
 
