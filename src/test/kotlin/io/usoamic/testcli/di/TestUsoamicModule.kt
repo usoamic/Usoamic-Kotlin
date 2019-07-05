@@ -4,13 +4,14 @@ import io.usoamic.cli.core.Usoamic
 import dagger.Module
 import dagger.Provides
 import io.usoamic.cli.other.Config
+import io.usoamic.testcli.other.TestConfig
 import javax.inject.Singleton
 
 @Module
-class UsoamicModule {
+class TestUsoamicModule {
     @Provides
     @Singleton
     fun provideContract(): Usoamic {
-        return Usoamic("test_account.json")
+        return Usoamic(TestConfig.ACCOUNT_FILENAME, TestConfig.NODE)
     }
 }

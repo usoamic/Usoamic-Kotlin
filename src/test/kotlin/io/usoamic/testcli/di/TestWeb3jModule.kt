@@ -8,7 +8,7 @@ import org.web3j.protocol.http.HttpService
 import javax.inject.Singleton
 
 @Module
-class Web3jModule {
+class TestWeb3jModule {
     @Provides
     @Singleton
     fun provideWeb3j(): Web3j {
