@@ -1,4 +1,4 @@
-package io.usoamic.cli.di
+package io.usoamic.testcli.di
 
 import dagger.Module
 import dagger.Provides
