@@ -97,6 +97,7 @@ class IdeasTest {
                 assert(idea.numberOfParticipants > BigInteger.ZERO)
 
                 val vote = usoamic.getVote(ideaId, BigInteger.ZERO)
+                assert(vote.isExist)
                 assert(vote.comment == comment)
                 assert(vote.voteType == voteType)
                 assert(vote.voter == usoamic.account.address)
