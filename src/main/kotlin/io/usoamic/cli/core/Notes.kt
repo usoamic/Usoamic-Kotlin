@@ -36,6 +36,9 @@ open class Notes constructor(filename: String, node: String) : Ideas(filename, n
     )
 
     @Throws(Exception::class)
+    fun getLastNoteId(): BigInteger? = getNumberOfPublicNotes()!!.subtract(BigInteger.ONE)
+
+    @Throws(Exception::class)
     fun getLastNoteIdByAddress(address: String): BigInteger? = getNumberOfNotesByAddress(address)!!.subtract(BigInteger.ONE)
 
     @Throws(Exception::class)
@@ -43,13 +46,13 @@ open class Notes constructor(filename: String, node: String) : Ideas(filename, n
         getAndPrepareNote(
             "getNoteByAddress",
             listOf(
-                Utf8String(author),
+                Address(author),
                 Uint256(noteId)
             )
         )
 
     @Throws(Exception::class)
-    fun getNote(noteId: BigInteger): Note = getAndPrepareNote("getAndPrepareNote", listOf(Uint256(noteId)))
+    fun getNote(noteId: BigInteger): Note = getAndPrepareNote("getNote", listOf(Uint256(noteId)))
 
     @Throws(Exception::class)
     private fun getAndPrepareNote(name: String, inputParameters: List<Type<out Any>>): Note {
