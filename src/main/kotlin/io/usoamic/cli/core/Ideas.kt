@@ -24,6 +24,16 @@ open class Ideas constructor(filename: String, node: String) : Owner(filename, n
     )
 
     @Throws(Exception::class)
+    fun setIdeaStatus(password: String, ideaId: BigInteger, status: IdeaStatus) = executeTransaction(
+        password,
+        "setIdeaStatus",
+        listOf(
+            Uint256(ideaId),
+            Uint8(status.ordinal.toLong())
+        )
+    )
+
+    @Throws(Exception::class)
     fun supportIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.SUPPORT, ideaId, comment)
 
     @Throws(Exception::class)
