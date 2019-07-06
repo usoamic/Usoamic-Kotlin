@@ -6,4 +6,8 @@ import javax.inject.Inject
 class PurchasesTest {
     @Inject
     lateinit var usoamic: Usoamic
+
+    init {
+        BaseUnitTest.componentTest.inject(this)
+    }
 }
