@@ -11,6 +11,7 @@ import org.web3j.crypto.RawTransaction
 import org.web3j.crypto.TransactionEncoder
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.core.methods.request.Transaction
+import org.web3j.tx.Transfer.GAS_LIMIT
 import org.web3j.tx.gas.DefaultGasProvider.GAS_PRICE
 import org.web3j.utils.Numeric
 import java.math.BigInteger
@@ -101,19 +102,11 @@ open class TransactionManager(filename: String, node: String) : AccountWrapper(f
         val credentials = getCredentials(password)
         val nonce = getNonce(credentials.address)
 
-        val transaction = Transaction.createEthCallTransaction(
-            credentials.address,
-            to.toLowerCase(),
-            "0x"
-        )
-
-        val estimateGas = web3j.ethEstimateGas(transaction).send()
-
         val rawTransaction = RawTransaction.createEtherTransaction(
             nonce,
             GAS_PRICE,
-            estimateGas.amountUsed,
-            CONTRACT_ADDRESS,
+            GAS_LIMIT,
+            to,
             value
         )
 
