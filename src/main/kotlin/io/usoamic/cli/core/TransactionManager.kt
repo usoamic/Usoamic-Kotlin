@@ -97,6 +97,34 @@ open class TransactionManager(filename: String, node: String) : AccountWrapper(f
     }
 
     @Throws(Exception::class)
+    public fun transferEther(password: String, to: String, value: BigInteger): String {
+        val credentials = getCredentials(password)
+        val nonce = getNonce(credentials.address)
+
+        val transaction = Transaction.createEthCallTransaction(
+            credentials.address,
+            to.toLowerCase(),
+            "0x"
+        )
+
+        val estimateGas = web3j.ethEstimateGas(transaction).send()
+
+        val rawTransaction = RawTransaction.createEtherTransaction(
+            nonce,
+            GAS_PRICE,
+            estimateGas.amountUsed,
+            CONTRACT_ADDRESS,
+            value
+        )
+
+        val signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials)
+        val hexValue = Numeric.toHexString(signedMessage)
+
+        val transactionResponse = web3j.ethSendRawTransaction(hexValue).sendAsync().get()
+        return transactionResponse.transactionHash
+    }
+
+    @Throws(Exception::class)
     public fun waitTransactionReceipt(txHash: String, callback: () -> Unit) {
         while (true) {
             val transactionReceipt = web3j.ethGetTransactionReceipt(txHash).send()
