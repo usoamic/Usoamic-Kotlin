@@ -11,6 +11,7 @@ class Coin(value: BigDecimal) {
     }
 
     companion object {
+        val ONE: Coin = Coin(BigDecimal.ONE)
         fun fromSat(value: BigInteger): Coin = Coin(value.toBigDecimal(DECIMALS))
         fun fromCoin(value: String): Coin = Coin(BigDecimal(value))
         fun fromCoin(value: BigDecimal): Coin = Coin(value)
