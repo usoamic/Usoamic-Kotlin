@@ -11,6 +11,7 @@ import org.web3j.crypto.RawTransaction
 import org.web3j.crypto.TransactionEncoder
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.core.methods.request.Transaction
+import org.web3j.protocol.core.methods.response.TransactionReceipt
 import org.web3j.tx.Transfer.GAS_LIMIT
 import org.web3j.tx.gas.DefaultGasProvider.GAS_PRICE
 import org.web3j.utils.Numeric
@@ -118,17 +119,19 @@ open class TransactionManager(filename: String, node: String) : AccountWrapper(f
     }
 
     @Throws(Exception::class)
-    public fun waitTransactionReceipt(txHash: String, callback: () -> Unit) {
+    public fun waitTransactionReceipt(txHash: String, callback: (receipt: TransactionReceipt) -> Unit) {
         while (true) {
             val transactionReceipt = web3j.ethGetTransactionReceipt(txHash).send()
+            val result = transactionReceipt.result;
 
-            if (transactionReceipt.result != null) {
+            if (result != null) {
+                callback(result)
                 break
             }
 
             Thread.sleep(15000)
         }
-        callback()
+
     }
 
     @Throws(Exception::class)
