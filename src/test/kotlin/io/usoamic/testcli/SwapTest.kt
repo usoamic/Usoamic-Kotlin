@@ -6,4 +6,8 @@ import javax.inject.Inject
 class SwapTest {
     @Inject
     lateinit var usoamic: Usoamic
+
+    init {
+        BaseUnitTest.componentTest.inject(this)
+    }
 }
