@@ -3,14 +3,12 @@ package io.usoamic.testcli
 import io.usoamic.cli.core.Usoamic
 import io.usoamic.cli.enum.IdeaStatus
 import io.usoamic.cli.enum.VoteType
-import io.usoamic.cli.exception.InvalidMnemonicPhraseException
 import io.usoamic.testcli.other.TestConfig
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.web3j.exceptions.MessageDecodingException
 import org.web3j.protocol.Web3j
-import java.lang.Exception
 import java.math.BigInteger
 import javax.inject.Inject
 import kotlin.random.Random
@@ -39,6 +37,22 @@ class IdeasTest {
             assert(idea.description == description)
             assert(idea.ideaId == ideaId)
             assert(idea.ideaStatus == IdeaStatus.DISCUSSION)
+        }
+    }
+
+    @Test
+    fun setIdeaStatusTest() {
+        val status = IdeaStatus.SPAM
+        val ideaTxHash = usoamic.addIdea(TestConfig.PASSWORD, generateIdeaDescription())
+        usoamic.waitTransactionReceipt(ideaTxHash) {
+            val ideaId = usoamic.getLastIdeaId()
+            assertThrows<MessageDecodingException> {
+                val ideaStatusTxHash = usoamic.setIdeaStatus(TestConfig.PASSWORD, ideaId, status)
+                usoamic.waitTransactionReceipt(ideaStatusTxHash) {
+                    val idea = usoamic.getIdea(ideaId)
+                    assert(idea.ideaStatus != status)
+                }
+            }
         }
     }
 
