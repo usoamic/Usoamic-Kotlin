@@ -4,7 +4,6 @@ import io.usoamic.cli.core.Usoamic
 import io.usoamic.cli.enum.IdeaStatus
 import io.usoamic.cli.enum.VoteType
 import io.usoamic.testcli.other.TestConfig
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.web3j.exceptions.MessageDecodingException
@@ -102,7 +101,7 @@ class IdeasTest {
                 assert(vote.voteType == voteType)
                 assert(vote.voter == usoamic.account.address)
 
-                Assertions.assertThrows(MessageDecodingException::class.java) {
+                assertThrows<MessageDecodingException> {
                     voteForIdea(voteType, ideaId, comment)
                 }
             }

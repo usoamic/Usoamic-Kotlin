@@ -50,14 +50,14 @@ class UsoamicTest {
 
     @Test
     fun accountTestWhenMnemonicPhraseIsEmpty() {
-        assertThrows(InvalidMnemonicPhraseException::class.java) {
+        assertThrows<InvalidMnemonicPhraseException> {
             usoamic.importMnemonic(TestConfig.PASSWORD, "")
         }
     }
 
     @Test
     fun accountTestWhenMnemonicPhraseIsInvalid() {
-        assertThrows(InvalidMnemonicPhraseException::class.java) {
+        assertThrows<InvalidMnemonicPhraseException> {
             usoamic.importMnemonic(TestConfig.PASSWORD, "culture into")
         }
     }
