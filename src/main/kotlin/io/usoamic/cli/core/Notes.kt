@@ -31,7 +31,7 @@ open class Notes constructor(filename: String, node: String) : Ideas(filename, n
 
     @Throws(Exception::class)
     fun getNumberOfNotesByAddress(address: String): BigInteger? = executeCallUint256ValueReturn(
-        "getNumberOfPublicNotes",
+        "getNumberOfNotesByAddress",
         listOf(Address(address))
     )
 
