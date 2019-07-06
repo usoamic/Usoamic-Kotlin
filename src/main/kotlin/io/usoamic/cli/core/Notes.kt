@@ -36,6 +36,9 @@ open class Notes constructor(filename: String, node: String) : Ideas(filename, n
     )
 
     @Throws(Exception::class)
+    fun getLastNoteIdByAddress(address: String): BigInteger? = getNumberOfNotesByAddress(address)!!.subtract(BigInteger.ONE)
+
+    @Throws(Exception::class)
     fun getNoteByAddress(author: String, noteId: BigInteger): Note =
         getAndPrepareNote(
             "getNoteByAddress",
