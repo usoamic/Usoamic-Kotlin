@@ -46,4 +46,10 @@ class PurchasesTest {
             assert(purchaserBalance!!.subtract(newPurchaserBalance!!).compareTo(cost) == 0)
         }
     }
+
+    @Test
+    fun getNumberOfPurchaseByAddressTest() {
+        val numberOfPurchases = usoamic.getNumberOfPurchaseByAddress(TestConfig.DEFAULT_ADDRESS)!!
+        assert(numberOfPurchases >= BigInteger.ZERO)
+    }
 }
