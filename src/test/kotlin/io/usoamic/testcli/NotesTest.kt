@@ -59,6 +59,12 @@ class NotesTest {
         assert(numberOfNotes >= BigInteger.ZERO)
     }
 
+    @Test
+    fun getNumberOfNotesByAddressTest() {
+        val numberOfNotes = usoamic.getNumberOfNotesByAddress(usoamic.account.address)!!
+        assert(numberOfNotes >= BigInteger.ZERO)
+    }
+
     private fun generateNoteContent(): String {
         return "Note #" + Random.nextInt()
     }
