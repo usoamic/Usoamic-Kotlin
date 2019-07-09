@@ -62,6 +62,12 @@ class UsoamicTest {
     }
 
     @Test
+    fun balanceOfTest() {
+        val balance = usoamic.balanceOf(TestConfig.OWNER_ADDRESS)!!
+        require(balance >= BigInteger.ZERO)
+    }
+
+    @Test
     fun burnTest() {
         val address = usoamic.account.address
         val balance = usoamic.balanceOf(address)!!
