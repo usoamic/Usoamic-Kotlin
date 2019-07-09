@@ -32,6 +32,11 @@ class TransactionExplorerTest {
         assert(defaultNumberOfTx >= BigInteger.ZERO)
     }
 
+    @Test
+    fun getNumberOfTransactionsTest() {
+        val numberOfTx = usoamic.getNumberOfTransactions()!!
+        assert(numberOfTx >= BigInteger.ZERO)
+    }
 
     @Test
     fun getTransactionTest() {
