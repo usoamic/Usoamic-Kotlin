@@ -53,7 +53,7 @@ class SwapTest {
     }
 
     @Test
-    fun setSwappable() {
+    fun setSwappableTest() {
         assertThrows<MessageDecodingException> {
             val swappable = usoamic.getSwappable()!!
             usoamic.setSwappable(TestConfig.PASSWORD, !(swappable))
