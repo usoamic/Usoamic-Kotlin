@@ -12,6 +12,6 @@ class TestUsoamicModule {
     @Provides
     @Singleton
     fun provideContract(): Usoamic {
-        return Usoamic(TestConfig.ACCOUNT_FILENAME, TestConfig.NODE)
+        return Usoamic(TestConfig.ACCOUNT_FILENAME, TestConfig.CONTRACT_ADDRESS, TestConfig.NODE)
     }
 }
