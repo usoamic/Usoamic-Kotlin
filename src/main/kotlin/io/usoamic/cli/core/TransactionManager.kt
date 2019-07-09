@@ -99,7 +99,7 @@ open class TransactionManager(filename: String, private val contractAddress: Str
     }
 
     @Throws(Exception::class)
-    public fun transferEther(password: String, to: String, value: BigInteger): String {
+    fun transferEther(password: String, to: String, value: BigInteger): String {
         val credentials = getCredentials(password)
         val nonce = getNonce(credentials.address)
 
@@ -119,7 +119,7 @@ open class TransactionManager(filename: String, private val contractAddress: Str
     }
 
     @Throws(Exception::class)
-    public fun waitTransactionReceipt(txHash: String, callback: (receipt: TransactionReceipt) -> Unit) {
+    fun waitTransactionReceipt(txHash: String, callback: (receipt: TransactionReceipt) -> Unit) {
         while (true) {
             val transactionReceipt = web3j.ethGetTransactionReceipt(txHash).send()
             val result = transactionReceipt.result;
