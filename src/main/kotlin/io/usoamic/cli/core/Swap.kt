@@ -1,6 +1,8 @@
 package io.usoamic.cli.core
 
+import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Bool
+import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import java.lang.Exception
 import java.math.BigInteger
@@ -39,4 +41,10 @@ open class Swap constructor(filename: String, contractAddress: String, node: Str
 
     @Throws(Exception::class)
     fun getSwapRate(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getSwapRate")
+
+    @Throws(Exception::class)
+    fun getSwappable(): Boolean? = executeCallEmptyPassValueAndSingleValueReturn(
+        "getSwappable",
+        listOf(object: TypeReference<Bool>() { })
+    )
 }
