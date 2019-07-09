@@ -48,8 +48,30 @@ class PurchasesTest {
     }
 
     @Test
+    fun getPurchaseByAddressTest() {
+        val purchaser = usoamic.account.address
+        val id = BigInteger.ZERO
+        val numberOfPurchases = usoamic.getNumberOfPurchaseByAddress(purchaser)!!
+
+        val purchase = usoamic.getPurchaseByAddress(purchaser, id)
+        val isExist = numberOfPurchases > BigInteger.ZERO
+
+        println(purchase)
+        println(isExist)
+
+        assert(purchase.isExist == isExist)
+        if(isExist) {
+           assert(purchase.id == id)
+           assert(purchase.cost >= BigInteger.ZERO)
+        }
+
+        val noExistPurchase = usoamic.getPurchaseByAddress(purchaser, numberOfPurchases)
+        assert(!noExistPurchase.isExist)
+    }
+
+    @Test
     fun getNumberOfPurchaseByAddressTest() {
-        val numberOfPurchases = usoamic.getNumberOfPurchaseByAddress(TestConfig.DEFAULT_ADDRESS)!!
+        val numberOfPurchases = usoamic.getNumberOfPurchaseByAddress(usoamic.account.address)!!
         assert(numberOfPurchases >= BigInteger.ZERO)
     }
 }
