@@ -17,7 +17,7 @@ open class Swap constructor(filename: String, contractAddress: String, node: Str
     fun burnSwap(password: String, value: BigInteger): String = executeTransaction(
             password,
             "burnSwap",
-            listOf(Uint256(300))
+            listOf(Uint256(value))
     )
 
     @Throws(Exception::class)
