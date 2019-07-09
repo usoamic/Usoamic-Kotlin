@@ -5,7 +5,7 @@ import org.web3j.abi.datatypes.generated.Uint256
 import java.lang.Exception
 import java.math.BigInteger
 
-open class Swap constructor(filename: String, node: String) : TransactionExplorer(filename, node) {
+open class Swap constructor(filename: String, contractAddress: String, node: String) : TransactionExplorer(filename, contractAddress, node) {
     @Throws(Exception::class)
     fun withdrawEth(password: String, value: BigInteger): String = executeTransaction(
             password,
@@ -17,7 +17,7 @@ open class Swap constructor(filename: String, node: String) : TransactionExplore
     fun burnSwap(password: String, value: BigInteger): String = executeTransaction(
             password,
             "burnSwap",
-            listOf(Uint256(value))
+            listOf(Uint256(300))
     )
 
     @Throws(Exception::class)

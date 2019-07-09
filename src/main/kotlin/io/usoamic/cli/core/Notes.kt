@@ -9,7 +9,7 @@ import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.abi.datatypes.generated.Uint8
 import java.math.BigInteger
 
-open class Notes constructor(filename: String, node: String) : Ideas(filename, node) {
+open class Notes constructor(filename: String, contractAddress: String, node: String) : Ideas(filename, contractAddress, node) {
     @Throws(Exception::class)
     fun addPublicNote(password: String, content: String): String = addNote(password, NoteVisibility.PUBLIC, content)
 

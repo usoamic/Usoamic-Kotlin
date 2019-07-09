@@ -10,7 +10,7 @@ import java.math.BigInteger
 import org.web3j.abi.datatypes.Function
 import java.lang.Exception
 
-open class Purchases constructor(filename: String, node: String) : Notes(filename, node) {
+open class Purchases constructor(filename: String, contractAddress: String, node: String) : Notes(filename, contractAddress, node) {
     @Throws(Exception::class)
     fun makePurchase(password: String, appId: String, purchaseId: String, cost: BigInteger): String = executeTransaction(
         password,

@@ -15,7 +15,7 @@ import org.web3j.abi.datatypes.generated.Uint8
 import java.lang.Exception
 import java.math.BigInteger
 
-open class Ideas constructor(filename: String, node: String) : Owner(filename, node) {
+open class Ideas constructor(filename: String, contractAddress: String, node: String) : Owner(filename, contractAddress, node) {
     @Throws(Exception::class)
     fun addIdea(password: String, description: String): String = executeTransaction(
         password,

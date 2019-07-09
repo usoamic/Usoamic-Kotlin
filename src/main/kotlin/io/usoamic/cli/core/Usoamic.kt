@@ -10,7 +10,7 @@ import org.web3j.abi.datatypes.Utf8String
 import java.lang.Exception
 
 
-class Usoamic constructor(filename: String, node: String) : Swap(filename, node) {
+class Usoamic constructor(filename: String, contractAddress: String, node: String) : Swap(filename, contractAddress, node) {
     @Throws(Exception::class)
     fun balanceOf(address: String): BigInteger? = executeCallUint256ValueReturn("balanceOf", listOf(Address(address)))
 
