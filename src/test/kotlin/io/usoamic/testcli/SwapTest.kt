@@ -35,6 +35,17 @@ class SwapTest {
     }
 
     @Test
+    fun getSwappableTest() {
+        usoamic.getSwappable()
+    }
+
+    @Test
+    fun getSwapBalanceTest() {
+        val swapBalance = usoamic.getSwapBalance()!!
+        require(swapBalance >= BigInteger.ZERO)
+    }
+
+    @Test
     fun setSwapRateTest() {
         assertThrows<MessageDecodingException> {
             usoamic.setSwapRate(TestConfig.PASSWORD, BigInteger.ONE)
