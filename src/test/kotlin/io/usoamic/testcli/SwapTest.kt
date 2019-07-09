@@ -28,6 +28,13 @@ class SwapTest {
     }
 
     @Test
+    fun withdrawEthTest() {
+        assertThrows<MessageDecodingException> {
+            usoamic.withdrawEth(TestConfig.PASSWORD, Convert.toWei("0.1", Convert.Unit.ETHER).toBigInteger())
+        }
+    }
+
+    @Test
     fun setSwapRateTest() {
         assertThrows<MessageDecodingException> {
             usoamic.setSwapRate(TestConfig.PASSWORD, BigInteger.ONE)
