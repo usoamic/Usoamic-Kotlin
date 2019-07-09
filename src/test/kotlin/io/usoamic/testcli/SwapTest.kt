@@ -27,7 +27,7 @@ class SwapTest {
 
     @Test
     fun burnSwapTest() {
-        val value = Coin.HUNDRED.toSat()
+        val value = Coin.ONE_HUNDRED.toSat()
 
         val address = usoamic.account.address
 
