@@ -6,7 +6,6 @@ import io.usoamic.cli.util.Coin
 import io.usoamic.testcli.other.TestConfig
 import org.junit.jupiter.api.*
 
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
 import org.web3j.crypto.WalletUtils
@@ -63,21 +62,48 @@ class UsoamicTest {
     }
 
     @Test
+    fun burnTest() {
+        val address = usoamic.account.address
+        val balance = usoamic.balanceOf(address)!!
+        val value = Coin.fromCoin("1.2345").toSat()
+
+        assert(balance >= value) {
+            println("Need more tokens: $value")
+        }
+        val ethBalance = usoamic.getBalance()
+
+        assert(ethBalance > BigInteger.ZERO) {
+            println("Need more Ether: $ethBalance")
+        }
+
+        val estimatedBalance = balance.subtract(value)!!
+
+        val txHash = usoamic.burn(TestConfig.PASSWORD, value)
+        usoamic.waitTransactionReceipt(txHash) {
+            val newBalance = usoamic.balanceOf(address)
+
+            println("New Balance: $newBalance")
+
+            assert(estimatedBalance.compareTo(newBalance) == 0)
+        }
+    }
+
+    @Test
     fun transferTest() {
         val bobCredentials = Credentials.create(Keys.createEcKeyPair())
         println("BobPrivateKey: ${bobCredentials.ecKeyPair.privateKey}")
 
         val alice = usoamic.account.address
         val bob = bobCredentials.address
-        val aliceBalance = usoamic.balanceOf(alice)
-        val bobBalance = usoamic.balanceOf(bob)
+        val aliceBalance = usoamic.balanceOf(alice)!!
+        val bobBalance = usoamic.balanceOf(bob)!!
 
         println("Alice balance: $aliceBalance")
         println("Bob balance: $bobBalance")
 
         val value = Coin.fromCoin("1.2345").toSat()
 
-        assert(aliceBalance!! >= value) {
+        assert(aliceBalance >= value) {
             println("Need more tokens: $value")
         }
 
@@ -86,11 +112,8 @@ class UsoamicTest {
             println("Need more Ether: $aliceEthBalance")
         }
 
-        val needAliceBalance = aliceBalance.subtract(value)
-        val needBobBalance = bobBalance?.add(value)
-
-        println("Need Alice Balance: $needAliceBalance")
-        println("Need Bob Balance: $needBobBalance")
+        val estimatedAliceBalance = aliceBalance.subtract(value)
+        val estimatedBobBalance = bobBalance.add(value)
 
         val txHash = usoamic.transfer(TestConfig.PASSWORD, bob, value)
         usoamic.waitTransactionReceipt(txHash) {
@@ -100,8 +123,8 @@ class UsoamicTest {
             println("New Alice Balance: $newAliceBalance")
             println("New Bob Balance: $newBobBalance")
 
-            assert(needAliceBalance?.compareTo(newAliceBalance) == 0)
-            assert(needBobBalance?.compareTo(newBobBalance) == 0)
+            assert(estimatedAliceBalance?.compareTo(newAliceBalance) == 0)
+            assert(estimatedBobBalance?.compareTo(newBobBalance) == 0)
         }
     }
 
