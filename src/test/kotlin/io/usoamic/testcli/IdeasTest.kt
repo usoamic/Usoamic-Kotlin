@@ -56,6 +56,24 @@ class IdeasTest {
     }
 
     @Test
+    fun getIdeaTest() {
+        val id = BigInteger.ZERO
+        val numberOfPurchases = usoamic.getNumberOfIdeas()!!
+
+        val idea = usoamic.getIdea(id)
+        val isExist = numberOfPurchases > BigInteger.ZERO
+
+        assert(idea.isExist == isExist)
+        if(isExist) {
+            assert(idea.ideaId == id)
+            assert(idea.description.isNotEmpty())
+        }
+
+        val noExistIdea = usoamic.getIdea(numberOfPurchases)
+        assert(!noExistIdea.isExist)
+    }
+
+    @Test
     fun supportIdea() {
         voteForIdeaTest(VoteType.SUPPORT)
     }
