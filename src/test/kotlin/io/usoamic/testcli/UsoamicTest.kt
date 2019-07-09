@@ -135,13 +135,13 @@ class UsoamicTest {
     }
 
     @Test
-    fun supplyTest() {
+    fun getSupplyTest() {
         val supply = usoamic.getSupply()
         assert(supply!! >= BigInteger.ZERO)
     }
 
     @Test
-    fun versionTest() {
+    fun getVersionTest() {
         val version = usoamic.getVersion()
         require(version == TestConfig.VERSION)
     }
