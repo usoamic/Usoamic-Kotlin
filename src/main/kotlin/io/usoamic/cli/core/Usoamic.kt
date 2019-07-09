@@ -28,7 +28,7 @@ class Usoamic constructor(filename: String, contractAddress: String, node: Strin
     )
 
     @Throws(Exception::class)
-    fun getSupply(): String? = executeCallEmptyPassValueAndUint256Return("getSupply")
+    fun getSupply(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getSupply")
 
     @Throws(Exception::class)
     fun getVersion(): String? = executeCallEmptyPassValueAndSingleValueReturn(
