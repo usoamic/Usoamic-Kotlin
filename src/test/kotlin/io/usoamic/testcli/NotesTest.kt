@@ -4,6 +4,7 @@ import io.usoamic.cli.core.Usoamic
 import io.usoamic.cli.enum.NoteVisibility
 import io.usoamic.testcli.other.TestConfig
 import org.junit.jupiter.api.Test
+import org.web3j.crypto.WalletUtils
 import java.math.BigInteger
 import javax.inject.Inject
 import kotlin.random.Random
@@ -51,6 +52,23 @@ class NotesTest {
                 assert(commonNote == note)
             }
         }
+    }
+
+    @Test
+    fun getNoteTest() {
+        val id = BigInteger.ZERO
+        val note = usoamic.getNote(id)
+        val numberOfNotes = usoamic.getNumberOfPublicNotes()!!
+        val isExist = numberOfNotes > BigInteger.ZERO
+
+        assert(note.isExist == isExist)
+        if(isExist) {
+            assert(!note.content.isEmpty())
+            assert(WalletUtils.isValidAddress(note.author))
+        }
+
+        val noExistNote = usoamic.getNote(numberOfNotes)
+        assert(!noExistNote.isExist)
     }
 
     @Test
