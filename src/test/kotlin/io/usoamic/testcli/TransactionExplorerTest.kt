@@ -23,14 +23,15 @@ class TransactionExplorerTest {
     }
 
     @Test
-    fun numberOfTransactionsByAddressTest() {
+    fun getNumberOfTransactionsByAddress() {
         val credentials = Credentials.create(Keys.createEcKeyPair())
         val numberOfTx = usoamic.getNumberOfTransactionsByAddress(credentials.address)
         assert(numberOfTx == BigInteger.ZERO)
 
-        val defaultNumberOfTx = usoamic.getNumberOfTransactionsByAddress(TestConfig.DEFAULT_ADDRESS)
-        assert(defaultNumberOfTx!! > BigInteger.ZERO)
+        val defaultNumberOfTx = usoamic.getNumberOfTransactionsByAddress(TestConfig.DEFAULT_ADDRESS)!!
+        assert(defaultNumberOfTx >= BigInteger.ZERO)
     }
+
 
     @Test
     fun getTransactionTest() {
