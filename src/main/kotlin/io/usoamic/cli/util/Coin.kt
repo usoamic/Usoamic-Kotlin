@@ -3,7 +3,7 @@ package io.usoamic.cli.util
 import java.math.BigDecimal
 import java.math.BigInteger
 
-class Coin(value: BigDecimal) {
+class Coin private constructor(value: BigDecimal) {
     private val value: BigDecimal
 
     init {
