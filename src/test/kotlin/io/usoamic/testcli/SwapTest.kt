@@ -27,7 +27,7 @@ class SwapTest {
 
     @Test
     fun burnSwapTest() {
-        val value = Coin.ONE.toSat()
+        val value = Coin.HUNDRED.toSat()
 
         val address = usoamic.account.address
 
@@ -42,8 +42,15 @@ class SwapTest {
             val newContractBalance = usoamic.getBalance(TestConfig.CONTRACT_ADDRESS)
 
             assert(accountTokenBalance!!.subtract(newAccountTokenBalance).compareTo(value) == 0)
-            assert(newAccountBalance.subtract(accountBalance).compareTo(value) == 0)
-            assert(contractBalance.subtract(newContractBalance).compareTo(value) == 0)
+
+            val swapRate = usoamic.getSwapRate()
+            val ethValue = value.multiply(swapRate)
+
+            val maxFee = BigInteger("-10000000000000000")
+
+            assert(newAccountBalance.subtract(accountBalance).subtract(ethValue) >= maxFee)
+            assert(contractBalance.subtract(newContractBalance).compareTo(ethValue) == 0)
         }
     }
+
 }
