@@ -61,6 +61,12 @@ class SwapTest {
     }
 
     @Test
+    fun getSwapRateTest() {
+        val swapRate = usoamic.getSwapRate()!!
+        assert(swapRate >= BigInteger.ONE)
+    }
+
+    @Test
     fun burnSwapTest() {
         val value = Coin.ONE_HUNDRED.toSat()
 
