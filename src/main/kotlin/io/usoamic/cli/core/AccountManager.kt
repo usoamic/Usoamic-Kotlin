@@ -40,7 +40,7 @@ open class AccountManager(private val filename: String) {
     private fun import(password: String, keyPair: ECKeyPair): String {
         val credentials = Credentials.create(keyPair)
 
-        val directory = File("/keystore")
+        val directory = File("/keystore") //TODO: Change Directory from C:\keystore to other
         if(!directory.exists()) {
             directory.mkdir()
         }
