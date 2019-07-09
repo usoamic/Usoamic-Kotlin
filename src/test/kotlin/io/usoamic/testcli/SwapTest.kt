@@ -4,6 +4,8 @@ import io.usoamic.cli.core.Usoamic
 import io.usoamic.cli.util.Coin
 import io.usoamic.testcli.other.TestConfig
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import org.web3j.exceptions.MessageDecodingException
 import org.web3j.utils.Convert
 import java.math.BigInteger
 import javax.inject.Inject
@@ -22,6 +24,21 @@ class SwapTest {
         val txHash = usoamic.transferEther(TestConfig.PASSWORD, TestConfig.CONTRACT_ADDRESS, value)
         usoamic.waitTransactionReceipt(txHash) {
             assert(it.status == "0x0")
+        }
+    }
+
+    @Test
+    fun setSwapRateTest() {
+        assertThrows<MessageDecodingException> {
+            usoamic.setSwapRate(TestConfig.PASSWORD, BigInteger.ONE)
+        }
+    }
+
+    @Test
+    fun setSwappable() {
+        assertThrows<MessageDecodingException> {
+            val swappable = usoamic.getSwappable()!!
+            usoamic.setSwappable(TestConfig.PASSWORD, !(swappable))
         }
     }
 
