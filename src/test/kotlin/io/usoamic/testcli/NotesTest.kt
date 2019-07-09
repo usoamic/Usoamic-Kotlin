@@ -4,6 +4,7 @@ import io.usoamic.cli.core.Usoamic
 import io.usoamic.cli.enum.NoteVisibility
 import io.usoamic.testcli.other.TestConfig
 import org.junit.jupiter.api.Test
+import java.math.BigInteger
 import javax.inject.Inject
 import kotlin.random.Random
 import kotlin.random.nextUInt
@@ -50,6 +51,12 @@ class NotesTest {
                 assert(commonNote == note)
             }
         }
+    }
+
+    @Test
+    fun getNumberOfPublicNotesTest() {
+        val numberOfNotes = usoamic.getNumberOfPublicNotes()!!
+        assert(numberOfNotes >= BigInteger.ZERO)
     }
 
     private fun generateNoteContent(): String {
