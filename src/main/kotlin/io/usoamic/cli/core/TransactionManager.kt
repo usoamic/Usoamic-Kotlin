@@ -17,7 +17,7 @@ import org.web3j.tx.gas.DefaultGasProvider.GAS_PRICE
 import org.web3j.utils.Numeric
 import java.math.BigInteger
 
-open class TransactionManager(filename: String, node: String) : AccountWrapper(filename, node) {
+open class TransactionManager(filename: String, private val contractAddress: String, node: String) : AccountWrapper(filename, node) {
     @Throws(Exception::class)
     protected fun <T : Any?>executeCallSingleValueReturn(function: Function): T? {
         val values = executeCall(function)
@@ -52,7 +52,7 @@ open class TransactionManager(filename: String, node: String) : AccountWrapper(f
         val encodedFunction = FunctionEncoder.encode(function)
 
         val ethCall = web3j.ethCall(
-            Transaction.createEthCallTransaction(account.address, CONTRACT_ADDRESS, encodedFunction),
+            Transaction.createEthCallTransaction(account.address, contractAddress, encodedFunction),
             DefaultBlockParameterName.LATEST
         ).send()
 
@@ -77,7 +77,7 @@ open class TransactionManager(filename: String, node: String) : AccountWrapper(f
 
         val transaction = Transaction.createEthCallTransaction(
             credentials.address,
-            CONTRACT_ADDRESS.toLowerCase(),
+            contractAddress,
             encodedFunction
         )
 
@@ -87,7 +87,7 @@ open class TransactionManager(filename: String, node: String) : AccountWrapper(f
             nonce,
             GAS_PRICE,
             estimateGas.amountUsed,
-            CONTRACT_ADDRESS,
+            contractAddress,
             encodedFunction
         )
 
