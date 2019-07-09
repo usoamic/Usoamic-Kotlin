@@ -37,8 +37,8 @@ class NotesTest {
 
         usoamic.waitTransactionReceipt(addNoteTxHash) {
             val author = usoamic.account.address
-            val noteId = usoamic.getLastNoteIdByAddress(author)
-            val note = usoamic.getNoteByAddress(author, noteId!!)
+            val noteId = usoamic.getLastNoteIdByAddress(author)!!
+            val note = usoamic.getNoteByAddress(author, noteId)
             println(note)
 
             assert(note.isExist)
@@ -47,8 +47,8 @@ class NotesTest {
             assert(note.visibility == noteVisibility)
 
             if(noteVisibility == NoteVisibility.PUBLIC) {
-                val publicNoteId = usoamic.getLastNoteId()
-                val commonNote = usoamic.getNote(publicNoteId!!)
+                val publicNoteId = usoamic.getLastNoteId()!!
+                val commonNote = usoamic.getNote(publicNoteId)
                 assert(commonNote == note)
             }
         }
