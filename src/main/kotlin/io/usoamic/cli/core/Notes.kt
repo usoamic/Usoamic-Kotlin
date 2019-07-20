@@ -52,7 +52,7 @@ open class Notes constructor(filename: String, contractAddress: String, node: St
         )
 
     @Throws(Exception::class)
-    fun getNote(noteId: BigInteger): Note = getAndPrepareNote("getNote", listOf(Uint256(noteId)))
+    fun getNote(noteRefId: BigInteger): Note = getAndPrepareNote("getNote", listOf(Uint256(noteRefId)))
 
     @Throws(Exception::class)
     private fun getAndPrepareNote(name: String, inputParameters: List<Type<out Any>>): Note {

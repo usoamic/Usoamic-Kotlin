@@ -23,29 +23,29 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     )
 
     @Throws(Exception::class)
-    fun setIdeaStatus(password: String, ideaId: BigInteger, status: IdeaStatus) = executeTransaction(
+    fun setIdeaStatus(password: String, ideaRefId: BigInteger, status: IdeaStatus) = executeTransaction(
         password,
         "setIdeaStatus",
         listOf(
-            Uint256(ideaId),
+            Uint256(ideaRefId),
             Uint8(status.ordinal.toLong())
         )
     )
 
     @Throws(Exception::class)
-    fun supportIdea(password: String, ideaId: BigInteger, comment: String): String =
-        voteForIdea(password, VoteType.SUPPORT, ideaId, comment)
+    fun supportIdea(password: String, ideaRefId: BigInteger, comment: String): String =
+        voteForIdea(password, VoteType.SUPPORT, ideaRefId, comment)
 
     @Throws(Exception::class)
-    fun abstainIdea(password: String, ideaId: BigInteger, comment: String): String =
-        voteForIdea(password, VoteType.ABSTAIN, ideaId, comment)
+    fun abstainIdea(password: String, ideaRefId: BigInteger, comment: String): String =
+        voteForIdea(password, VoteType.ABSTAIN, ideaRefId, comment)
 
     @Throws(Exception::class)
-    fun againstIdea(password: String, ideaId: BigInteger, comment: String): String =
-        voteForIdea(password, VoteType.AGAINST, ideaId, comment)
+    fun againstIdea(password: String, ideaRefId: BigInteger, comment: String): String =
+        voteForIdea(password, VoteType.AGAINST, ideaRefId, comment)
 
     @Throws(Exception::class)
-    private fun voteForIdea(password: String, voteType: VoteType, ideaId: BigInteger, comment: String): String =
+    private fun voteForIdea(password: String, voteType: VoteType, ideaRefId: BigInteger, comment: String): String =
         executeTransaction(
             password,
             when (voteType) {
@@ -54,7 +54,7 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
                 VoteType.AGAINST -> "againstIdea"
             },
             listOf(
-                Uint256(ideaId),
+                Uint256(ideaRefId),
                 Utf8String(comment)
             )
         )
@@ -83,12 +83,12 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     }
 
     @Throws(Exception::class)
-    fun getVote(ideaId: BigInteger, voteId: BigInteger): Vote {
+    fun getVote(ideaRefId: BigInteger, voteRefId: BigInteger): Vote {
         val function = Function(
             "getVote",
             listOf(
-                Uint256(ideaId),
-                Uint256(voteId)
+                Uint256(ideaRefId),
+                Uint256(voteRefId)
             ),
             getVoteOutputParameters()
         )
