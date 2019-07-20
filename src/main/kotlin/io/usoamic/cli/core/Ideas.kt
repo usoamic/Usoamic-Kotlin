@@ -162,7 +162,16 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     @Throws(Exception::class)
     fun getNumberOfIdeasByAddress(author: String): BigInteger? = executeCallUint256ValueReturn(
         "getNumberOfIdeas", //TODO: Rename to getNumberOfIdeasAddress
-        listOf(Utf8String(author))
+        listOf(Address(author))
+    )
+
+    @Throws(Exception::class)
+    fun getNumberOfVotesByAddress(voter: String, ideaId: BigInteger): BigInteger? = executeCallUint256ValueReturn(
+        "getNumberOfVotesByAddress",
+        listOf(
+            Address(voter),
+            Uint256(ideaId)
+        )
     )
 
     @Throws(Exception::class)
