@@ -42,7 +42,7 @@ class UsoamicTest {
     }
 
     @Test
-    @RepeatedTest(5)
+    @RepeatedTest(500)
     fun testAddresses() {
         val credentials = Credentials.create(Keys.createEcKeyPair())
         assert(WalletUtils.isValidAddress(credentials.address) && WalletUtils.isValidPrivateKey(credentials.ecKeyPair.privateKey.toString(16)))
