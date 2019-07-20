@@ -60,54 +60,39 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
         )
 
     @Throws(Exception::class)
-    fun getIdea(ideaRefId: BigInteger): Idea {
-        val function = Function(
-            "getIdea",
-            listOf(Uint256(ideaRefId)),
-            getIdeaOutputParameters()
-        )
-        return prepareIdeaResult(function)
-    }
+    fun getIdea(ideaRefId: BigInteger): Idea = getAndPrepareIdea(
+        "getIdea",
+        listOf(Uint256(ideaRefId))
+    )
 
     @Throws(Exception::class)
-    fun getIdeaByAddress(author: String, ideaId: BigInteger): Idea {
-        val function = Function(
-            "getIdeaByAddress",
-            listOf(
-                Address(author),
-                Uint256(ideaId)
-            ),
-            getIdeaOutputParameters()
+    fun getIdeaByAddress(author: String, ideaId: BigInteger): Idea = getAndPrepareIdea(
+        "getIdeaByAddress",
+        listOf(
+            Address(author),
+            Uint256(ideaId)
         )
-        return prepareIdeaResult(function)
-    }
+    )
 
     @Throws(Exception::class)
-    fun getVote(ideaRefId: BigInteger, voteRefId: BigInteger): Vote {
-        val function = Function(
-            "getVote",
-            listOf(
-                Uint256(ideaRefId),
-                Uint256(voteRefId)
-            ),
-            getVoteOutputParameters()
+    fun getVote(ideaRefId: BigInteger, voteRefId: BigInteger): Vote = getAndPrepareVote(
+        "getVote",
+        listOf(
+            Uint256(ideaRefId),
+            Uint256(voteRefId)
         )
-        return prepareVoteResult(function)
-    }
+    )
 
     @Throws(Exception::class)
-    fun getVoteByAddress(ideaRefId: BigInteger, voter: String, voteId: BigInteger): Vote {
-        val function = Function(
-            "getVoteByAddress",
-            listOf(
-                Uint256(ideaRefId),
-                Address(voter),
-                Uint256(voteId)
-            ),
-            getVoteOutputParameters()
+    fun getVoteByAddress(ideaRefId: BigInteger, voter: String, voteId: BigInteger): Vote = getAndPrepareVote(
+        "",
+        listOf(
+            Uint256(ideaRefId),
+            Address(voter),
+            Uint256(voteId)
         )
-        return prepareVoteResult(function)
-    }
+    )
+
 
     @Throws(Exception::class)
     fun getNumberOfIdeas(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfIdeas")
@@ -130,22 +115,12 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     @Throws(Exception::class)
     fun getLastIdeaId(): BigInteger = getNumberOfIdeas()!!.subtract(BigInteger.ONE)
 
-    private fun prepareVoteResult(function: Function): Vote {
-        val result = executeCall(function)
-
-        val voteTypeId = result[4].value as BigInteger
-
-        return Vote.Builder()
-            .setIsExist(result[0].value as Boolean)
-            .setIdeaId(result[1].value as BigInteger)
-            .setVoteId(result[2].value as BigInteger)
-            .setVoter(result[3].value as String)
-            .setVoteType(VoteType.values()[voteTypeId.toInt()])
-            .setComment(result[5].value as String)
-            .build()
-    }
-
-    private fun prepareIdeaResult(function: Function): Idea {
+    private fun getAndPrepareIdea(name: String, inputParameters: List<Type<out Any>>): Idea {
+        val function = Function(
+            name,
+            inputParameters,
+            getIdeaOutputParameters()
+        )
         val result = executeCall(function)
         val ideaStatusId = result[5].value as BigInteger
 
@@ -161,6 +136,26 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
             .setNumberOfAbstained(result[8].value as BigInteger)
             .setNumberOfVotedAgainst(result[9].value as BigInteger)
             .setNumberOfParticipants(result[10].value as BigInteger)
+            .build()
+    }
+
+    private fun getAndPrepareVote(name: String, inputParameters: List<Type<out Any>>): Vote {
+        val function = Function(
+            name,
+            inputParameters,
+            getVoteOutputParameters()
+        )
+        val result = executeCall(function)
+
+        val voteTypeId = result[4].value as BigInteger
+
+        return Vote.Builder()
+            .setIsExist(result[0].value as Boolean)
+            .setIdeaId(result[1].value as BigInteger)
+            .setVoteId(result[2].value as BigInteger)
+            .setVoter(result[3].value as String)
+            .setVoteType(VoteType.values()[voteTypeId.toInt()])
+            .setComment(result[5].value as String)
             .build()
     }
 
