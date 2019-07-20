@@ -25,18 +25,7 @@ class IdeasTest {
 
     @Test
     fun addIdeaTest() {
-        val description = generateIdeaDescription()
-        val txHash = usoamic.addIdea(TestConfig.PASSWORD, description)
-
-        usoamic.waitTransactionReceipt(txHash) {
-            val ideaId = usoamic.getLastIdeaId()
-            val idea = usoamic.getIdea(ideaId)
-            assert(idea.isExist)
-            assert(idea.author == usoamic.account.address)
-            assert(idea.description == description)
-            assert(idea.ideaId == ideaId)
-            assert(idea.ideaStatus == IdeaStatus.DISCUSSION)
-        }
+        addIdea { }
     }
 
     @Test
@@ -64,19 +53,35 @@ class IdeasTest {
     @Test
     fun getIdeaTest() {
         val id = BigInteger.ZERO
-        val numberOfPurchases = usoamic.getNumberOfIdeas()!!
+        val numberOfIdeas = usoamic.getNumberOfIdeas()!!
 
         val idea = usoamic.getIdea(id)
-        val isExist = numberOfPurchases > BigInteger.ZERO
+        val isExist = numberOfIdeas > BigInteger.ZERO
 
         assert(idea.isExist == isExist)
-        if(isExist) {
+        if (isExist) {
             assert(idea.ideaId == id)
             assert(idea.description.isNotEmpty())
         }
 
-        val noExistIdea = usoamic.getIdea(numberOfPurchases)
+        val noExistIdea = usoamic.getIdea(numberOfIdeas)
         assert(!noExistIdea.isExist)
+    }
+
+    @Test
+    fun getIdeaByAddressTest() {
+        val id = BigInteger.ZERO
+
+        addIdea {
+            val address = usoamic.account.address
+
+            val ideaId = usoamic.getLastIdeaIdByAddress(address)
+
+            val idea = usoamic.getIdeaByAddress(address, ideaId)
+            assert(idea.isExist)
+            assert(idea.ideaId == id)
+            assert(idea.description.isNotEmpty())
+        }
     }
 
     @Test
@@ -133,6 +138,22 @@ class IdeasTest {
         }
     }
 
+    private fun addIdea(callback: () -> Unit) {
+        val description = generateIdeaDescription()
+        val txHash = usoamic.addIdea(TestConfig.PASSWORD, description)
+
+        usoamic.waitTransactionReceipt(txHash) {
+            val ideaId = usoamic.getLastIdeaId()
+            val idea = usoamic.getIdea(ideaId)
+            assert(idea.isExist)
+            assert(idea.author == usoamic.account.address)
+            assert(idea.description == description)
+            assert(idea.ideaId == ideaId)
+            assert(idea.ideaStatus == IdeaStatus.DISCUSSION)
+            callback()
+        }
+    }
+
     private fun voteForIdea(voteType: VoteType, ideaId: BigInteger, comment: String): String {
         return when (voteType) {
             VoteType.SUPPORT -> usoamic.supportIdea(TestConfig.PASSWORD, ideaId, comment)
@@ -144,6 +165,7 @@ class IdeasTest {
     private fun generateComment(): String {
         return ("Comment #" + Random.nextInt())
     }
+
     private fun generateIdeaDescription(): String {
         return ("Idea #" + Random.nextInt())
     }
