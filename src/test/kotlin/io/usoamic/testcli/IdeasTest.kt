@@ -51,6 +51,12 @@ class IdeasTest {
     }
 
     @Test
+    fun getNumberOfIdeasByAddressTest() {
+        val numberOfIdeasByAddress = usoamic.getNumberOfIdeasByAddress(usoamic.account.address)!!
+        assert(numberOfIdeasByAddress >= BigInteger.ZERO)
+    }
+
+    @Test
     fun getIdeaTest() {
         val id = BigInteger.ZERO
         val numberOfIdeas = usoamic.getNumberOfIdeas()!!
