@@ -14,6 +14,7 @@ import java.math.BigInteger
 
 open class Ideas constructor(filename: String, contractAddress: String, node: String) :
     Owner(filename, contractAddress, node) {
+
     @Throws(Exception::class)
     fun addIdea(password: String, description: String): String = executeTransaction(
         password,
@@ -58,20 +59,6 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
             )
         )
 
-    /*
-    bool exist,
-    uint256 ideaId,
-    uint256 ideaRefId,
-    address author,
-    string description,
-    IdeaStatus ideaStatus,
-    uint256 timestamp,
-    uint256 numberOfSupporters,
-    uint256 numberOfAbstained,
-    uint256 numberOfVotedAgainst,
-    uint256 numberOfParticipants
-     */
-
     @Throws(Exception::class)
     fun getIdea(ideaRefId: BigInteger): Idea {
         val function = Function(
@@ -79,22 +66,7 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
             listOf(Uint256(ideaRefId)),
             getIdeaOutputParameters()
         )
-        val result = executeCall(function)
-        val ideaStatusId = result[5].value as BigInteger
-
-        return Idea.Builder()
-            .setIsExist(result[0].value as Boolean)
-            .setIdeaId(result[1].value as BigInteger)
-            .setIdeaRefId(result[2].value as BigInteger)
-            .setAuthor(result[3].value as String)
-            .setDescription(result[4].value as String)
-            .setIdeaStatus(IdeaStatus.values()[ideaStatusId.toInt()])
-            .setTimestamp(result[6].value as BigInteger)
-            .setNumberOfSupporters(result[7].value as BigInteger)
-            .setNumberOfAbstained(result[8].value as BigInteger)
-            .setNumberOfVotedAgainst(result[9].value as BigInteger)
-            .setNumberOfParticipants(result[10].value as BigInteger)
-            .build()
+        return prepareIdeaResult(function)
     }
 
     @Throws(Exception::class)
@@ -107,22 +79,7 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
             ),
             getIdeaOutputParameters()
         )
-        val result = executeCall(function)
-        val ideaStatusId = result[5].value as BigInteger
-
-        return Idea.Builder()
-            .setIsExist(result[0].value as Boolean)
-            .setIdeaId(result[1].value as BigInteger)
-            .setIdeaRefId(result[2].value as BigInteger)
-            .setAuthor(result[3].value as String)
-            .setDescription(result[4].value as String)
-            .setIdeaStatus(IdeaStatus.values()[ideaStatusId.toInt()])
-            .setTimestamp(result[6].value as BigInteger)
-            .setNumberOfSupporters(result[7].value as BigInteger)
-            .setNumberOfAbstained(result[8].value as BigInteger)
-            .setNumberOfVotedAgainst(result[9].value as BigInteger)
-            .setNumberOfParticipants(result[10].value as BigInteger)
-            .build()
+        return prepareIdeaResult(function)
     }
 
     @Throws(Exception::class)
@@ -185,6 +142,25 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
             .setVoter(result[3].value as String)
             .setVoteType(VoteType.values()[voteTypeId.toInt()])
             .setComment(result[5].value as String)
+            .build()
+    }
+
+    private fun prepareIdeaResult(function: Function): Idea {
+        val result = executeCall(function)
+        val ideaStatusId = result[5].value as BigInteger
+
+        return Idea.Builder()
+            .setIsExist(result[0].value as Boolean)
+            .setIdeaId(result[1].value as BigInteger)
+            .setIdeaRefId(result[2].value as BigInteger)
+            .setAuthor(result[3].value as String)
+            .setDescription(result[4].value as String)
+            .setIdeaStatus(IdeaStatus.values()[ideaStatusId.toInt()])
+            .setTimestamp(result[6].value as BigInteger)
+            .setNumberOfSupporters(result[7].value as BigInteger)
+            .setNumberOfAbstained(result[8].value as BigInteger)
+            .setNumberOfVotedAgainst(result[9].value as BigInteger)
+            .setNumberOfParticipants(result[10].value as BigInteger)
             .build()
     }
 
