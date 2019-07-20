@@ -76,7 +76,7 @@ open class Notes constructor(filename: String, contractAddress: String, node: St
             .setIsExist(result[0].value as Boolean)
             .setNoteId(result[1].value as BigInteger)
             .setVisibility(NoteVisibility.values()[visibilityId.toInt()])
-            .setRefId(result[3].value as BigInteger)
+            .setNoteRefId(result[3].value as BigInteger)
             .setContent(result[4].value as String)
             .setAuthor(result[5].value as String)
             .setTimestamp(result[6].value as BigInteger)

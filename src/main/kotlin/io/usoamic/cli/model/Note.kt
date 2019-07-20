@@ -7,7 +7,7 @@ data class Note constructor(
     val isExist: Boolean,
     val noteId: BigInteger,
     val visibility: NoteVisibility,
-    val refId: BigInteger,
+    val noteRefId: BigInteger,
     val content: String,
     val author: String,
     val timestamp: BigInteger
@@ -16,7 +16,7 @@ data class Note constructor(
         private var isExist: Boolean = false
         private lateinit var noteId: BigInteger
         private lateinit var visibility: NoteVisibility
-        private lateinit var refId: BigInteger
+        private lateinit var noteRefId: BigInteger
         private lateinit var content: String
         private lateinit var author: String
         private lateinit var timestamp: BigInteger
@@ -33,8 +33,8 @@ data class Note constructor(
             this.visibility = visibility
         }
 
-        fun setRefId(refId: BigInteger) = apply {
-            this.refId = refId
+        fun setNoteRefId(refId: BigInteger) = apply {
+            this.noteRefId = refId
         }
 
         fun setContent(content: String) = apply {
@@ -53,7 +53,7 @@ data class Note constructor(
             isExist,
             noteId,
             visibility,
-            refId,
+            noteRefId,
             content,
             author,
             timestamp
