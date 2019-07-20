@@ -9,7 +9,6 @@ import org.web3j.crypto.WalletUtils
 import java.math.BigInteger
 import javax.inject.Inject
 import kotlin.random.Random
-import kotlin.random.nextUInt
 
 class NotesTest {
     @Inject

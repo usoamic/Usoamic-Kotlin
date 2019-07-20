@@ -1,8 +1,8 @@
 package io.usoamic.testcli
 
-import io.usoamic.testcli.di.TestUsoamicModule
 import io.usoamic.testcli.di.DaggerTestAppComponent
 import io.usoamic.testcli.di.TestAppComponent
+import io.usoamic.testcli.di.TestUsoamicModule
 import io.usoamic.testcli.di.TestWeb3jModule
 import org.junit.jupiter.api.BeforeAll
 

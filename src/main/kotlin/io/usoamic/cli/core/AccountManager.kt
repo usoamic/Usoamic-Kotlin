@@ -13,7 +13,6 @@ import org.web3j.crypto.WalletUtils
 import java.io.File
 import java.io.FileWriter
 import java.io.IOException
-import java.lang.Exception
 
 open class AccountManager(private val filename: String) {
     @Throws(InvalidPrivateKeyException::class, IOException::class)

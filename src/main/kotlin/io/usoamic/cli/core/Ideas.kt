@@ -9,7 +9,6 @@ import org.web3j.abi.datatypes.*
 import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.abi.datatypes.generated.Uint8
-import java.lang.Exception
 import java.math.BigInteger
 
 open class Ideas constructor(filename: String, contractAddress: String, node: String) :
@@ -99,7 +98,7 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
 
     @Throws(Exception::class)
     fun getNumberOfIdeasByAddress(author: String): BigInteger? = executeCallUint256ValueReturn(
-        "getNumberOfIdeas", //TODO: Rename to getNumberOfIdeasAddress
+        "getNumberOfIdeasAddress",
         listOf(Address(author))
     )
 

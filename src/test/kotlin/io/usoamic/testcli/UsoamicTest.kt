@@ -4,8 +4,9 @@ import io.usoamic.cli.core.Usoamic
 import io.usoamic.cli.exception.InvalidMnemonicPhraseException
 import io.usoamic.cli.util.Coin
 import io.usoamic.testcli.other.TestConfig
-import org.junit.jupiter.api.*
-
+import org.junit.jupiter.api.RepeatedTest
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
 import org.web3j.crypto.WalletUtils

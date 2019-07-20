@@ -4,11 +4,10 @@ import io.usoamic.cli.model.Purchase
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.Bool
+import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
-import org.web3j.abi.datatypes.Function
-import java.lang.Exception
 
 open class Purchases constructor(filename: String, contractAddress: String, node: String) : Notes(filename, contractAddress, node) {
     @Throws(Exception::class)

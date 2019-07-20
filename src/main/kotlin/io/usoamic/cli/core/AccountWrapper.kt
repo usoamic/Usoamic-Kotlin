@@ -1,7 +1,6 @@
 package io.usoamic.cli.core
 
 import io.usoamic.cli.model.Account
-import io.usoamic.cli.other.Config
 import org.web3j.crypto.CipherException
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.WalletUtils

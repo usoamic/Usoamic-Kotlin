@@ -1,13 +1,10 @@
 package io.usoamic.cli.core
 
-import jnr.ffi.Struct
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Address
+import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
-import org.web3j.abi.datatypes.Function
-import org.web3j.abi.datatypes.Utf8String
-import java.lang.Exception
 
 
 class Usoamic constructor(filename: String, contractAddress: String, node: String) : Swap(filename, contractAddress, node) {

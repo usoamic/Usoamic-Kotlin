@@ -2,7 +2,6 @@ package io.usoamic.cli.core
 
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.Bool
-import org.web3j.abi.datatypes.Function
 
 open class Owner constructor(filename: String, contractAddress: String, node: String) : TransactionManager(filename, contractAddress, node) {
     @Throws(Exception::class)

@@ -1,6 +1,5 @@
 package io.usoamic.cli.core
 
-import io.usoamic.cli.other.Config.Companion.CONTRACT_ADDRESS
 import org.web3j.abi.FunctionEncoder
 import org.web3j.abi.FunctionReturnDecoder
 import org.web3j.abi.TypeReference

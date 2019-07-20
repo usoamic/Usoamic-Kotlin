@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
 import org.web3j.protocol.Web3j
-import java.math.BigDecimal
 import java.math.BigInteger
 import javax.inject.Inject
 

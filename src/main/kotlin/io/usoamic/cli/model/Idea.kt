@@ -2,7 +2,6 @@ package io.usoamic.cli.model
 
 import io.usoamic.cli.enum.IdeaStatus
 import java.math.BigInteger
-import java.sql.Timestamp
 
 data class Idea constructor(
     val isExist: Boolean,

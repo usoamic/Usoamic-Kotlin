@@ -5,9 +5,7 @@ import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.Bool
 import org.web3j.abi.datatypes.Function
-import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
-import java.lang.Exception
 import java.math.BigInteger
 
 // bool exist, uint256 txId, address from, address to, uint256 value, uint256 timestamp

@@ -1,9 +1,8 @@
 package io.usoamic.testcli.di
 
-import io.usoamic.cli.core.Usoamic
 import dagger.Module
 import dagger.Provides
-import io.usoamic.cli.other.Config
+import io.usoamic.cli.core.Usoamic
 import io.usoamic.testcli.other.TestConfig
 import javax.inject.Singleton
 

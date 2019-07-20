@@ -1,6 +1,5 @@
 package io.usoamic.cli.util
 
-import org.web3j.crypto.MnemonicUtils
 import java.security.SecureRandom
 
 open class MnemonicUtils : org.web3j.crypto.MnemonicUtils() {
