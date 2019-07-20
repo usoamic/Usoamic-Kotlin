@@ -124,17 +124,17 @@ class IdeasTest {
     }
 
     @Test
-    fun supportIdea() {
+    fun supportIdeaTest() {
         this.voteForIdea(VoteType.SUPPORT) {}
     }
 
     @Test
-    fun abstainIdea() {
+    fun abstainIdeaTest() {
         this.voteForIdea(VoteType.ABSTAIN) {}
     }
 
     @Test
-    fun againstIdea() {
+    fun againstIdeaTest() {
         this.voteForIdea(VoteType.AGAINST) {}
     }
 
