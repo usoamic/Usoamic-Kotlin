@@ -3,9 +3,11 @@ package io.usoamic.testcli
 import io.usoamic.cli.core.Usoamic
 import io.usoamic.cli.enum.IdeaStatus
 import io.usoamic.cli.enum.VoteType
+import io.usoamic.cli.model.Vote
 import io.usoamic.testcli.other.TestConfig
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.web3j.crypto.WalletUtils
 import org.web3j.exceptions.MessageDecodingException
 import org.web3j.protocol.Web3j
 import java.math.BigInteger
@@ -91,21 +93,32 @@ class IdeasTest {
     }
 
     @Test
+    fun getVoteForIdeaTest() {
+        voteForIdea(VoteType.SUPPORT) {
+            val ideaRefId = usoamic.getLastIdeaId()
+            val idea = usoamic.getIdea(ideaRefId)
+            val voteRefId = idea.numberOfSupporters.subtract(BigInteger.ZERO)
+            val vote = usoamic.getVote(ideaRefId, voteRefId)
+            testVote(vote)
+        }
+    }
+
+    @Test
     fun supportIdea() {
-        voteForIdeaTest(VoteType.SUPPORT)
+        this.voteForIdea(VoteType.SUPPORT) {}
     }
 
     @Test
     fun abstainIdea() {
-        voteForIdeaTest(VoteType.ABSTAIN)
+        this.voteForIdea(VoteType.ABSTAIN) {}
     }
 
     @Test
     fun againstIdea() {
-        voteForIdeaTest(VoteType.AGAINST)
+        this.voteForIdea(VoteType.AGAINST) {}
     }
 
-    private fun voteForIdeaTest(voteType: VoteType) {
+    private fun voteForIdea(voteType: VoteType, callback: () -> Unit) {
         val ideaTxHash = usoamic.addIdea(TestConfig.PASSWORD, generateIdeaDescription())
 
         usoamic.waitTransactionReceipt(ideaTxHash) {
@@ -132,7 +145,9 @@ class IdeasTest {
                 assert(idea.numberOfParticipants > BigInteger.ZERO)
 
                 val vote = usoamic.getVote(ideaId, BigInteger.ZERO)
-                assert(vote.isExist)
+
+                testVote(vote)
+
                 assert(vote.comment == comment)
                 assert(vote.voteType == voteType)
                 assert(vote.voter == usoamic.account.address)
@@ -142,6 +157,11 @@ class IdeasTest {
                 }
             }
         }
+    }
+
+    private fun testVote(vote: Vote) {
+        assert(vote.isExist)
+        assert(WalletUtils.isValidAddress(vote.voter))
     }
 
     private fun addIdea(callback: () -> Unit) {
