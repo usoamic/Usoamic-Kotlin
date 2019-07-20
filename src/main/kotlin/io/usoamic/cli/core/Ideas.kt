@@ -5,16 +5,15 @@ import io.usoamic.cli.enum.VoteType
 import io.usoamic.cli.model.Idea
 import io.usoamic.cli.model.Vote
 import org.web3j.abi.TypeReference
-import org.web3j.abi.datatypes.Address
-import org.web3j.abi.datatypes.Bool
+import org.web3j.abi.datatypes.*
 import org.web3j.abi.datatypes.Function
-import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.abi.datatypes.generated.Uint8
 import java.lang.Exception
 import java.math.BigInteger
 
-open class Ideas constructor(filename: String, contractAddress: String, node: String) : Owner(filename, contractAddress, node) {
+open class Ideas constructor(filename: String, contractAddress: String, node: String) :
+    Owner(filename, contractAddress, node) {
     @Throws(Exception::class)
     fun addIdea(password: String, description: String): String = executeTransaction(
         password,
@@ -33,27 +32,31 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     )
 
     @Throws(Exception::class)
-    fun supportIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.SUPPORT, ideaId, comment)
+    fun supportIdea(password: String, ideaId: BigInteger, comment: String): String =
+        voteForIdea(password, VoteType.SUPPORT, ideaId, comment)
 
     @Throws(Exception::class)
-    fun abstainIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.ABSTAIN, ideaId, comment)
+    fun abstainIdea(password: String, ideaId: BigInteger, comment: String): String =
+        voteForIdea(password, VoteType.ABSTAIN, ideaId, comment)
 
     @Throws(Exception::class)
-    fun againstIdea(password: String, ideaId: BigInteger, comment: String): String = voteForIdea(password, VoteType.AGAINST, ideaId, comment)
+    fun againstIdea(password: String, ideaId: BigInteger, comment: String): String =
+        voteForIdea(password, VoteType.AGAINST, ideaId, comment)
 
     @Throws(Exception::class)
-    private fun voteForIdea(password: String, voteType: VoteType, ideaId: BigInteger, comment: String): String = executeTransaction(
-        password,
-        when(voteType) {
-            VoteType.SUPPORT -> "supportIdea"
-            VoteType.ABSTAIN -> "abstainIdea"
-            VoteType.AGAINST -> "againstIdea"
-        },
-        listOf(
-            Uint256(ideaId),
-            Utf8String(comment)
+    private fun voteForIdea(password: String, voteType: VoteType, ideaId: BigInteger, comment: String): String =
+        executeTransaction(
+            password,
+            when (voteType) {
+                VoteType.SUPPORT -> "supportIdea"
+                VoteType.ABSTAIN -> "abstainIdea"
+                VoteType.AGAINST -> "againstIdea"
+            },
+            listOf(
+                Uint256(ideaId),
+                Utf8String(comment)
+            )
         )
-    )
 
     /*
     bool exist,
@@ -74,19 +77,35 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
         val function = Function(
             "getIdea",
             listOf(Uint256(ideaRefId)),
+            getIdeaOutputParameters()
+        )
+        val result = executeCall(function)
+        val ideaStatusId = result[5].value as BigInteger
+
+        return Idea.Builder()
+            .setIsExist(result[0].value as Boolean)
+            .setIdeaId(result[1].value as BigInteger)
+            .setIdeaRefId(result[2].value as BigInteger)
+            .setAuthor(result[3].value as String)
+            .setDescription(result[4].value as String)
+            .setIdeaStatus(IdeaStatus.values()[ideaStatusId.toInt()])
+            .setTimestamp(result[6].value as BigInteger)
+            .setNumberOfSupporters(result[7].value as BigInteger)
+            .setNumberOfAbstained(result[8].value as BigInteger)
+            .setNumberOfVotedAgainst(result[9].value as BigInteger)
+            .setNumberOfParticipants(result[10].value as BigInteger)
+            .build()
+    }
+
+    @Throws(Exception::class)
+    fun getIdeaByAddress(author: String, ideaId: BigInteger): Idea {
+        val function = Function(
+            "getIdea",
             listOf(
-                object: TypeReference<Bool>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Address>() { },
-                object: TypeReference<Utf8String>() { },
-                object: TypeReference<Uint8>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Uint256>() { }
-            )
+                Address(author),
+                Uint256(ideaId)
+            ),
+            getIdeaOutputParameters()
         )
         val result = executeCall(function)
         val ideaStatusId = result[5].value as BigInteger
@@ -115,12 +134,12 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
                 Uint256(voteId)
             ),
             listOf(
-                object: TypeReference<Bool>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Address>() { },
-                object: TypeReference<Uint256>() { },
-                object: TypeReference<Utf8String>() { }
+                object : TypeReference<Bool>() {},
+                object : TypeReference<Uint256>() {},
+                object : TypeReference<Uint256>() {},
+                object : TypeReference<Address>() {},
+                object : TypeReference<Uint256>() {},
+                object : TypeReference<Utf8String>() {}
             )
         )
         val result = executeCall(function)
@@ -142,4 +161,19 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
 
     @Throws(Exception::class)
     fun getLastIdeaId(): BigInteger = getNumberOfIdeas()!!.subtract(BigInteger.ONE)
+
+    private fun getIdeaOutputParameters() = listOf(
+        object : TypeReference<Bool>() {},
+        object : TypeReference<Uint256>() {},
+        object : TypeReference<Uint256>() {},
+        object : TypeReference<Address>() {},
+        object : TypeReference<Utf8String>() {},
+        object : TypeReference<Uint8>() {},
+        object : TypeReference<Uint256>() {},
+        object : TypeReference<Uint256>() {},
+        object : TypeReference<Uint256>() {},
+        object : TypeReference<Uint256>() {},
+        object : TypeReference<Uint256>() {}
+    )
+
 }
