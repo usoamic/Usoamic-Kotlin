@@ -7,6 +7,7 @@ import java.sql.Timestamp
 data class Idea constructor(
     val isExist: Boolean,
     val ideaId: BigInteger,
+    val ideaRefId: BigInteger,
     val author: String,
     val description: String,
     val ideaStatus: IdeaStatus,
@@ -76,6 +77,7 @@ data class Idea constructor(
         fun build() = Idea(
             isExist,
             ideaId,
+            ideaRefId,
             author,
             description,
             ideaStatus,
