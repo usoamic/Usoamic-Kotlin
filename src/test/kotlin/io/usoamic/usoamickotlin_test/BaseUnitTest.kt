@@ -13,6 +13,5 @@ class BaseUnitTest {
                 .testUsoamicModule(TestUsoamicModule())
                 .build()
         }
-
     }
 }
