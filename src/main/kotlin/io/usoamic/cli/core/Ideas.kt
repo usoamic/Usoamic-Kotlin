@@ -104,11 +104,11 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     )
 
     @Throws(Exception::class)
-    fun getNumberOfVotesByAddress(voter: String, ideaId: BigInteger): BigInteger? = executeCallUint256ValueReturn(
+    fun getNumberOfVotesByAddress(voter: String, ideaRefId: BigInteger): BigInteger? = executeCallUint256ValueReturn(
         "getNumberOfVotesByAddress",
         listOf(
             Address(voter),
-            Uint256(ideaId)
+            Uint256(ideaRefId)
         )
     )
 
