@@ -160,6 +160,12 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     fun getNumberOfIdeas(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfIdeas")
 
     @Throws(Exception::class)
+    fun getNumberOfIdeasByAddress(author: String): BigInteger? = executeCallUint256ValueReturn(
+        "getNumberOfIdeas", //TODO: Rename to getNumberOfIdeasAddress
+        listOf(Utf8String(author))
+    )
+
+    @Throws(Exception::class)
     fun getLastIdeaId(): BigInteger = getNumberOfIdeas()!!.subtract(BigInteger.ONE)
 
     private fun getIdeaOutputParameters() = listOf(
