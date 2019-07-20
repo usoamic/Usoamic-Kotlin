@@ -40,19 +40,18 @@ class TransactionExplorerTest {
     @Test
     fun getTransactionTest() {
         val credentials = Credentials.create(Keys.createEcKeyPair())
-        val value = Coin.fromCoin("10.231").toSat()
+        val coin = Coin.fromCoin("10.231");
 
-        val txHash = usoamic.transfer(TestConfig.PASSWORD, credentials.address, value)
+        val txHash = usoamic.transfer(TestConfig.PASSWORD, credentials.address, coin.toSat())
 
         usoamic.waitTransactionReceipt(txHash) {
             val numberOfTx = usoamic.getNumberOfTransactions()!!.subtract(BigInteger.ONE)
             val transaction = usoamic.getTransaction(numberOfTx)
-            println("Transaction: $transaction")
             assert(transaction.isExist)
             assert(transaction.from == TestConfig.DEFAULT_ADDRESS)
             assert(transaction.to == credentials.address)
             assert(transaction.txId == numberOfTx)
-            assert(transaction.value == value)
+            assert(transaction.value == coin.toBigDecimal())
         }
     }
 }

@@ -85,8 +85,6 @@ class IdeasTest {
 
     @Test
     fun getIdeaByAddressTest() {
-        val id = BigInteger.ZERO
-
         addIdea {
             val address = usoamic.account.address
 
@@ -94,7 +92,6 @@ class IdeasTest {
 
             val idea = usoamic.getIdeaByAddress(address, ideaId)
             assert(idea.isExist)
-            assert(idea.ideaId == id)
             assert(idea.description.isNotEmpty())
         }
     }
@@ -144,8 +141,6 @@ class IdeasTest {
         usoamic.waitTransactionReceipt(ideaTxHash) {
             val ideaId = usoamic.getLastIdeaId()
             val comment = generateComment()
-
-            println("IdeaId: $ideaId; Comment: $comment")
 
             val voteTxHash = voteForIdea(voteType, ideaId, comment)
             usoamic.waitTransactionReceipt(voteTxHash) {

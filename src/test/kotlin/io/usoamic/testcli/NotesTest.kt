@@ -39,7 +39,6 @@ class NotesTest {
             val author = usoamic.account.address
             val noteId = usoamic.getLastNoteIdByAddress(author)!!
             val note = usoamic.getNoteByAddress(author, noteId)
-            println(note)
 
             assert(note.isExist)
             assert(note.content == content)
