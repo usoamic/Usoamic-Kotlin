@@ -133,27 +133,23 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
                 Uint256(ideaId),
                 Uint256(voteId)
             ),
-            listOf(
-                object : TypeReference<Bool>() {},
-                object : TypeReference<Uint256>() {},
-                object : TypeReference<Uint256>() {},
-                object : TypeReference<Address>() {},
-                object : TypeReference<Uint256>() {},
-                object : TypeReference<Utf8String>() {}
-            )
+            getVoteOutputParameters()
         )
-        val result = executeCall(function)
+        return prepareVoteResult(function)
+    }
 
-        val voteTypeId = result[4].value as BigInteger
-
-        return Vote.Builder()
-            .setIsExist(result[0].value as Boolean)
-            .setIdeaId(result[1].value as BigInteger)
-            .setVoteId(result[2].value as BigInteger)
-            .setVoter(result[3].value as String)
-            .setVoteType(VoteType.values()[voteTypeId.toInt()])
-            .setComment(result[5].value as String)
-            .build()
+    @Throws(Exception::class)
+    fun getVoteByAddress(ideaRefId: BigInteger, voter: String, voteId: BigInteger): Vote {
+        val function = Function(
+            "getVoteByAddress",
+            listOf(
+                Uint256(ideaRefId),
+                Address(voter),
+                Uint256(voteId)
+            ),
+            getVoteOutputParameters()
+        )
+        return prepareVoteResult(function)
     }
 
     @Throws(Exception::class)
@@ -177,6 +173,21 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     @Throws(Exception::class)
     fun getLastIdeaId(): BigInteger = getNumberOfIdeas()!!.subtract(BigInteger.ONE)
 
+    private fun prepareVoteResult(function: Function): Vote {
+        val result = executeCall(function)
+
+        val voteTypeId = result[4].value as BigInteger
+
+        return Vote.Builder()
+            .setIsExist(result[0].value as Boolean)
+            .setIdeaId(result[1].value as BigInteger)
+            .setVoteId(result[2].value as BigInteger)
+            .setVoter(result[3].value as String)
+            .setVoteType(VoteType.values()[voteTypeId.toInt()])
+            .setComment(result[5].value as String)
+            .build()
+    }
+
     private fun getIdeaOutputParameters() = listOf(
         object : TypeReference<Bool>() {},
         object : TypeReference<Uint256>() {},
@@ -191,4 +202,12 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
         object : TypeReference<Uint256>() {}
     )
 
+    private fun getVoteOutputParameters() = listOf(
+        object : TypeReference<Bool>() {},
+        object : TypeReference<Uint256>() {},
+        object : TypeReference<Uint256>() {},
+        object : TypeReference<Address>() {},
+        object : TypeReference<Uint256>() {},
+        object : TypeReference<Utf8String>() {}
+    )
 }
