@@ -7,14 +7,16 @@ data class Vote constructor(
     val isExist: Boolean,
     val ideaId: BigInteger,
     val voteId: BigInteger,
+    val voteRefId: BigInteger,
     val voter: String,
-    val voteType: VoteType, //TODO: Change to enum VoteType
+    val voteType: VoteType,
     val comment: String
 ) {
     class Builder {
         private var isExist: Boolean = false
         private lateinit var ideaId: BigInteger
         private lateinit var voteId: BigInteger
+        private lateinit var voteRefId: BigInteger
         private lateinit var voter: String
         private lateinit var voteType: VoteType
         private lateinit var comment: String
@@ -29,6 +31,10 @@ data class Vote constructor(
 
         fun setVoteId(voteId: BigInteger) = apply {
             this.voteId = voteId
+        }
+
+        fun setVoteRefId(voteRefId: BigInteger) = apply {
+            this.voteRefId = voteRefId
         }
 
         fun setVoter(address: String) = apply {
@@ -47,6 +53,7 @@ data class Vote constructor(
             isExist,
             ideaId,
             voteId,
+            voteRefId,
             voter,
             voteType,
             comment
