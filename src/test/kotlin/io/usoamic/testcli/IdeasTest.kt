@@ -93,13 +93,26 @@ class IdeasTest {
     }
 
     @Test
-    fun getVoteForIdeaTest() {
+    fun getVoteTest() {
         voteForIdea(VoteType.SUPPORT) {
             val ideaRefId = usoamic.getLastIdeaId()
             val idea = usoamic.getIdea(ideaRefId)
             val voteRefId = idea.numberOfSupporters.subtract(BigInteger.ZERO)
             val vote = usoamic.getVote(ideaRefId, voteRefId)
             testVote(vote)
+        }
+    }
+
+    @Test
+    fun getVoteByAddressTest() {
+        val address = usoamic.account.address
+
+        voteForIdea(VoteType.SUPPORT) {
+            val ideaRefId = usoamic.getLastIdeaId()
+            val voteId = usoamic.getNumberOfVotesByAddress(address, ideaRefId)!!
+            val vote = usoamic.getVoteByAddress(ideaRefId, address, voteId)
+            testVote(vote)
+            assert(vote.voter == address)
         }
     }
 
