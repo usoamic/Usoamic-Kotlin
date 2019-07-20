@@ -8,6 +8,6 @@ class TestConfig {
         const val DEFAULT_ADDRESS: String = "0x8b27fa2987630a1acd8d868ba84b2928de737bc2"
         const val OWNER_ADDRESS: String = "0x5d8766ac0075bdf81b48f0bfcf92449e9def0f37"
         const val PASSWORD: String = "1234!"
-        const val VERSION: String = "2"
+        const val VERSION: String = "v2"
     }
 }
