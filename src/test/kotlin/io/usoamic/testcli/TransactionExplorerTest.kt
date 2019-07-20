@@ -6,16 +6,12 @@ import io.usoamic.testcli.other.TestConfig
 import org.junit.jupiter.api.Test
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
-import org.web3j.protocol.Web3j
 import java.math.BigInteger
 import javax.inject.Inject
 
 class TransactionExplorerTest {
     @Inject
     lateinit var usoamic: Usoamic
-
-    @Inject
-    lateinit var web3j: Web3j
 
     init {
         BaseUnitTest.componentTest.inject(this)

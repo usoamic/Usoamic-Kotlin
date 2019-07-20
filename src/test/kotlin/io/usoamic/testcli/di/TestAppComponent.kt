@@ -6,7 +6,7 @@ import io.usoamic.testcli.*
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [TestWeb3jModule::class, TestUsoamicModule::class])
+@Component(modules = [TestUsoamicModule::class])
 interface TestAppComponent {
     fun inject(clazz: NotesTest)
     fun inject(clazz: OwnerTest)

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.web3j.crypto.WalletUtils
 import org.web3j.exceptions.MessageDecodingException
-import org.web3j.protocol.Web3j
 import java.math.BigInteger
 import javax.inject.Inject
 import kotlin.random.Random
@@ -17,9 +16,6 @@ import kotlin.random.Random
 class IdeasTest {
     @Inject
     lateinit var usoamic: Usoamic
-
-    @Inject
-    lateinit var web3j: Web3j
 
     init {
         BaseUnitTest.componentTest.inject(this)
