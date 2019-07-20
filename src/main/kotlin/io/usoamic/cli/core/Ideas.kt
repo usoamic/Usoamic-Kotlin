@@ -115,6 +115,9 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     @Throws(Exception::class)
     fun getLastIdeaId(): BigInteger = getNumberOfIdeas()!!.subtract(BigInteger.ONE)
 
+    @Throws(Exception::class)
+    fun getLastIdeaIdByAddress(author: String): BigInteger = getNumberOfIdeasByAddress(author)!!.subtract(BigInteger.ONE)
+
     private fun getAndPrepareIdea(name: String, inputParameters: List<Type<out Any>>): Idea {
         val function = Function(
             name,
