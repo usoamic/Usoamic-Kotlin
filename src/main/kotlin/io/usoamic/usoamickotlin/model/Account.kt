@@ -1,4 +1,4 @@
-package model
+package io.usoamic.usoamickotlin.model
 
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
