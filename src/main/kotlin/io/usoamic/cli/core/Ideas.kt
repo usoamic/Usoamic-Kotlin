@@ -100,7 +100,7 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     @Throws(Exception::class)
     fun getIdeaByAddress(author: String, ideaId: BigInteger): Idea {
         val function = Function(
-            "getIdea",
+            "getIdeaByAddress",
             listOf(
                 Address(author),
                 Uint256(ideaId)
