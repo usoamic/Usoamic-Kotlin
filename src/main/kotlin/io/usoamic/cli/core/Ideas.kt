@@ -4,7 +4,6 @@ import io.usoamic.cli.enum.IdeaStatus
 import io.usoamic.cli.enum.VoteType
 import io.usoamic.cli.model.Idea
 import io.usoamic.cli.model.Vote
-import io.usoamic.cli.other.Config
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.Bool
@@ -56,13 +55,28 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
         )
     )
 
+    /*
+    bool exist,
+    uint256 ideaId,
+    uint256 ideaRefId,
+    address author,
+    string description,
+    IdeaStatus ideaStatus,
+    uint256 timestamp,
+    uint256 numberOfSupporters,
+    uint256 numberOfAbstained,
+    uint256 numberOfVotedAgainst,
+    uint256 numberOfParticipants
+     */
+
     @Throws(Exception::class)
-    fun getIdea(ideaId: BigInteger): Idea {
+    fun getIdea(ideaRefId: BigInteger): Idea {
         val function = Function(
             "getIdea",
-            listOf(Uint256(ideaId)),
+            listOf(Uint256(ideaRefId)),
             listOf(
                 object: TypeReference<Bool>() { },
+                object: TypeReference<Uint256>() { },
                 object: TypeReference<Uint256>() { },
                 object: TypeReference<Address>() { },
                 object: TypeReference<Utf8String>() { },
@@ -75,19 +89,20 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
             )
         )
         val result = executeCall(function)
-        val ideaStatusId = result[4].value as BigInteger
+        val ideaStatusId = result[5].value as BigInteger
 
         return Idea.Builder()
             .setIsExist(result[0].value as Boolean)
             .setIdeaId(result[1].value as BigInteger)
-            .setAuthor(result[2].value as String)
-            .setDescription(result[3].value as String)
+            .setIdeaRefId(result[2].value as BigInteger)
+            .setAuthor(result[3].value as String)
+            .setDescription(result[4].value as String)
             .setIdeaStatus(IdeaStatus.values()[ideaStatusId.toInt()])
-            .setTimestamp(result[5].value as BigInteger)
-            .setNumberOfSupporters(result[6].value as BigInteger)
-            .setNumberOfAbstained(result[7].value as BigInteger)
-            .setNumberOfVotedAgainst(result[8].value as BigInteger)
-            .setNumberOfParticipants(result[9].value as BigInteger)
+            .setTimestamp(result[6].value as BigInteger)
+            .setNumberOfSupporters(result[7].value as BigInteger)
+            .setNumberOfAbstained(result[8].value as BigInteger)
+            .setNumberOfVotedAgainst(result[9].value as BigInteger)
+            .setNumberOfParticipants(result[10].value as BigInteger)
             .build()
     }
 

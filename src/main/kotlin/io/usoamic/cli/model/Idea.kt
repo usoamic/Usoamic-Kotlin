@@ -19,6 +19,7 @@ data class Idea constructor(
     class Builder {
         private var isExist: Boolean = false
         private lateinit var ideaId: BigInteger
+        private lateinit var ideaRefId: BigInteger
         private lateinit var author: String
         private lateinit var description: String
         private lateinit var ideaStatus: IdeaStatus
@@ -34,6 +35,10 @@ data class Idea constructor(
 
         fun setIdeaId(ideaId: BigInteger) = apply {
             this.ideaId = ideaId
+        }
+
+        fun setIdeaRefId(ideaRefId: BigInteger) = apply {
+            this.ideaRefId = ideaRefId
         }
 
         fun setAuthor(author: String) = apply {
