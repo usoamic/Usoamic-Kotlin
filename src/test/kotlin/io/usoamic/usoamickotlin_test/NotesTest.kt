@@ -38,7 +38,7 @@ class NotesTest {
         usoamic.waitTransactionReceipt(addNoteTxHash) {
             val author = usoamic.address
             val noteId = usoamic.getLastNoteIdByAddress(author)!!
-            val note = usoamic.getNoteByAddress(author, noteId)
+            val note = usoamic.getNoteByAuthor(author, noteId)
 
             assert(note.isExist)
             assert(note.content == content)
@@ -58,10 +58,10 @@ class NotesTest {
         val address = usoamic.address
 
         val id = BigInteger.ZERO
-        val numberOfNotes = usoamic.getNumberOfNotesByAddress(address)!!
+        val numberOfNotes = usoamic.getNumberOfNotesByAuthor(address)!!
 
-        val note = usoamic.getNoteByAddress(address, id)
-        val noExistNote = usoamic.getNoteByAddress(address, numberOfNotes)
+        val note = usoamic.getNoteByAuthor(address, id)
+        val noExistNote = usoamic.getNoteByAuthor(address, numberOfNotes)
 
         testNote(note, noExistNote, numberOfNotes)
     }
@@ -97,7 +97,7 @@ class NotesTest {
 
     @Test
     fun getNumberOfNotesByAddressTest() {
-        val numberOfNotes = usoamic.getNumberOfNotesByAddress(usoamic.address)!!
+        val numberOfNotes = usoamic.getNumberOfNotesByAuthor(usoamic.address)!!
         assert(numberOfNotes >= BigInteger.ZERO)
     }
 
