@@ -22,7 +22,7 @@ class Usoamic constructor(filename: String, contractAddress: String, node: Strin
     @Throws(Exception::class)
     fun transferUso(password: String, to: String, value: BigInteger): String = executeTransaction(
         password,
-        "transferUso",
+        "transfer",
         listOf(
             Address(to),
             Uint256(value)
