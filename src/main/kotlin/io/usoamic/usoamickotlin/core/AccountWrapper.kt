@@ -23,6 +23,7 @@ open class AccountWrapper(private val filename: String, node: String) : AccountM
         return _account
     }
 
+    val hasAccount: Boolean get() = ::_account.isInitialized
     val address: String get() = account.address
 
     @Throws(Exception::class)
