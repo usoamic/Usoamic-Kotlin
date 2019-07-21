@@ -65,8 +65,8 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     )
 
     @Throws(Exception::class)
-    fun getIdeaByAddress(author: String, ideaId: BigInteger): Idea = getAndPrepareIdea(
-        "getIdeaByAddress",
+    fun getIdeaByAuthor(author: String, ideaId: BigInteger): Idea = getAndPrepareIdea(
+        "getIdeaByAuthor",
         listOf(
             Address(author),
             Uint256(ideaId)
@@ -83,8 +83,8 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     )
 
     @Throws(Exception::class)
-    fun getVoteByAddress(ideaRefId: BigInteger, voter: String, voteId: BigInteger): Vote = getAndPrepareVote(
-        "",
+    fun getVoteByVoter(ideaRefId: BigInteger, voter: String, voteId: BigInteger): Vote = getAndPrepareVote(
+        "getVoteByVoter",
         listOf(
             Uint256(ideaRefId),
             Address(voter),
@@ -97,14 +97,14 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     fun getNumberOfIdeas(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfIdeas")
 
     @Throws(Exception::class)
-    fun getNumberOfIdeasByAddress(author: String): BigInteger? = executeCallUint256ValueReturn(
+    fun getNumberOfIdeasByAuthor(author: String): BigInteger? = executeCallUint256ValueReturn(
         "getNumberOfIdeasAddress",
         listOf(Address(author))
     )
 
     @Throws(Exception::class)
-    fun getNumberOfVotesByAddress(voter: String, ideaRefId: BigInteger): BigInteger? = executeCallUint256ValueReturn(
-        "getNumberOfVotesByAddress",
+    fun getNumberOfVotesByVoter(voter: String, ideaRefId: BigInteger): BigInteger? = executeCallUint256ValueReturn(
+        "getNumberOfVotesByVoter",
         listOf(
             Address(voter),
             Uint256(ideaRefId)
@@ -115,7 +115,7 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     fun getLastIdeaId(): BigInteger = getNumberOfIdeas()!!.subtract(BigInteger.ONE)
 
     @Throws(Exception::class)
-    fun getLastIdeaIdByAddress(author: String): BigInteger = getNumberOfIdeasByAddress(author)!!.subtract(BigInteger.ONE)
+    fun getLastIdeaIdByAuthor(author: String): BigInteger = getNumberOfIdeasByAuthor(author)!!.subtract(BigInteger.ONE)
 
     private fun getAndPrepareIdea(name: String, inputParameters: List<Type<out Any>>): Idea {
         val function = Function(
