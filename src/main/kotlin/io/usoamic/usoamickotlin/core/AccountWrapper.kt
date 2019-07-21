@@ -15,7 +15,7 @@ import java.nio.file.Path
 open class AccountWrapper(private val filename: String, node: String) : AccountManager(filename) {
     protected val web3j: Web3j = Web3j.build(HttpService(node))
     private lateinit var _account: Account
-    public val account: Account get() {
+    protected val account: Account get() {
         if (!::_account.isInitialized) {
             val json = Files.readString(Path.of(filename))
             _account = Account.fromJson(json)
@@ -23,13 +23,15 @@ open class AccountWrapper(private val filename: String, node: String) : AccountM
         return _account
     }
 
+    val address: String get() = account.address
+
     @Throws(Exception::class)
-    public fun getBalance(): BigInteger {
+    fun getBalance(): BigInteger {
         return getBalance(account.address)
     }
 
     @Throws(java.lang.Exception::class)
-    public fun getBalance(address: String): BigInteger {
+    fun getBalance(address: String): BigInteger {
         return web3j.ethGetBalance(address, DefaultBlockParameterName.LATEST).send().balance
     }
 
