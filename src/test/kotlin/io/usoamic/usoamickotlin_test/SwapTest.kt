@@ -69,17 +69,14 @@ class SwapTest {
     @Test
     fun burnSwapTest() {
         val value = Coin.ONE_HUNDRED.toSat()
-
-        val address = usoamic.address
-
-        val accountBalance = usoamic.getEthBalance(address)
-        val accountTokenBalance = usoamic.balanceOf(address)
+        val accountBalance = usoamic.getEthBalance()
+        val accountTokenBalance = usoamic.getUsoBalance()
         val contractBalance = usoamic.getEthBalance(TestConfig.CONTRACT_ADDRESS)
 
         val txHash = usoamic.burnSwap(TestConfig.PASSWORD, value)
         usoamic.waitTransactionReceipt(txHash) {
-            val newAccountBalance = usoamic.getEthBalance(address)
-            val newAccountTokenBalance = usoamic.balanceOf(address)
+            val newAccountBalance = usoamic.getEthBalance()
+            val newAccountTokenBalance = usoamic.getUsoBalance()
             val newContractBalance = usoamic.getEthBalance(TestConfig.CONTRACT_ADDRESS)
 
             assert(accountTokenBalance!!.subtract(newAccountTokenBalance).compareTo(value) == 0)
