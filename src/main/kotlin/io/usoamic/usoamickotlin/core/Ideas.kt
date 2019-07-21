@@ -97,7 +97,7 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
 
     @Throws(Exception::class)
     fun getNumberOfIdeasByAuthor(author: String): BigInteger? = executeCallUint256ValueReturn(
-        "getNumberOfIdeasAddress",
+        "getNumberOfIdeasByAuthor",
         listOf(Address(author))
     )
 
