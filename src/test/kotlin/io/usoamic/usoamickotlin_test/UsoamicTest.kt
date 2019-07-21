@@ -113,7 +113,7 @@ class UsoamicTest {
         val estimatedAliceBalance = aliceBalance.subtract(value)
         val estimatedBobBalance = bobBalance.add(value)
 
-        val txHash = usoamic.transfer(TestConfig.PASSWORD, bob, value)
+        val txHash = usoamic.transferUso(TestConfig.PASSWORD, bob, value)
         usoamic.waitTransactionReceipt(txHash) {
             val newAliceBalance = usoamic.balanceOf(alice)
             val newBobBalance = usoamic.balanceOf(bob)

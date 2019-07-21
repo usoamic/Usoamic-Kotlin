@@ -20,9 +20,9 @@ class Usoamic constructor(filename: String, contractAddress: String, node: Strin
     fun burn(password: String, value: BigInteger): String = executeTransaction(password, "burn", listOf(Uint256(value)))
 
     @Throws(Exception::class)
-    fun transfer(password: String, to: String, value: BigInteger): String = executeTransaction(
+    fun transferUso(password: String, to: String, value: BigInteger): String = executeTransaction(
         password,
-        "transfer",
+        "transferUso",
         listOf(
             Address(to),
             Uint256(value)

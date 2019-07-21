@@ -98,7 +98,7 @@ open class TransactionManager(filename: String, private val contractAddress: Str
     }
 
     @Throws(Exception::class)
-    fun transferEther(password: String, to: String, value: BigInteger): String {
+    fun transferEth(password: String, to: String, value: BigInteger): String {
         val credentials = getCredentials(password)
         val nonce = getNonce(credentials.address)
 
