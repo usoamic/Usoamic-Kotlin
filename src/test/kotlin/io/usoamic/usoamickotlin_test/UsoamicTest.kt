@@ -71,7 +71,7 @@ class UsoamicTest {
         assert(balance >= value) {
             println("Need more tokens: $value")
         }
-        val ethBalance = usoamic.getBalance()
+        val ethBalance = usoamic.getEthBalance()
 
         assert(ethBalance > BigInteger.ZERO) {
             println("Need more Ether: $ethBalance")
@@ -105,7 +105,7 @@ class UsoamicTest {
             println("Need more tokens: $value")
         }
 
-        val aliceEthBalance = usoamic.getBalance()
+        val aliceEthBalance = usoamic.getEthBalance()
         assert(aliceEthBalance > BigInteger.ZERO) {
             println("Need more Ether: $aliceEthBalance")
         }

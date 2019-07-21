@@ -9,6 +9,11 @@ import java.math.BigInteger
 
 class Usoamic constructor(filename: String, contractAddress: String, node: String) : Swap(filename, contractAddress, node) {
     @Throws(Exception::class)
+    fun getUsoBalance(): BigInteger? {
+        return balanceOf(address)
+    }
+
+    @Throws(Exception::class)
     fun balanceOf(address: String): BigInteger? = executeCallUint256ValueReturn("balanceOf", listOf(Address(address)))
 
     @Throws(Exception::class)
