@@ -83,10 +83,9 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
     )
 
     @Throws(Exception::class)
-    fun getVoteByVoter(ideaRefId: BigInteger, voter: String, voteId: BigInteger): Vote = getAndPrepareVote(
+    fun getVoteByVoter(voter: String, voteId: BigInteger): Vote = getAndPrepareVote(
         "getVoteByVoter",
         listOf(
-            Uint256(ideaRefId),
             Address(voter),
             Uint256(voteId)
         )
