@@ -27,7 +27,7 @@ class PurchasesTest {
         val purchaseId = "purchaseId" + Random.nextInt()
         val cost = Coin.ONE.toSat()
         val purchaseTxHash = usoamic.makePurchase(TestConfig.PASSWORD, appId, purchaseId,  cost)
-        val numberOfPurchases = usoamic.getNumberOfPurchaseByAddress(purchaser)!!
+        val numberOfPurchases = usoamic.getNumberOfPurchasesByAddress(purchaser)!!
 
         usoamic.waitTransactionReceipt(purchaseTxHash) {
             val lastPurchaseId = usoamic.getLastPurchaseId(purchaser)!!
@@ -52,7 +52,7 @@ class PurchasesTest {
     fun getPurchaseByAddressTest() {
         val purchaser = usoamic.address
         val id = BigInteger.ZERO
-        val numberOfPurchases = usoamic.getNumberOfPurchaseByAddress(purchaser)!!
+        val numberOfPurchases = usoamic.getNumberOfPurchasesByAddress(purchaser)!!
 
         val purchase = usoamic.getPurchaseByAddress(purchaser, id)
         val isExist = numberOfPurchases > BigInteger.ZERO
@@ -72,7 +72,7 @@ class PurchasesTest {
 
     @Test
     fun getNumberOfPurchaseByAddressTest() {
-        val numberOfPurchases = usoamic.getNumberOfPurchaseByAddress(usoamic.address)!!
+        val numberOfPurchases = usoamic.getNumberOfPurchasesByAddress(usoamic.address)!!
         assert(numberOfPurchases >= BigInteger.ZERO)
     }
 }
