@@ -15,7 +15,7 @@ import java.nio.file.Path
 open class AccountWrapper(private val filename: String, node: String) : AccountManager(filename) {
     protected val web3j: Web3j = Web3j.build(HttpService(node))
     private lateinit var _account: Account
-    protected val account: Account get() {
+    private val account: Account get() {
         if (!::_account.isInitialized) {
             val json = Files.readString(Path.of(filename))
             _account = Account.fromJson(json)
