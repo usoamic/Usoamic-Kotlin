@@ -31,8 +31,8 @@ class UsoamicTest {
         }
         val mnemonicPhrase = "denial wrist culture into guess parade lesson black member shove wisdom strike"
         val fileName = usoamic.importMnemonic(TestConfig.PASSWORD, mnemonicPhrase)
-        assert(WalletUtils.isValidAddress(usoamic.account.address))
-        assert(usoamic.account.address == TestConfig.DEFAULT_ADDRESS)
+        assert(WalletUtils.isValidAddress(usoamic.address))
+        assert(usoamic.address == TestConfig.DEFAULT_ADDRESS)
     }
 
     @Test
@@ -64,7 +64,7 @@ class UsoamicTest {
 
     @Test
     fun burnTest() {
-        val address = usoamic.account.address
+        val address = usoamic.address
         val balance = usoamic.balanceOf(address)!!
         val value = Coin.fromCoin("1.2345").toSat()
 
@@ -91,7 +91,7 @@ class UsoamicTest {
         val bobCredentials = Credentials.create(Keys.createEcKeyPair())
         println("BobPrivateKey: ${bobCredentials.ecKeyPair.privateKey}")
 
-        val alice = usoamic.account.address
+        val alice = usoamic.address
         val bob = bobCredentials.address
         val aliceBalance = usoamic.balanceOf(alice)!!
         val bobBalance = usoamic.balanceOf(bob)!!

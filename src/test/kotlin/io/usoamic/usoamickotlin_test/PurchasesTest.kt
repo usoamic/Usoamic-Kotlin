@@ -18,7 +18,7 @@ class PurchasesTest {
 
     @Test
     fun makePurchaseTest() {
-        val purchaser = usoamic.account.address
+        val purchaser = usoamic.address
 
         val ownerBalance = usoamic.balanceOf(TestConfig.OWNER_ADDRESS)!!
         val purchaserBalance = usoamic.balanceOf(purchaser)!!
@@ -50,7 +50,7 @@ class PurchasesTest {
 
     @Test
     fun getPurchaseByAddressTest() {
-        val purchaser = usoamic.account.address
+        val purchaser = usoamic.address
         val id = BigInteger.ZERO
         val numberOfPurchases = usoamic.getNumberOfPurchaseByAddress(purchaser)!!
 
@@ -72,7 +72,7 @@ class PurchasesTest {
 
     @Test
     fun getNumberOfPurchaseByAddressTest() {
-        val numberOfPurchases = usoamic.getNumberOfPurchaseByAddress(usoamic.account.address)!!
+        val numberOfPurchases = usoamic.getNumberOfPurchaseByAddress(usoamic.address)!!
         assert(numberOfPurchases >= BigInteger.ZERO)
     }
 }

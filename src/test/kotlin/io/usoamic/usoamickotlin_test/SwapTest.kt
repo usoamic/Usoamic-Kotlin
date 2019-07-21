@@ -70,7 +70,7 @@ class SwapTest {
     fun burnSwapTest() {
         val value = Coin.ONE_HUNDRED.toSat()
 
-        val address = usoamic.account.address
+        val address = usoamic.address
 
         val accountBalance = usoamic.getBalance(address)
         val accountTokenBalance = usoamic.balanceOf(address)

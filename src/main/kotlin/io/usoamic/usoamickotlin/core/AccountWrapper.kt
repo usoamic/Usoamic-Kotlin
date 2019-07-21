@@ -28,7 +28,7 @@ open class AccountWrapper(private val filename: String, node: String) : AccountM
 
     @Throws(Exception::class)
     fun getBalance(): BigInteger {
-        return getBalance(account.address)
+        return getBalance(address)
     }
 
     @Throws(java.lang.Exception::class)
