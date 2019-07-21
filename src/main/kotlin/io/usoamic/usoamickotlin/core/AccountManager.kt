@@ -17,7 +17,7 @@ import java.io.IOException
 open class AccountManager(private val filename: String) {
     @Throws(InvalidPrivateKeyException::class, IOException::class)
     fun importPrivateKey(password: String, privateKey: String): String {
-        if(WalletUtils.isValidPrivateKey(privateKey)) {
+        if(!WalletUtils.isValidPrivateKey(privateKey)) {
             throw InvalidPrivateKeyException()
         }
         val credentials = Credentials.create(privateKey)
