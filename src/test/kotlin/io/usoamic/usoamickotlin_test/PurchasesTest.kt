@@ -71,7 +71,7 @@ class PurchasesTest {
     }
 
     @Test
-    fun getNumberOfPurchaseByAddressTest() {
+    fun getNumberOfPurchasesByAddressTest() {
         val numberOfPurchases = usoamic.getNumberOfPurchasesByAddress(usoamic.address)!!
         assert(numberOfPurchases >= BigInteger.ZERO)
     }
