@@ -36,7 +36,7 @@ class SwapTest {
 
     @Test
     fun getSwappableTest() {
-        usoamic.getSwappable()
+        assert(usoamic.getSwappable() != null)
     }
 
     @Test
