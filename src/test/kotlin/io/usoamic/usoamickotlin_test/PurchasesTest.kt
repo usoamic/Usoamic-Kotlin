@@ -57,9 +57,6 @@ class PurchasesTest {
         val purchase = usoamic.getPurchaseByAddress(purchaser, id)
         val isExist = numberOfPurchases > BigInteger.ZERO
 
-        println(purchase)
-        println(isExist)
-
         assert(purchase.isExist == isExist)
         if(isExist) {
            assert(purchase.id == id)

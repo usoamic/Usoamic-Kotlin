@@ -87,8 +87,6 @@ class SwapTest {
             println("Need more ethers on contract address ${TestConfig.CONTRACT_ADDRESS}")
         }
 
-        println("$accountBalance, $accountTokenBalance, $numberOfWei, $value")
-
         val txHash = usoamic.burnSwap(TestConfig.PASSWORD, value)
         usoamic.waitTransactionReceipt(txHash) {
             val newAccountBalance = usoamic.getEthBalance()
