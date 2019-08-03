@@ -183,7 +183,7 @@ class IdeasTest {
             assert(idea.isExist)
             assert(idea.author == usoamic.address)
             assert(idea.description == description)
-            assert(idea.ideaId == ideaId)
+            assert(idea.ideaRefId == ideaId)
             assert(idea.ideaStatus == IdeaStatus.DISCUSSION)
             callback()
         }
