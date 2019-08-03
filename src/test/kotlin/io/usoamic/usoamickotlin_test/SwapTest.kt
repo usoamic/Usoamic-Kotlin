@@ -74,8 +74,20 @@ class SwapTest {
 
         val value = Coin.ONE_HUNDRED.toSat()
         val accountBalance = usoamic.getEthBalance()
-        val accountTokenBalance = usoamic.getUsoBalance()
+        val accountTokenBalance = usoamic.getUsoBalance()!!
+
+        assert(accountTokenBalance > value)
+
         val contractBalance = usoamic.getEthBalance(TestConfig.CONTRACT_ADDRESS)
+
+        val swapRate = usoamic.getSwapRate()!!
+        val numberOfWei = swapRate.multiply(value)!!
+
+        assert(contractBalance > numberOfWei) {
+            println("Need more ethers on contract address ${TestConfig.CONTRACT_ADDRESS}")
+        }
+
+        println("$accountBalance, $accountTokenBalance, $numberOfWei, $value")
 
         val txHash = usoamic.burnSwap(TestConfig.PASSWORD, value)
         usoamic.waitTransactionReceipt(txHash) {
@@ -85,7 +97,6 @@ class SwapTest {
 
             assert(accountTokenBalance!!.subtract(newAccountTokenBalance).compareTo(value) == 0)
 
-            val swapRate = usoamic.getSwapRate()
             val ethValue = value.multiply(swapRate)
 
             val maxFee = BigInteger("-10000000000000000")
