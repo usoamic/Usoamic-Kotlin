@@ -68,6 +68,10 @@ class SwapTest {
 
     @Test
     fun burnSwapTest() {
+        assert(usoamic.getSwappable()!!) {
+            println("Swap disabled!")
+        }
+
         val value = Coin.ONE_HUNDRED.toSat()
         val accountBalance = usoamic.getEthBalance()
         val accountTokenBalance = usoamic.getUsoBalance()
