@@ -98,7 +98,7 @@ class IdeasTest {
             val idea = usoamic.getIdea(ideaRefId)
             val voteRefId = idea.numberOfSupporters.subtract(BigInteger.ZERO)
             val vote = usoamic.getVote(ideaRefId, voteRefId)
-            testVote(vote)
+            assertVote(vote)
         }
     }
 
@@ -109,7 +109,7 @@ class IdeasTest {
         voteForIdea(VoteType.SUPPORT) {
             val voteId = usoamic.getNumberOfVotesByVoter(address)!!
             val vote = usoamic.getVoteByVoter(address, voteId)
-            testVote(vote)
+            assertVote(vote)
             assert(vote.voter == address)
         }
     }
@@ -155,7 +155,7 @@ class IdeasTest {
 
                 val vote = usoamic.getVote(ideaId, BigInteger.ZERO)
 
-                testVote(vote)
+                assertVote(vote)
 
                 assert(vote.comment == comment)
                 assert(vote.voteType == voteType)
@@ -168,7 +168,7 @@ class IdeasTest {
         }
     }
 
-    private fun testVote(vote: Vote) {
+    private fun assertVote(vote: Vote) {
         assert(vote.isExist)
         assert(WalletUtils.isValidAddress(vote.voter))
     }
