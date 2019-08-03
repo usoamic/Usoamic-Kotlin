@@ -24,39 +24,6 @@ class UsoamicTest {
     }
 
     @Test
-    fun accountTest() {
-        val path = Path.of(TestConfig.ACCOUNT_FILENAME)
-        if(Files.exists(path)) {
-            Files.delete(path)
-        }
-        val mnemonicPhrase = "denial wrist culture into guess parade lesson black member shove wisdom strike"
-        val fileName = usoamic.importMnemonic(TestConfig.PASSWORD, mnemonicPhrase)
-        assert(WalletUtils.isValidAddress(usoamic.address))
-        assert(usoamic.address == TestConfig.DEFAULT_ADDRESS)
-    }
-
-    @Test
-    @RepeatedTest(500)
-    fun testAddresses() {
-        val credentials = Credentials.create(Keys.createEcKeyPair())
-        assert(WalletUtils.isValidAddress(credentials.address)/* && WalletUtils.isValidPrivateKey(credentials.ecKeyPair.privateKey.toString(16))*/)
-    }
-
-    @Test
-    fun accountTestWhenMnemonicPhraseIsEmpty() {
-        assertThrows<InvalidMnemonicPhraseException> {
-            usoamic.importMnemonic(TestConfig.PASSWORD, "")
-        }
-    }
-
-    @Test
-    fun accountTestWhenMnemonicPhraseIsInvalid() {
-        assertThrows<InvalidMnemonicPhraseException> {
-            usoamic.importMnemonic(TestConfig.PASSWORD, "culture into")
-        }
-    }
-
-    @Test
     fun balanceOfTest() {
         val balance = usoamic.balanceOf(TestConfig.OWNER_ADDRESS)!!
         require(balance >= BigInteger.ZERO)
