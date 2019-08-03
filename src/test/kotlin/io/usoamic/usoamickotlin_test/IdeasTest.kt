@@ -50,14 +50,13 @@ class IdeasTest {
 
     @Test
     fun getNumberOfIdeasByAddressTest() {
-        val numberOfIdeasByAddress = usoamic.getNumberOfIdeasByAddress(usoamic.account.address)!!
+        val numberOfIdeasByAddress = usoamic.getNumberOfIdeasByAuthor(usoamic.address)!!
         assert(numberOfIdeasByAddress >= BigInteger.ZERO)
     }
 
     @Test
     fun getNumberOfVotesByAddressTest() {
-        val ideaRefId = usoamic.getNumberOfIdeas()!!
-        val numberOfVotesByAddress = usoamic.getNumberOfVotesByAddress(usoamic.account.address, ideaRefId)!!
+        val numberOfVotesByAddress = usoamic.getNumberOfVotesByVoter(usoamic.address)!!
         assert(numberOfVotesByAddress >= BigInteger.ZERO)
     }
 
@@ -82,11 +81,11 @@ class IdeasTest {
     @Test
     fun getIdeaByAddressTest() {
         addIdea {
-            val address = usoamic.account.address
+            val address = usoamic.address
 
-            val ideaId = usoamic.getLastIdeaIdByAddress(address)
+            val ideaId = usoamic.getLastIdeaIdByAuthor(address)
 
-            val idea = usoamic.getIdeaByAddress(address, ideaId)
+            val idea = usoamic.getIdeaByAuthor(address, ideaId)
             assert(idea.isExist)
             assert(idea.description.isNotEmpty())
         }
@@ -99,19 +98,18 @@ class IdeasTest {
             val idea = usoamic.getIdea(ideaRefId)
             val voteRefId = idea.numberOfSupporters.subtract(BigInteger.ZERO)
             val vote = usoamic.getVote(ideaRefId, voteRefId)
-            testVote(vote)
+            assertVote(vote)
         }
     }
 
     @Test
     fun getVoteByAddressTest() {
-        val address = usoamic.account.address
+        val address = usoamic.address
 
         voteForIdea(VoteType.SUPPORT) {
-            val ideaRefId = usoamic.getLastIdeaId()
-            val voteId = usoamic.getNumberOfVotesByAddress(address, ideaRefId)!!
-            val vote = usoamic.getVoteByAddress(ideaRefId, address, voteId)
-            testVote(vote)
+            val voteId = usoamic.getNumberOfVotesByVoter(address)!!
+            val vote = usoamic.getVoteByVoter(address, voteId)
+            assertVote(vote)
             assert(vote.voter == address)
         }
     }
@@ -157,11 +155,11 @@ class IdeasTest {
 
                 val vote = usoamic.getVote(ideaId, BigInteger.ZERO)
 
-                testVote(vote)
+                assertVote(vote)
 
                 assert(vote.comment == comment)
                 assert(vote.voteType == voteType)
-                assert(vote.voter == usoamic.account.address)
+                assert(vote.voter == usoamic.address)
 
                 assertThrows<MessageDecodingException> {
                     voteForIdea(voteType, ideaId, comment)
@@ -170,7 +168,7 @@ class IdeasTest {
         }
     }
 
-    private fun testVote(vote: Vote) {
+    private fun assertVote(vote: Vote) {
         assert(vote.isExist)
         assert(WalletUtils.isValidAddress(vote.voter))
     }
@@ -183,9 +181,9 @@ class IdeasTest {
             val ideaId = usoamic.getLastIdeaId()
             val idea = usoamic.getIdea(ideaId)
             assert(idea.isExist)
-            assert(idea.author == usoamic.account.address)
+            assert(idea.author == usoamic.address)
             assert(idea.description == description)
-            assert(idea.ideaId == ideaId)
+            assert(idea.ideaRefId == ideaId)
             assert(idea.ideaStatus == IdeaStatus.DISCUSSION)
             callback()
         }

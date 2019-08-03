@@ -36,9 +36,9 @@ class TransactionExplorerTest {
     @Test
     fun getTransactionTest() {
         val credentials = Credentials.create(Keys.createEcKeyPair())
-        val coin = Coin.fromCoin("10.231");
+        val coin = Coin.fromCoin("10.231")
 
-        val txHash = usoamic.transfer(TestConfig.PASSWORD, credentials.address, coin.toSat())
+        val txHash = usoamic.transferUso(TestConfig.PASSWORD, credentials.address, coin.toSat())
 
         usoamic.waitTransactionReceipt(txHash) {
             val numberOfTx = usoamic.getNumberOfTransactions()!!.subtract(BigInteger.ONE)

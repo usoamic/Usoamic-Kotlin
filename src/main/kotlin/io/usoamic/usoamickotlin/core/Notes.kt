@@ -30,8 +30,8 @@ open class Notes constructor(filename: String, contractAddress: String, node: St
     fun getNumberOfPublicNotes(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfPublicNotes")
 
     @Throws(Exception::class)
-    fun getNumberOfNotesByAddress(address: String): BigInteger? = executeCallUint256ValueReturn(
-        "getNumberOfNotesByAddress",
+    fun getNumberOfNotesByAuthor(address: String): BigInteger? = executeCallUint256ValueReturn(
+        "getNumberOfNotesByAuthor",
         listOf(Address(address))
     )
 
@@ -39,12 +39,12 @@ open class Notes constructor(filename: String, contractAddress: String, node: St
     fun getLastNoteId(): BigInteger? = getNumberOfPublicNotes()!!.subtract(BigInteger.ONE)
 
     @Throws(Exception::class)
-    fun getLastNoteIdByAddress(address: String): BigInteger? = getNumberOfNotesByAddress(address)!!.subtract(BigInteger.ONE)
+    fun getLastNoteIdByAddress(address: String): BigInteger? = getNumberOfNotesByAuthor(address)!!.subtract(BigInteger.ONE)
 
     @Throws(Exception::class)
-    fun getNoteByAddress(author: String, noteId: BigInteger): Note =
+    fun getNoteByAuthor(author: String, noteId: BigInteger): Note =
         getAndPrepareNote(
-            "getNoteByAddress",
+            "getNoteByAuthor",
             listOf(
                 Address(author),
                 Uint256(noteId)

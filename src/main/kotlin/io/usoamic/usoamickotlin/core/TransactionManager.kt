@@ -51,7 +51,7 @@ open class TransactionManager(filename: String, private val contractAddress: Str
         val encodedFunction = FunctionEncoder.encode(function)
 
         val ethCall = web3j.ethCall(
-            Transaction.createEthCallTransaction(account.address, contractAddress, encodedFunction),
+            Transaction.createEthCallTransaction(address, contractAddress, encodedFunction),
             DefaultBlockParameterName.LATEST
         ).send()
 
@@ -98,7 +98,7 @@ open class TransactionManager(filename: String, private val contractAddress: Str
     }
 
     @Throws(Exception::class)
-    fun transferEther(password: String, to: String, value: BigInteger): String {
+    fun transferEth(password: String, to: String, value: BigInteger): String {
         val credentials = getCredentials(password)
         val nonce = getNonce(credentials.address)
 

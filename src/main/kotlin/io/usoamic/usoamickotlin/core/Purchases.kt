@@ -51,8 +51,8 @@ open class Purchases constructor(filename: String, contractAddress: String, node
     }
 
     @Throws(Exception::class)
-    fun getLastPurchaseId(address: String): BigInteger? = getNumberOfPurchaseByAddress(address)!!.subtract(BigInteger.ONE)
+    fun getLastPurchaseId(address: String): BigInteger? = getNumberOfPurchasesByAddress(address)!!.subtract(BigInteger.ONE)
 
     @Throws(Exception::class)
-    fun getNumberOfPurchaseByAddress(address: String): BigInteger? = executeCallUint256ValueReturn("getNumberOfPurchaseByAddress", listOf(Address(address)))
+    fun getNumberOfPurchasesByAddress(address: String): BigInteger? = executeCallUint256ValueReturn("getNumberOfPurchasesByAddress", listOf(Address(address)))
 }

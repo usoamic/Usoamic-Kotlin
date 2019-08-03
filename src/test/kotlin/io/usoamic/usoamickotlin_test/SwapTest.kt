@@ -21,7 +21,7 @@ class SwapTest {
     @Test
     fun depositEthTest() {
         val value = Convert.toWei("0.1", Convert.Unit.ETHER).toBigInteger()
-        val txHash = usoamic.transferEther(TestConfig.PASSWORD, TestConfig.CONTRACT_ADDRESS, value)
+        val txHash = usoamic.transferEth(TestConfig.PASSWORD, TestConfig.CONTRACT_ADDRESS, value)
         usoamic.waitTransactionReceipt(txHash) {
             assert(it.status == "0x0")
         }
@@ -36,7 +36,7 @@ class SwapTest {
 
     @Test
     fun getSwappableTest() {
-        usoamic.getSwappable()
+        assert(usoamic.getSwappable() != null)
     }
 
     @Test
@@ -68,23 +68,33 @@ class SwapTest {
 
     @Test
     fun burnSwapTest() {
+        assert(usoamic.getSwappable()!!) {
+            println("Swap disabled!")
+        }
+
         val value = Coin.ONE_HUNDRED.toSat()
+        val accountBalance = usoamic.getEthBalance()
+        val accountTokenBalance = usoamic.getUsoBalance()!!
 
-        val address = usoamic.account.address
+        assert(accountTokenBalance > value)
 
-        val accountBalance = usoamic.getBalance(address)
-        val accountTokenBalance = usoamic.balanceOf(address)
-        val contractBalance = usoamic.getBalance(TestConfig.CONTRACT_ADDRESS)
+        val contractBalance = usoamic.getEthBalance(TestConfig.CONTRACT_ADDRESS)
+
+        val swapRate = usoamic.getSwapRate()!!
+        val numberOfWei = swapRate.multiply(value)!!
+
+        assert(contractBalance > numberOfWei) {
+            println("Need more ethers on contract address ${TestConfig.CONTRACT_ADDRESS}")
+        }
 
         val txHash = usoamic.burnSwap(TestConfig.PASSWORD, value)
         usoamic.waitTransactionReceipt(txHash) {
-            val newAccountBalance = usoamic.getBalance(address)
-            val newAccountTokenBalance = usoamic.balanceOf(address)
-            val newContractBalance = usoamic.getBalance(TestConfig.CONTRACT_ADDRESS)
+            val newAccountBalance = usoamic.getEthBalance()
+            val newAccountTokenBalance = usoamic.getUsoBalance()
+            val newContractBalance = usoamic.getEthBalance(TestConfig.CONTRACT_ADDRESS)
 
             assert(accountTokenBalance!!.subtract(newAccountTokenBalance).compareTo(value) == 0)
 
-            val swapRate = usoamic.getSwapRate()
             val ethValue = value.multiply(swapRate)
 
             val maxFee = BigInteger("-10000000000000000")

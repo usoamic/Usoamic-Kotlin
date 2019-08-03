@@ -10,5 +10,9 @@ open class MnemonicUtils : org.web3j.crypto.MnemonicUtils() {
             secureRandom.nextBytes(initialEntropy)
             return generateMnemonic(initialEntropy)
         }
+
+        fun isValidMnemonicPhrase(mnemonicPhrase: String): Boolean {
+            return validateMnemonic(mnemonicPhrase)
+        }
     }
 }

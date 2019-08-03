@@ -24,39 +24,6 @@ class UsoamicTest {
     }
 
     @Test
-    fun accountTest() {
-        val path = Path.of(TestConfig.ACCOUNT_FILENAME)
-        if(Files.exists(path)) {
-            Files.delete(path)
-        }
-        val mnemonicPhrase = "denial wrist culture into guess parade lesson black member shove wisdom strike"
-        val fileName = usoamic.importMnemonic(TestConfig.PASSWORD, mnemonicPhrase)
-        assert(WalletUtils.isValidAddress(usoamic.account.address))
-        assert(usoamic.account.address == TestConfig.DEFAULT_ADDRESS)
-    }
-
-    @Test
-    @RepeatedTest(500)
-    fun testAddresses() {
-        val credentials = Credentials.create(Keys.createEcKeyPair())
-        assert(WalletUtils.isValidAddress(credentials.address)/* && WalletUtils.isValidPrivateKey(credentials.ecKeyPair.privateKey.toString(16))*/)
-    }
-
-    @Test
-    fun accountTestWhenMnemonicPhraseIsEmpty() {
-        assertThrows<InvalidMnemonicPhraseException> {
-            usoamic.importMnemonic(TestConfig.PASSWORD, "")
-        }
-    }
-
-    @Test
-    fun accountTestWhenMnemonicPhraseIsInvalid() {
-        assertThrows<InvalidMnemonicPhraseException> {
-            usoamic.importMnemonic(TestConfig.PASSWORD, "culture into")
-        }
-    }
-
-    @Test
     fun balanceOfTest() {
         val balance = usoamic.balanceOf(TestConfig.OWNER_ADDRESS)!!
         require(balance >= BigInteger.ZERO)
@@ -64,14 +31,14 @@ class UsoamicTest {
 
     @Test
     fun burnTest() {
-        val address = usoamic.account.address
+        val address = usoamic.address
         val balance = usoamic.balanceOf(address)!!
         val value = Coin.fromCoin("1.2345").toSat()
 
         assert(balance >= value) {
             println("Need more tokens: $value")
         }
-        val ethBalance = usoamic.getBalance()
+        val ethBalance = usoamic.getEthBalance()
 
         assert(ethBalance > BigInteger.ZERO) {
             println("Need more Ether: $ethBalance")
@@ -91,7 +58,7 @@ class UsoamicTest {
         val bobCredentials = Credentials.create(Keys.createEcKeyPair())
         println("BobPrivateKey: ${bobCredentials.ecKeyPair.privateKey}")
 
-        val alice = usoamic.account.address
+        val alice = usoamic.address
         val bob = bobCredentials.address
         val aliceBalance = usoamic.balanceOf(alice)!!
         val bobBalance = usoamic.balanceOf(bob)!!
@@ -105,7 +72,7 @@ class UsoamicTest {
             println("Need more tokens: $value")
         }
 
-        val aliceEthBalance = usoamic.getBalance()
+        val aliceEthBalance = usoamic.getEthBalance()
         assert(aliceEthBalance > BigInteger.ZERO) {
             println("Need more Ether: $aliceEthBalance")
         }
@@ -113,7 +80,7 @@ class UsoamicTest {
         val estimatedAliceBalance = aliceBalance.subtract(value)
         val estimatedBobBalance = bobBalance.add(value)
 
-        val txHash = usoamic.transfer(TestConfig.PASSWORD, bob, value)
+        val txHash = usoamic.transferUso(TestConfig.PASSWORD, bob, value)
         usoamic.waitTransactionReceipt(txHash) {
             val newAliceBalance = usoamic.balanceOf(alice)
             val newBobBalance = usoamic.balanceOf(bob)
