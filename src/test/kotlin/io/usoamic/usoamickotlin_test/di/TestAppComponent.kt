@@ -15,5 +15,5 @@ interface TestAppComponent {
     fun inject(clazz: TransactionExplorerTest)
     fun inject(clazz: UsoamicTest)
     fun inject(clazz: IdeasTest)
-    fun inject(clazz: AccountTest)
+    fun inject(clazz: AccountManagerTest)
 }

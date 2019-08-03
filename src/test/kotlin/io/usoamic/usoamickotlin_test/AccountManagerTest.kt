@@ -13,7 +13,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import javax.inject.Inject
 
-class AccountTest {
+class AccountManagerTest {
     @Inject
     lateinit var usoamic: Usoamic
 
