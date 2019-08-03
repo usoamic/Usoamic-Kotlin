@@ -79,7 +79,8 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
         listOf(
             Uint256(ideaRefId),
             Uint256(voteRefId)
-        )
+        ),
+        voteRefId
     )
 
     @Throws(Exception::class)
@@ -137,7 +138,7 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
             .build()
     }
 
-    private fun getAndPrepareVote(name: String, inputParameters: List<Type<out Any>>): Vote {
+    private fun getAndPrepareVote(name: String, inputParameters: List<Type<out Any>>, voteRefId: BigInteger = BigInteger("-1")): Vote {
         val function = Function(
             name,
             inputParameters,
@@ -149,7 +150,8 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
 
         return Vote.Builder()
             .setIsExist(result[0].value as Boolean)
-            .setIdeaId(result[1].value as BigInteger)
+            .setIdeaRefId(result[1].value as BigInteger)
+            .setVoteRefId(voteRefId)
             .setVoteId(result[2].value as BigInteger)
             .setVoter(result[3].value as String)
             .setVoteType(VoteType.values()[voteTypeId.toInt()])
