@@ -7,6 +7,7 @@ import io.usoamic.usoamickotlin_test.di.TestUsoamicModule
 class BaseUnitTest {
     companion object {
         val componentTest: TestAppComponent = buildDagger()
+
         private fun buildDagger(): TestAppComponent {
             return DaggerTestAppComponent
                 .builder()
