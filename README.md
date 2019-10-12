@@ -17,4 +17,3 @@ dependencies {
     kaptTest 'com.google.dagger:dagger-compiler:2.23.2'
     testAnnotationProcessor "com.google.dagger:dagger-compiler:2.23.2"
 }
-```
