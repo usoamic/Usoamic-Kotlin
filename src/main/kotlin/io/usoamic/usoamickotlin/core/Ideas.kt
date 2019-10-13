@@ -92,7 +92,6 @@ open class Ideas constructor(filename: String, contractAddress: String, node: St
         )
     )
 
-
     @Throws(Exception::class)
     fun getNumberOfIdeas(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfIdeas")
 
