@@ -1,6 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val VERSION = "1.0.7"
+val VERSION = "1.0.8"
 
 plugins {
     java
