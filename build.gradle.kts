@@ -9,7 +9,7 @@ plugins {
 
 allprojects {
     group = "io.usoamic.usoamic-kotlin"
-    version = "1.0.9"
+    version = "1.0.10"
 }
 
 repositories {
