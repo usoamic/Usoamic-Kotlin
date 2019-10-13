@@ -8,18 +8,18 @@ import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameterName
 import org.web3j.protocol.http.HttpService
 import org.web3j.utils.Convert
+import org.web3j.utils.Files
+import java.io.File
 import java.io.IOException
 import java.math.BigDecimal
 import java.math.BigInteger
-import java.nio.file.Files
-import java.nio.file.Path
 
 open class AccountWrapper(private val filename: String, node: String) : AccountManager(filename) {
     protected val web3j: Web3j = Web3j.build(HttpService(node))
     private lateinit var _account: Account
     private val account: Account get() {
         if (!::_account.isInitialized) {
-            val json = Files.readString(Path.of(filename))
+            val json = Files.readString(File(filename))
             _account = Account.fromJson(json)
         }
         return _account
