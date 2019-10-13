@@ -13,7 +13,7 @@ configure<JavaPluginConvention> {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "12"
+        jvmTarget = "10"
     }
 }
 
@@ -34,8 +34,3 @@ dependencies {
     kaptTest("com.google.dagger", "dagger-compiler", "2.23.2")
     testAnnotationProcessor("com.google.dagger", "dagger-compiler", "2.23.2")
 }
-/*
-test {
-    useJUnitPlatform()
-}
- */
