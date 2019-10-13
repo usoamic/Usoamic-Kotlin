@@ -37,6 +37,6 @@ configure<JavaPluginConvention> {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "8"
+        jvmTarget = "1.8"
     }
 }
