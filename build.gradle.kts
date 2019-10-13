@@ -1,22 +1,15 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val VERSION = "1.0.8"
-
 plugins {
     java
+    maven
     kotlin("jvm") version "1.3.50"
     kotlin("kapt") version "1.3.50"
 }
 
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_10
-    targetCompatibility = JavaVersion.VERSION_1_10
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        jvmTarget = "10"
-    }
+allprojects {
+    group = "io.usoamic.usoamic-kotlin"
+    version = "1.0.10"
 }
 
 repositories {
@@ -35,4 +28,15 @@ dependencies {
     testCompile("com.google.dagger", "dagger", "2.23.2")
     kaptTest("com.google.dagger", "dagger-compiler", "2.23.2")
     testAnnotationProcessor("com.google.dagger", "dagger-compiler", "2.23.2")
+}
+
+configure<JavaPluginConvention> {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }

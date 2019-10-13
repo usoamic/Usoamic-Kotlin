@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/usoamic/Usoamic-Kotlin.svg)](https://jitpack.io/#usoamic/Usoamic-Kotlin)
 # Usoamic-Kotlin
 
 Kotlin library for interaction with Usoamic contract
