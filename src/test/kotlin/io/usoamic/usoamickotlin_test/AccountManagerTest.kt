@@ -9,8 +9,7 @@ import org.junit.jupiter.api.assertThrows
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
 import org.web3j.crypto.WalletUtils
-import java.nio.file.Files
-import java.nio.file.Path
+import java.io.File
 import javax.inject.Inject
 
 class AccountManagerTest {
@@ -23,9 +22,9 @@ class AccountManagerTest {
 
     @Test
     fun accountTest() {
-        val path = Path.of(TestConfig.ACCOUNT_FILENAME)
-        if(Files.exists(path)) {
-            Files.delete(path)
+        val file = File(TestConfig.ACCOUNT_FILENAME)
+        if(file.exists()) {
+            file.delete()
         }
         val mnemonicPhrase = "denial wrist culture into guess parade lesson black member shove wisdom strike"
         val fileName = usoamic.importMnemonic(TestConfig.PASSWORD, mnemonicPhrase)
