@@ -8,7 +8,7 @@ plugins {
 }
 
 allprojects {
-    group = "io.usoamic.usoamic-kotlin"
+    group = "io.usoamic.usoamickotlin"
     version = "1.0.10"
 }
 
