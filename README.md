@@ -3,6 +3,17 @@
 
 Kotlin library for interaction with Usoamic contract
 
+## Gradle Setup
+```gradle
+repositories {
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.usoamic:usoamic-kotlin:v1.0.10'
+}
+```
+
 ## Dependencies
 ```gradle
 dependencies {
