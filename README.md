@@ -1,5 +1,5 @@
-[![](https://jitpack.io/v/usoamic/Usoamic-Kotlin.svg)](https://jitpack.io/#usoamic/Usoamic-Kotlin)
-# Usoamic-Kotlin
+[![](https://jitpack.io/v/usoamic/usoamic.kt.svg)](https://jitpack.io/#usoamic/usoamic.kt)
+# usoamic.kt
 
 Kotlin library for interaction with Usoamic contract
 

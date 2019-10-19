@@ -1,1 +1,1 @@
-rootProject.name = "usoamic-kotlin"
+rootProject.name = "usoamic.kt"
