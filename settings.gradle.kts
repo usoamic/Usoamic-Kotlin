@@ -1,1 +1,1 @@
-rootProject.name = "usoamic.kt"
+rootProject.name = "usoamickt"
