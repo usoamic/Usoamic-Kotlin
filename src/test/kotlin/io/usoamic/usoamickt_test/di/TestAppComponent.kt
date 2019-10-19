@@ -1,7 +1,6 @@
 package io.usoamic.usoamickt_test.di
 
 import dagger.Component
-import io.usoamic.usoamickotlin_test.*
 import io.usoamic.usoamickt_test.*
 
 import javax.inject.Singleton
