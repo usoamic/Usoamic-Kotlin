@@ -19,7 +19,7 @@ class UsoamicTest {
 
     @Test
     fun balanceOfTest() {
-        val balance = usoamic.balanceOf(TestConfig.OWNER_ADDRESS)!!
+        val balance = usoamic.balanceOf(TestConfig.CONTRACT_CREATOR_ADDRESS)!!
         require(balance >= BigInteger.ZERO)
     }
 
