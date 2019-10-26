@@ -1,13 +1,21 @@
 package io.usoamic.usoamickt.core
 
+import io.usoamic.usoamickt.enum.NetworkType
+import io.usoamic.usoamickt.enum.NodeProvider
+import io.usoamic.usoamickt.model.Contract
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
-
 class Usoamic constructor(filename: String, contractAddress: String, node: String) : Swap(filename, contractAddress, node) {
+    constructor(filename: String, nodeProvider: NodeProvider, networkType: NetworkType) : this(
+        filename,
+        Contract.forNetwork(networkType),
+        nodeProvider.getUrl(networkType)
+    )
+
     @Throws(Exception::class)
     fun getUsoBalance(): BigInteger? {
         return balanceOf(address)
