@@ -1,4 +1,4 @@
-package io.usoamic.usoamickt.model
+package io.usoamic.usoamickt.other
 
 import io.usoamic.usoamickt.enum.NetworkType
 
