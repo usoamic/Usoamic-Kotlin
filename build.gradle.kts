@@ -9,7 +9,7 @@ plugins {
 
 allprojects {
     group = "io.usoamic"
-    version = "1.0.13"
+    version = "1.1"
 }
 
 repositories {
