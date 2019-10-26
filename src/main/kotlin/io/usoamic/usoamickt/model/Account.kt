@@ -15,6 +15,8 @@ data class Account(
     val timestamp: BigInteger
 ) {
     companion object {
+        const val FILENAME: String = "account.json"
+
         fun fromJson(json: String): Account {
             return Gson().fromJson(json, Account::class.java)
         }
