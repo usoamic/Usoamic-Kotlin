@@ -20,7 +20,7 @@ class PurchasesTest {
     fun makePurchaseTest() {
         val purchaser = usoamic.address
 
-        val ownerBalance = usoamic.balanceOf(TestConfig.OWNER_ADDRESS)!!
+        val ownerBalance = usoamic.balanceOf(TestConfig.CONTRACT_CREATOR_ADDRESS)!!
         val purchaserBalance = usoamic.balanceOf(purchaser)!!
 
         val appId = "appId" + Random.nextInt()
@@ -40,9 +40,8 @@ class PurchasesTest {
             assert(purchase.purchaseId == purchaseId)
             assert(purchase.cost.compareTo(cost) == 0)
 
-            val newOwnerBalance = usoamic.balanceOf(TestConfig.OWNER_ADDRESS)!!
+            val newOwnerBalance = usoamic.balanceOf(TestConfig.CONTRACT_CREATOR_ADDRESS)!!
             val newPurchaserBalance = usoamic.balanceOf(purchaser)!!
-
             assert(newOwnerBalance.subtract(ownerBalance).compareTo(cost) == 0)
             assert(purchaserBalance.subtract(newPurchaserBalance).compareTo(cost) == 0)
         }

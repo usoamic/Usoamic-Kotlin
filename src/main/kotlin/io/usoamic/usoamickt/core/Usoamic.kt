@@ -2,7 +2,8 @@ package io.usoamic.usoamickt.core
 
 import io.usoamic.usoamickt.enum.NetworkType
 import io.usoamic.usoamickt.enum.NodeProvider
-import io.usoamic.usoamickt.model.Contract
+import io.usoamic.usoamickt.other.Contract
+import io.usoamic.usoamickt.other.Node
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.Utf8String
@@ -10,10 +11,10 @@ import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
 class Usoamic constructor(filename: String, contractAddress: String, node: String) : Swap(filename, contractAddress, node) {
-    constructor(filename: String, nodeProvider: NodeProvider, networkType: NetworkType) : this(
+    constructor(filename: String, networkType: NetworkType, nodeProvider: NodeProvider) : this(
         filename,
         Contract.forNetwork(networkType),
-        nodeProvider.getUrl(networkType)
+        Node.by(networkType, nodeProvider)
     )
 
     @Throws(Exception::class)
