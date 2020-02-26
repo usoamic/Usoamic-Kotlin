@@ -3,6 +3,16 @@
 
 Kotlin library for interaction with Usoamic contract
 
+## Example For Android
+```
+val usoamic = Usoamic(
+    fileName = "FILE_NAME.json",
+    filePath = applicationContext.applicationInfo.dataDir,
+    networkType = NetworkType.MAINNET,
+    nodeProvider = NodeProvider.MYETHERWALLET
+)
+```
+
 ## Gradle Setup
 ```gradle
 repositories {
@@ -10,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.usoamic:usoamickt:v1.1.2'
+    implementation 'com.github.usoamic:usoamickt:v1.1.4'
 }
 ```
 
@@ -29,3 +39,4 @@ dependencies {
     kaptTest 'com.google.dagger:dagger-compiler:2.23.2'
     testAnnotationProcessor "com.google.dagger:dagger-compiler:2.23.2"
 }
+```
