@@ -5,7 +5,7 @@ import org.web3j.abi.datatypes.Bool
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
-open class Swap constructor(filename: String, contractAddress: String, node: String) : TransactionExplorer(filename, contractAddress, node) {
+open class Swap constructor(fileName: String, filePath: String, contractAddress: String, node: String) : TransactionExplorer(fileName, filePath, contractAddress, node) {
     @Throws(Exception::class)
     fun withdrawEth(password: String, value: BigInteger): String = executeTransaction(
             password,

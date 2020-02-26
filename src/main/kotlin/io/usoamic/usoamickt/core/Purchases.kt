@@ -9,7 +9,7 @@ import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
-open class Purchases constructor(filename: String, contractAddress: String, node: String) : Notes(filename, contractAddress, node) {
+open class Purchases constructor(fileName: String, filePath: String, contractAddress: String, node: String) : Notes(fileName, filePath, contractAddress, node) {
     @Throws(Exception::class)
     fun makePurchase(password: String, appId: String, purchaseId: String, cost: BigInteger): String = executeTransaction(
         password,

@@ -10,7 +10,7 @@ import java.math.BigInteger
 
 // bool exist, uint256 txId, address from, address to, uint256 value, uint256 timestamp
 
-open class TransactionExplorer constructor(filename: String, contractAddress: String, node: String) : Purchases(filename, contractAddress, node) {
+open class TransactionExplorer constructor(fileName: String, filePath: String, contractAddress: String, node: String) : Purchases(fileName, filePath, contractAddress, node) {
     @Throws(Exception::class)
     fun getTransaction(txId: BigInteger): Transaction {
         val function = Function(
