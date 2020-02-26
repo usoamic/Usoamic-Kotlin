@@ -10,9 +10,17 @@ import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
-class Usoamic constructor(filename: String, contractAddress: String, node: String) : Swap(filename, contractAddress, node) {
-    constructor(filename: String, networkType: NetworkType, nodeProvider: NodeProvider) : this(
-        filename,
+class Usoamic constructor(fileName: String, filePath: String, contractAddress: String, node: String) : Swap(fileName, filePath, contractAddress, node) {
+    constructor(fileName: String, networkType: NetworkType, nodeProvider: NodeProvider) : this(
+        fileName,
+        "",
+        Contract.forNetwork(networkType),
+        Node.by(networkType, nodeProvider)
+    )
+
+    constructor(fileName: String, filePath: String, networkType: NetworkType, nodeProvider: NodeProvider) : this(
+        fileName,
+        filePath,
         Contract.forNetwork(networkType),
         Node.by(networkType, nodeProvider)
     )

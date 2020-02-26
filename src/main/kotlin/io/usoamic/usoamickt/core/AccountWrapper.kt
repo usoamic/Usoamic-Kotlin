@@ -14,12 +14,15 @@ import java.io.IOException
 import java.math.BigDecimal
 import java.math.BigInteger
 
-open class AccountWrapper(private val filename: String, node: String) : AccountManager(filename) {
+open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) : AccountManager(fileName) {
     protected val web3j: Web3j = Web3j.build(HttpService(node))
     private lateinit var _account: Account
     private val account: Account get() {
         if (!::_account.isInitialized) {
-            val json = Files.readString(File(filename))
+            val file = File(
+                if(filePath.isEmpty()) fileName else "$filePath${File.separator}$fileName"
+            )
+            val json = Files.readString(file)
             _account = Account.fromJson(json)
         }
         return _account
@@ -45,6 +48,6 @@ open class AccountWrapper(private val filename: String, node: String) : AccountM
 
     @Throws(IOException::class, CipherException::class)
     protected fun getCredentials(password: String): Credentials {
-        return WalletUtils.loadCredentials(password, account.path + "/" + account.name)
+        return WalletUtils.loadCredentials(password, account.path + File.separator + account.name)
     }
 }
