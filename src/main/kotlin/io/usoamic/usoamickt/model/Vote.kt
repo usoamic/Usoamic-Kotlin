@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt.model
 
-import io.usoamic.usoamickt.enum.VoteType
+import io.usoamic.usoamickt.enumcls.VoteType
 import java.math.BigInteger
 
 data class Vote constructor(

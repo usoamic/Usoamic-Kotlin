@@ -1,7 +1,7 @@
 package io.usoamic.usoamickt.core
 
-import io.usoamic.usoamickt.enum.IdeaStatus
-import io.usoamic.usoamickt.enum.VoteType
+import io.usoamic.usoamickt.enumcls.IdeaStatus
+import io.usoamic.usoamickt.enumcls.VoteType
 import io.usoamic.usoamickt.model.Idea
 import io.usoamic.usoamickt.model.Vote
 import org.web3j.abi.TypeReference

@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt.core
 
-import io.usoamic.usoamickt.enum.NoteVisibility
+import io.usoamic.usoamickt.enumcls.NoteVisibility
 import io.usoamic.usoamickt.model.Note
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.*

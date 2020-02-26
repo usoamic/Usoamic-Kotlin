@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt_test.other
 
-import io.usoamic.usoamickt.enum.NetworkType
+import io.usoamic.usoamickt.enumcls.NetworkType
 import io.usoamic.usoamickt.other.Contract
 
 class TestConfig {

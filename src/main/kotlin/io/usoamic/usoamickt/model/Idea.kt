@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt.model
 
-import io.usoamic.usoamickt.enum.IdeaStatus
+import io.usoamic.usoamickt.enumcls.IdeaStatus
 import java.math.BigInteger
 
 data class Idea constructor(
