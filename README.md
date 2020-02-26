@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.usoamic:usoamickt:v1.1.3'
+    implementation 'com.github.usoamic:usoamickt:v1.1.4'
 }
 ```
 
