@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt.model
 
-import io.usoamic.usoamickt.enum.NoteVisibility
+import io.usoamic.usoamickt.enumcls.NoteVisibility
 import java.math.BigInteger
 
 data class Note constructor(

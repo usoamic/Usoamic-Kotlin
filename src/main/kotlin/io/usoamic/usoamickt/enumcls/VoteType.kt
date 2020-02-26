@@ -1,4 +1,4 @@
-package io.usoamic.usoamickt.enum
+package io.usoamic.usoamickt.enumcls
 
 enum class VoteType {
     SUPPORT,

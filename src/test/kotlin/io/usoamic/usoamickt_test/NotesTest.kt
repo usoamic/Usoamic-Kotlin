@@ -1,7 +1,7 @@
 package io.usoamic.usoamickt_test
 
 import io.usoamic.usoamickt.core.Usoamic
-import io.usoamic.usoamickt.enum.NoteVisibility
+import io.usoamic.usoamickt.enumcls.NoteVisibility
 import io.usoamic.usoamickt.model.Note
 import io.usoamic.usoamickt_test.other.TestConfig
 import org.junit.jupiter.api.Test

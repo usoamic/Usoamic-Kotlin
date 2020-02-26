@@ -1,8 +1,8 @@
 package io.usoamic.usoamickt_test
 
 import io.usoamic.usoamickt.core.Usoamic
-import io.usoamic.usoamickt.enum.IdeaStatus
-import io.usoamic.usoamickt.enum.VoteType
+import io.usoamic.usoamickt.enumcls.IdeaStatus
+import io.usoamic.usoamickt.enumcls.VoteType
 import io.usoamic.usoamickt.model.Vote
 import io.usoamic.usoamickt_test.other.TestConfig
 import org.junit.jupiter.api.Test

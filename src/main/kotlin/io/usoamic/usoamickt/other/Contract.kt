@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt.other
 
-import io.usoamic.usoamickt.enum.NetworkType
+import io.usoamic.usoamickt.enumcls.NetworkType
 
 object Contract {
     fun forNetwork(networkType: NetworkType): String {

@@ -1,7 +1,7 @@
 package io.usoamic.usoamickt.other
 
-import io.usoamic.usoamickt.enum.NetworkType
-import io.usoamic.usoamickt.enum.NodeProvider
+import io.usoamic.usoamickt.enumcls.NetworkType
+import io.usoamic.usoamickt.enumcls.NodeProvider
 import io.usoamic.usoamickt.exception.NodeProviderNotFound
 
 object Node {

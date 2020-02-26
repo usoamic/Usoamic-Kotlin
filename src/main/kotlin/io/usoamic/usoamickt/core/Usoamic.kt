@@ -1,7 +1,7 @@
 package io.usoamic.usoamickt.core
 
-import io.usoamic.usoamickt.enum.NetworkType
-import io.usoamic.usoamickt.enum.NodeProvider
+import io.usoamic.usoamickt.enumcls.NetworkType
+import io.usoamic.usoamickt.enumcls.NodeProvider
 import io.usoamic.usoamickt.other.Contract
 import io.usoamic.usoamickt.other.Node
 import org.web3j.abi.TypeReference
