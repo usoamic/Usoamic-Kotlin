@@ -46,7 +46,7 @@ open class AccountManager(private val filename: String) {
         val walletFileName = WalletUtils.generateWalletFile(password, keyPair, directory, false)
         val account = Account(credentials.address, directory.path, walletFileName, Timestamp.CURRENT)
 
-        FileWriter(filename).use {
+        FileWriter(if(path.isEmpty()) filename else "$path${File.separator}$filename").use {
             Gson().toJson(account, it)
         }
 
