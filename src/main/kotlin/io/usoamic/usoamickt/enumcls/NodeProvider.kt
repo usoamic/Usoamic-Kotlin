@@ -1,7 +1,7 @@
 package io.usoamic.usoamickt.enumcls
 
-enum class NodeProvider {
-    INFURA,
-    MYETHERWALLET,
-    ETHERSCAN
+sealed class NodeProvider {
+    data class Infura(val projectId: String, val projectSecret: String = "") : NodeProvider()
+    object MyEtherWallet : NodeProvider()
+    object EtherScan : NodeProvider()
 }
