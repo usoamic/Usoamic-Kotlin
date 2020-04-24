@@ -1,6 +1,14 @@
 package io.usoamic.usoamickt.enumcls
 
-enum class NetworkType {
-    MAINNET,
-    TESTNET
+sealed class NetworkType {
+    object Mainnet : NetworkType()
+    object Testnet : NetworkType()
+
+    companion object {
+        fun valueOf(type: String): NetworkType = when(type.toUpperCase()) {
+            "MAINNET" -> Mainnet
+            "TESTNET" -> Testnet
+            else -> throw ClassNotFoundException()
+        }
+    }
 }
