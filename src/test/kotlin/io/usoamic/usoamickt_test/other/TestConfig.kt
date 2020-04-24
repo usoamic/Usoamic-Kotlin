@@ -7,7 +7,7 @@ class TestConfig {
     companion object {
         const val ACCOUNT_FILENAME: String = "test_account.json"
         const val INFURA_PROJECT_ID: String = "fa8e5195184149f79e644292d2b31707"
-        val CONTRACT_ADDRESS: String = Contract.forNetwork(NetworkType.TESTNET)
+        val CONTRACT_ADDRESS: String = Contract.forNetwork(NetworkType.TestNet)
         const val DEFAULT_ADDRESS: String = "0x8b27fa2987630a1acd8d868ba84b2928de737bc2"
         const val CONTRACT_CREATOR_ADDRESS: String = "0xcabE4d50Fe44adc481FE965ecfc1B0B9a4389640"
         const val PASSWORD: String = "1234!"
