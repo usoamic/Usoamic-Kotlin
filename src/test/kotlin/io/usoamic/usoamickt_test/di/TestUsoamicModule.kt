@@ -13,6 +13,6 @@ class TestUsoamicModule {
     @Provides
     @Singleton
     fun provideContract(): Usoamic {
-        return Usoamic(TestConfig.ACCOUNT_FILENAME, NetworkType.TESTNET, NodeProvider.Infura(TestConfig.INFURA_PROJECT_ID))
+        return Usoamic(TestConfig.ACCOUNT_FILENAME, NetworkType.TestNet, NodeProvider.Infura(TestConfig.INFURA_PROJECT_ID))
     }
 }
