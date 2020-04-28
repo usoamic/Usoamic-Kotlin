@@ -1,4 +1,4 @@
-package io.usoamic.usoamickt.util.validateutil
+package io.usoamic.usoamickt.util
 
 import io.usoamic.usoamickt.exception.*
 import org.web3j.crypto.MnemonicUtils
