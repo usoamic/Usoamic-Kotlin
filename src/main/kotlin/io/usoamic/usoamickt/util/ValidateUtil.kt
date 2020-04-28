@@ -68,7 +68,11 @@ class ValidateUtil {
         }
 
         fun validateTransferValue(value: String) = apply {
-            val decimalVal = value.toBigDecimalOrNull() ?: throw EmptyValueException()
+            validateThatNotEmpty(
+                value,
+                EmptyValueException()
+            )
+            val decimalVal = value.toBigDecimalOrNull() ?: throw InvalidValueException()
             if (decimalVal <= BigDecimal.ZERO) {
                 throw InvalidValueException()
             }
