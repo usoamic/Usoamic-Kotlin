@@ -1,10 +1,10 @@
 package io.usoamic.usoamickt.core
 
 import com.google.gson.Gson
-import io.usoamic.usoamickt.exception.InvalidMnemonicPhraseException
-import io.usoamic.usoamickt.exception.InvalidPrivateKeyException
 import io.usoamic.usoamickt.model.Account
 import io.usoamic.usoamickt.util.Timestamp
+import io.usoamic.validateutilkt.error.InvalidMnemonicPhraseError
+import io.usoamic.validateutilkt.error.InvalidPrivateKeyError
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.ECKeyPair
 import org.web3j.crypto.Hash.sha256
@@ -15,19 +15,19 @@ import java.io.FileWriter
 import java.io.IOException
 
 open class AccountManager(private val filename: String) {
-    @Throws(InvalidPrivateKeyException::class, IOException::class)
+    @Throws(InvalidPrivateKeyError::class, IOException::class)
     fun importPrivateKey(password: String, privateKey: String, path: String = ""): String {
         if(!WalletUtils.isValidPrivateKey(privateKey)) {
-            throw InvalidPrivateKeyException()
+            throw InvalidPrivateKeyError()
         }
         val credentials = Credentials.create(privateKey)
         return import(password, credentials.ecKeyPair, path)
     }
 
-    @Throws(InvalidMnemonicPhraseException::class, IOException::class)
+    @Throws(InvalidMnemonicPhraseError::class, IOException::class)
     fun importMnemonic(password: String, mnemonic: String, path: String = ""): String {
         if(!MnemonicUtils.validateMnemonic(mnemonic)) {
-            throw InvalidMnemonicPhraseException()
+            throw InvalidMnemonicPhraseError()
         }
 
         val seed = MnemonicUtils.generateSeed(mnemonic, password)

@@ -14,6 +14,7 @@ allprojects {
 
 repositories {
     mavenCentral()
+    maven(url = "https://jitpack.io")
 }
 
 dependencies {
@@ -21,6 +22,7 @@ dependencies {
     compile("com.google.dagger", "dagger", "2.27")
     compile("com.google.code.gson", "gson", "2.8.5")
     compile("org.web3j", "core", "4.3.1")
+    compile("com.github.usoamic", "validateutilkt", "16304cc35d")
     compile("javax.annotation", "javax.annotation-api", "1.3.2")
     kapt("com.google.dagger", "dagger-compiler", "2.27")
 
