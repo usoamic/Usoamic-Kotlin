@@ -28,7 +28,14 @@ open class AccountWrapper(private val fileName: String, private val filePath: St
         return _account
     }
 
-    val hasAccount: Boolean get() = ::_account.isInitialized
+    val hasAccount: Boolean get() {
+        return try {
+            address.isNotEmpty()
+        } catch (e: Exception) {
+            false
+        }
+    }
+
     val address: String get() = account.address
 
     @Throws(Exception::class)
