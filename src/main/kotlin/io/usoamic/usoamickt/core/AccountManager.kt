@@ -14,7 +14,7 @@ import java.io.File
 import java.io.FileWriter
 import java.io.IOException
 
-open class AccountManager(private val filename: String) {
+open class AccountManager(private val fileName: String, private val filePath: String) {
     @Throws(InvalidPrivateKeyError::class, IOException::class)
     fun importPrivateKey(password: String, privateKey: String, path: String = ""): String {
         if(!WalletUtils.isValidPrivateKey(privateKey)) {
@@ -39,14 +39,14 @@ open class AccountManager(private val filename: String) {
     private fun import(password: String, keyPair: ECKeyPair, path: String): String {
         val credentials = Credentials.create(keyPair)
 
-        val directory = File(if(path.isEmpty()) WalletUtils.getDefaultKeyDirectory() else path)
+        val directory = File(if(path.isEmpty()) filePath else path)
         if(!directory.exists()) {
             directory.mkdir()
         }
         val walletFileName = WalletUtils.generateWalletFile(password, keyPair, directory, false)
         val account = Account(credentials.address, directory.path, walletFileName, Timestamp.CURRENT)
 
-        FileWriter(if(path.isEmpty()) filename else "$path${File.separator}$filename").use {
+        FileWriter(if(path.isEmpty()) fileName else "$path${File.separator}$fileName").use {
             Gson().toJson(account, it)
         }
 

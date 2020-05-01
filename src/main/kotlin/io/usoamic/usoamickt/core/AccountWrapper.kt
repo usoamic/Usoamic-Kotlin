@@ -14,7 +14,7 @@ import java.io.IOException
 import java.math.BigDecimal
 import java.math.BigInteger
 
-open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) : AccountManager(fileName) {
+open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) : AccountManager(fileName, filePath) {
     protected val web3j: Web3j = Web3j.build(HttpService(node))
     private lateinit var _account: Account
     private val account: Account get() {
