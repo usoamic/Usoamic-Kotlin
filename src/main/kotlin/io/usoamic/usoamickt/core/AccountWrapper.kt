@@ -38,6 +38,10 @@ open class AccountWrapper(private val fileName: String, private val filePath: St
 
     val address: String get() = account.address
 
+    fun getAddress(password: String): String {
+        return getCredentials(password).address
+    }
+
     @Throws(Exception::class)
     fun getEthBalance(): BigInteger {
         return getEthBalance(address)
