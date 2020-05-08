@@ -19,9 +19,7 @@ open class AccountWrapper(private val fileName: String, private val filePath: St
     private lateinit var _account: Account
     val account: Account get() {
         if (!::_account.isInitialized) {
-            val file = File(
-                if(filePath.isEmpty()) fileName else "$filePath${File.separator}$fileName"
-            )
+            val file = Account.initFile(filePath, fileName)
             val json = Files.readString(file)
             _account = Account.fromJson(json)
         }
