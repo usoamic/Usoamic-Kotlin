@@ -10,6 +10,7 @@ import org.web3j.protocol.http.HttpService
 import org.web3j.utils.Convert
 import org.web3j.utils.Files
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -17,7 +18,7 @@ import java.math.BigInteger
 open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) : AccountManager(fileName, filePath) {
     protected val web3j: Web3j = Web3j.build(HttpService(node))
     private lateinit var _account: Account
-    val account: Account get() {
+    private val account: Account get() {
         if (!::_account.isInitialized) {
             val file = Account.initFile(filePath, fileName)
             val json = Files.readString(file)
@@ -38,6 +39,13 @@ open class AccountWrapper(private val fileName: String, private val filePath: St
 
     fun getAddress(password: String): String {
         return getCredentials(password).address
+    }
+
+    fun removeWallet(): Boolean {
+        if(!account.file.delete()) {
+            throw FileNotFoundException()
+        }
+        return true
     }
 
     @Throws(Exception::class)
