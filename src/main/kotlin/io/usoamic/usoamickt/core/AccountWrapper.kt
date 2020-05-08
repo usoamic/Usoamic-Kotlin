@@ -18,10 +18,10 @@ import java.math.BigInteger
 open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) : AccountManager(fileName, filePath) {
     protected val web3j: Web3j = Web3j.build(HttpService(node))
     private lateinit var _account: Account
+    private val accountFile get() = Account.initFile(filePath, fileName)
     private val account: Account get() {
         if (!::_account.isInitialized) {
-            val file = Account.initFile(filePath, fileName)
-            val json = Files.readString(file)
+            val json = Files.readString(accountFile)
             _account = Account.fromJson(json)
         }
         return _account
@@ -42,7 +42,7 @@ open class AccountWrapper(private val fileName: String, private val filePath: St
     }
 
     fun removeWallet(): Boolean {
-        if(!account.file.delete()) {
+        if(!account.file.delete() || !accountFile.delete()) {
             throw FileNotFoundException()
         }
         return true
