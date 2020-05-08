@@ -17,7 +17,7 @@ import java.math.BigInteger
 open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) : AccountManager(fileName, filePath) {
     protected val web3j: Web3j = Web3j.build(HttpService(node))
     private lateinit var _account: Account
-    private val account: Account get() {
+    val account: Account get() {
         if (!::_account.isInitialized) {
             val file = File(
                 if(filePath.isEmpty()) fileName else "$filePath${File.separator}$fileName"
