@@ -14,14 +14,12 @@ import java.math.BigInteger
 open class Ideas constructor(fileName: String, filePath: String, contractAddress: String, node: String) :
     Owner(fileName, filePath, contractAddress, node) {
 
-    @Throws(Exception::class)
     fun addIdea(password: String, description: String): String = executeTransaction(
         password,
         "addIdea",
         listOf(Utf8String(description))
     )
 
-    @Throws(Exception::class)
     fun setIdeaStatus(password: String, ideaRefId: BigInteger, status: IdeaStatus) = executeTransaction(
         password,
         "setIdeaStatus",
@@ -31,19 +29,15 @@ open class Ideas constructor(fileName: String, filePath: String, contractAddress
         )
     )
 
-    @Throws(Exception::class)
     fun supportIdea(password: String, ideaRefId: BigInteger, comment: String): String =
         voteForIdea(password, VoteType.SUPPORT, ideaRefId, comment)
 
-    @Throws(Exception::class)
     fun abstainIdea(password: String, ideaRefId: BigInteger, comment: String): String =
         voteForIdea(password, VoteType.ABSTAIN, ideaRefId, comment)
 
-    @Throws(Exception::class)
     fun againstIdea(password: String, ideaRefId: BigInteger, comment: String): String =
         voteForIdea(password, VoteType.AGAINST, ideaRefId, comment)
 
-    @Throws(Exception::class)
     private fun voteForIdea(password: String, voteType: VoteType, ideaRefId: BigInteger, comment: String): String =
         executeTransaction(
             password,
@@ -58,13 +52,11 @@ open class Ideas constructor(fileName: String, filePath: String, contractAddress
             )
         )
 
-    @Throws(Exception::class)
     fun getIdea(ideaRefId: BigInteger): Idea = getAndPrepareIdea(
         "getIdea",
         listOf(Uint256(ideaRefId))
     )
 
-    @Throws(Exception::class)
     fun getIdeaByAuthor(author: String, ideaId: BigInteger): Idea = getAndPrepareIdea(
         "getIdeaByAuthor",
         listOf(
@@ -73,7 +65,6 @@ open class Ideas constructor(fileName: String, filePath: String, contractAddress
         )
     )
 
-    @Throws(Exception::class)
     fun getVote(ideaRefId: BigInteger, voteRefId: BigInteger): Vote = getAndPrepareVote(
         "getVote",
         listOf(
@@ -83,7 +74,6 @@ open class Ideas constructor(fileName: String, filePath: String, contractAddress
         voteRefId
     )
 
-    @Throws(Exception::class)
     fun getVoteByVoter(voter: String, voteId: BigInteger): Vote = getAndPrepareVote(
         "getVoteByVoter",
         listOf(
@@ -92,25 +82,20 @@ open class Ideas constructor(fileName: String, filePath: String, contractAddress
         )
     )
 
-    @Throws(Exception::class)
     fun getNumberOfIdeas(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfIdeas")
 
-    @Throws(Exception::class)
     fun getNumberOfIdeasByAuthor(author: String): BigInteger? = executeCallUint256ValueReturn(
         "getNumberOfIdeasByAuthor",
         listOf(Address(author))
     )
 
-    @Throws(Exception::class)
     fun getNumberOfVotesByVoter(voter: String): BigInteger? = executeCallUint256ValueReturn(
         "getNumberOfVotesByVoter",
         listOf(Address(voter))
     )
 
-    @Throws(Exception::class)
     fun getLastIdeaId(): BigInteger = getNumberOfIdeas()!!.subtract(BigInteger.ONE)
 
-    @Throws(Exception::class)
     fun getLastIdeaIdByAuthor(author: String): BigInteger = getNumberOfIdeasByAuthor(author)!!.subtract(BigInteger.ONE)
 
     private fun getAndPrepareIdea(name: String, inputParameters: List<Type<out Any>>): Idea {

@@ -12,10 +12,8 @@ import org.web3j.crypto.MnemonicUtils
 import org.web3j.crypto.WalletUtils
 import java.io.File
 import java.io.FileWriter
-import java.io.IOException
 
 open class AccountManager(private val fileName: String, private val filePath: String) {
-    @Throws(InvalidPrivateKeyError::class, IOException::class)
     fun importPrivateKey(password: String, privateKey: String): String {
         if(!WalletUtils.isValidPrivateKey(privateKey)) {
             throw InvalidPrivateKeyError()
@@ -24,7 +22,6 @@ open class AccountManager(private val fileName: String, private val filePath: St
         return import(password, credentials.ecKeyPair)
     }
 
-    @Throws(InvalidMnemonicPhraseError::class, IOException::class)
     fun importMnemonic(password: String, mnemonic: String): String {
         if(!MnemonicUtils.validateMnemonic(mnemonic)) {
             throw InvalidMnemonicPhraseError()
@@ -35,7 +32,6 @@ open class AccountManager(private val fileName: String, private val filePath: St
         return import(password, keyPair)
     }
 
-    @Throws(Exception::class)
     private fun import(password: String, keyPair: ECKeyPair): String {
         val credentials = Credentials.create(keyPair)
 

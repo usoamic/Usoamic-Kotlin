@@ -11,7 +11,6 @@ import java.math.BigInteger
 // bool exist, uint256 txId, address from, address to, uint256 value, uint256 timestamp
 
 open class TransactionExplorer constructor(fileName: String, filePath: String, contractAddress: String, node: String) : Purchases(fileName, filePath, contractAddress, node) {
-    @Throws(Exception::class)
     fun getTransaction(txId: BigInteger): Transaction {
         val function = Function(
             "getTransaction",
@@ -36,9 +35,7 @@ open class TransactionExplorer constructor(fileName: String, filePath: String, c
             .build()
     }
 
-    @Throws(Exception::class)
     fun getNumberOfTransactions(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfTransactions")
 
-    @Throws(Exception::class)
     fun getNumberOfTransactionsByAddress(owner: String): BigInteger? = executeCallUint256ValueReturn("getNumberOfTransactionsByAddress", listOf(Address(owner)))
 }
