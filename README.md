@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.usoamic:usoamickt:v1.1.6.1'
+    implementation 'com.github.usoamic:usoamickt:v1.2.1'
 }
 ```
 
@@ -30,7 +30,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'com.google.dagger:dagger:2.25.2'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'org.web3j:core:4.3.1'
+    implementation 'org.web3j:core:4.6.0'
     kapt 'com.google.dagger:dagger-compiler:2.25.2'
 
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5:1.3.50'
