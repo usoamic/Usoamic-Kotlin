@@ -82,9 +82,11 @@ open class TransactionManager(fileName: String, filePath: String, private val co
 
         val estimateGas = web3j.ethEstimateGas(transaction).send()
 
+        val gasPrice = web3j.ethGasPrice().send().gasPrice
+
         val rawTransaction = RawTransaction.createTransaction(
             nonce,
-            GAS_PRICE,
+            gasPrice,
             estimateGas.amountUsed,
             contractAddress,
             encodedFunction
