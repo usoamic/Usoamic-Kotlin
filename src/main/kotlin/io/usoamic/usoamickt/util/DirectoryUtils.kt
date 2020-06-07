@@ -3,14 +3,31 @@ package io.usoamic.usoamickt.util
 import java.io.File
 
 object DirectoryUtils {
-    const val DIRECTORY = "Usoamic"
-    const val LINUX_DIRECTORY = ".usoamic"
+    private const val DIRECTORY = "Usoamic"
+    private const val LINUX_DIRECTORY = ".usoamic"
 
     fun getDefaultKeyDirectory(): String {
         return getDefaultKeyDirectory(System.getProperty("os.name"))
     }
 
-    fun getDefaultKeyDirectory(osName1: String): String {
+    fun getTestnetKeyDirectory(): String {
+        return String.format(
+            "%s%stestnet%skeystore",
+            getDefaultKeyDirectory(),
+            File.separator,
+            File.separator
+        )
+    }
+
+    fun getMainnetKeyDirectory(): String {
+        return String.format(
+            "%s%skeystore",
+            getDefaultKeyDirectory(),
+            File.separator
+        )
+    }
+
+    private fun getDefaultKeyDirectory(osName1: String): String {
         val osName = osName1.toLowerCase()
         return when {
             osName.startsWith("mac") -> {
@@ -30,22 +47,5 @@ object DirectoryUtils {
                 )
             }
         }
-    }
-
-    fun getTestnetKeyDirectory(): String {
-        return String.format(
-            "%s%stestnet%skeystore",
-            getDefaultKeyDirectory(),
-            File.separator,
-            File.separator
-        )
-    }
-
-    fun getMainnetKeyDirectory(): String {
-        return String.format(
-            "%s%skeystore",
-            getDefaultKeyDirectory(),
-            File.separator
-        )
     }
 }
