@@ -26,6 +26,8 @@ open class TransactionManager(
     filePath,
     node
 ) {
+    private val DEFINED_GAS_PRICE = BigInteger.valueOf(35_000_000_000)
+
     protected fun <T : Any?> executeCallSingleValueReturn(function: Function): T? {
         val values = executeCall(function)
         return if (values.isNotEmpty()) (values[0].value as T) else null
@@ -129,7 +131,11 @@ open class TransactionManager(
 
     }
 
-    fun getGasPrice(): BigInteger = web3j.ethGasPrice().send().gasPrice
+    fun getGasPrice(): BigInteger {
+        val nGasPrice = web3j.ethGasPrice().send().gasPrice
+        val dGasPrice = DEFINED_GAS_PRICE
+        return nGasPrice.max(dGasPrice)
+    }
 
     private fun sendTransaction(rawTransaction: RawTransaction, credentials: Credentials): String {
         val signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials)
