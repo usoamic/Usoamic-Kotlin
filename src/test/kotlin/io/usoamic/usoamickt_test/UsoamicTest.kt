@@ -103,6 +103,6 @@ class UsoamicTest {
     fun getGasPrice() {
         val price = usoamic.getGasPrice()
         println("price = $price")
-        require(price >= BigInteger.valueOf(10_000_000_000))
+        require(price >= BigInteger.valueOf(1_000_000_000))
     }
 }
