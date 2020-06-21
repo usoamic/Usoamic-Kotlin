@@ -13,25 +13,27 @@ import java.io.FileNotFoundException
 import java.math.BigDecimal
 import java.math.BigInteger
 
-open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) : AccountManager(fileName, filePath) {
-    protected val web3j: Web3j = Web3j.build(HttpService(node))
+open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) :
+    EthereumCore(fileName, filePath, node) {
     private lateinit var _account: Account
     private val accountFile get() = Account.initFile(filePath, fileName)
-    private val account: Account get() {
-        if (!::_account.isInitialized) {
-            val json = Files.readString(accountFile)
-            _account = Account.fromJson(json)
+    private val account: Account
+        get() {
+            if (!::_account.isInitialized) {
+                val json = Files.readString(accountFile)
+                _account = Account.fromJson(json)
+            }
+            return _account
         }
-        return _account
-    }
 
-    val hasAccount: Boolean get() {
-        return try {
-            address.isNotEmpty()
-        } catch (e: Exception) {
-            false
+    val hasAccount: Boolean
+        get() {
+            return try {
+                address.isNotEmpty()
+            } catch (e: Exception) {
+                false
+            }
         }
-    }
 
     val address: String get() = account.address
 
@@ -40,21 +42,15 @@ open class AccountWrapper(private val fileName: String, private val filePath: St
     }
 
     fun removeWallet(): Boolean {
-        if(!account.file.delete() || !accountFile.delete()) {
+        if (!account.file.delete() || !accountFile.delete()) {
             throw FileNotFoundException()
         }
         return true
     }
 
-
     fun getEthBalance(): BigInteger {
         return getEthBalance(address)
     }
-
-    fun getEthBalance(address: String): BigInteger {
-        return web3j.ethGetBalance(address, DefaultBlockParameterName.LATEST).send().balance
-    }
-
 
     fun getConvertedBalance(unit: Convert.Unit = Convert.Unit.WEI): BigDecimal {
         return Convert.fromWei(getEthBalance().toString(), unit)
