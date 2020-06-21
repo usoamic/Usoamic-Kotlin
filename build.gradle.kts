@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 object Version {
-    const val kotlinStdLib = "1.3.50"
     const val dagger = "2.27"
     const val gson = "2.8.5"
     const val web3j = "4.6.0"
@@ -15,8 +14,8 @@ object Version {
 plugins {
     java
     maven
-    kotlin("jvm") version "1.3.50"
-    kotlin("kapt") version "1.3.50"
+    kotlin("jvm") version "1.3.72"
+    kotlin("kapt") version "1.3.72"
 }
 
 allprojects {
@@ -30,17 +29,18 @@ repositories {
 }
 
 dependencies {
-    compile("org.jetbrains.kotlin", "kotlin-stdlib", Version.kotlinStdLib)
-    compile("com.google.dagger", "dagger", Version.dagger)
-    compile("com.google.code.gson", "gson", Version.gson)
-    compile("org.web3j", "core", Version.web3j)
-    compile("com.github.usoamic", "validateutilkt", Version.validateUtilKt)
-    compile("javax.annotation", "javax.annotation-api", Version.javaxAnnotationApi)
+    implementation(kotlin("stdlib"))
+    implementation(kotlin("stdlib-jdk8"))
+    implementation("com.google.dagger", "dagger", Version.dagger)
+    implementation("com.google.code.gson", "gson", Version.gson)
+    implementation("org.web3j", "core", Version.web3j)
+    implementation("com.github.usoamic", "validateutilkt", Version.validateUtilKt)
+    implementation("javax.annotation", "javax.annotation-api", Version.javaxAnnotationApi)
     kapt("com.google.dagger", "dagger-compiler", Version.daggerCompiler)
 
-    testCompile("org.jetbrains.kotlin", "kotlin-test-junit5", Version.kotlinTestJunit5)
-    testCompile("org.junit.jupiter", "junit-jupiter", Version.junitJupiter)
-    testCompile("javax.annotation", "javax.annotation-api", Version.javaxAnnotationApi)
+    testImplementation("org.jetbrains.kotlin", "kotlin-test-junit5", Version.kotlinTestJunit5)
+    testImplementation("org.junit.jupiter", "junit-jupiter", Version.junitJupiter)
+    testImplementation("javax.annotation", "javax.annotation-api", Version.javaxAnnotationApi)
     kaptTest("com.google.dagger", "dagger-compiler", Version.daggerCompiler)
     testAnnotationProcessor("com.google.dagger", "dagger-compiler", Version.daggerCompiler)
 }
@@ -60,4 +60,12 @@ tasks {
     "test"(Test::class) {
         useJUnitPlatform()
     }
+}
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}
+val compileTestKotlin: KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
