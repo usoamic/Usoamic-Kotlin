@@ -1,6 +1,7 @@
 package io.usoamic.usoamickt.core
 
 import io.usoamic.usoamickt.enumcls.IdeaStatus
+import io.usoamic.usoamickt.enumcls.TxSpeed
 import io.usoamic.usoamickt.enumcls.VoteType
 import io.usoamic.usoamickt.model.Idea
 import io.usoamic.usoamickt.model.Vote
@@ -14,31 +15,33 @@ import java.math.BigInteger
 open class Ideas constructor(fileName: String, filePath: String, contractAddress: String, node: String) :
     Owner(fileName, filePath, contractAddress, node) {
 
-    fun addIdea(password: String, description: String): String = executeTransaction(
+    fun addIdea(password: String, description: String, txSpeed: TxSpeed = TxSpeed.Auto): String = executeTransaction(
         password,
         "addIdea",
-        listOf(Utf8String(description))
+        listOf(Utf8String(description)),
+        txSpeed
     )
 
-    fun setIdeaStatus(password: String, ideaRefId: BigInteger, status: IdeaStatus) = executeTransaction(
+    fun setIdeaStatus(password: String, ideaRefId: BigInteger, status: IdeaStatus, txSpeed: TxSpeed = TxSpeed.Auto) = executeTransaction(
         password,
         "setIdeaStatus",
         listOf(
             Uint256(ideaRefId),
             Uint8(status.ordinal.toLong())
-        )
+        ),
+        txSpeed
     )
 
-    fun supportIdea(password: String, ideaRefId: BigInteger, comment: String): String =
-        voteForIdea(password, VoteType.SUPPORT, ideaRefId, comment)
+    fun supportIdea(password: String, ideaRefId: BigInteger, comment: String, txSpeed: TxSpeed = TxSpeed.Auto): String =
+        voteForIdea(password, VoteType.SUPPORT, ideaRefId, comment, txSpeed)
 
-    fun abstainIdea(password: String, ideaRefId: BigInteger, comment: String): String =
-        voteForIdea(password, VoteType.ABSTAIN, ideaRefId, comment)
+    fun abstainIdea(password: String, ideaRefId: BigInteger, comment: String, txSpeed: TxSpeed = TxSpeed.Auto): String =
+        voteForIdea(password, VoteType.ABSTAIN, ideaRefId, comment, txSpeed)
 
-    fun againstIdea(password: String, ideaRefId: BigInteger, comment: String): String =
-        voteForIdea(password, VoteType.AGAINST, ideaRefId, comment)
+    fun againstIdea(password: String, ideaRefId: BigInteger, comment: String, txSpeed: TxSpeed = TxSpeed.Auto): String =
+        voteForIdea(password, VoteType.AGAINST, ideaRefId, comment, txSpeed)
 
-    private fun voteForIdea(password: String, voteType: VoteType, ideaRefId: BigInteger, comment: String): String =
+    private fun voteForIdea(password: String, voteType: VoteType, ideaRefId: BigInteger, comment: String, txSpeed: TxSpeed): String =
         executeTransaction(
             password,
             when (voteType) {
@@ -49,7 +52,8 @@ open class Ideas constructor(fileName: String, filePath: String, contractAddress
             listOf(
                 Uint256(ideaRefId),
                 Utf8String(comment)
-            )
+            ),
+            txSpeed
         )
 
     fun getIdea(ideaRefId: BigInteger): Idea = getAndPrepareIdea(

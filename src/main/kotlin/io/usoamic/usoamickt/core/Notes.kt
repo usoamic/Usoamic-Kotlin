@@ -1,6 +1,7 @@
 package io.usoamic.usoamickt.core
 
 import io.usoamic.usoamickt.enumcls.NoteVisibility
+import io.usoamic.usoamickt.enumcls.TxSpeed
 import io.usoamic.usoamickt.model.Note
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.*
@@ -14,13 +15,14 @@ open class Notes constructor(fileName: String, filePath: String, contractAddress
 
     fun addUnlistedNote(password: String, content: String): String = addNote(password, NoteVisibility.UNLISTED, content)
 
-    private fun addNote(password: String, noteVisibility: NoteVisibility, content: String): String = executeTransaction(
+    private fun addNote(password: String, noteVisibility: NoteVisibility, content: String, txSpeed: TxSpeed = TxSpeed.Auto): String = executeTransaction(
         password,
         when(noteVisibility) {
             NoteVisibility.PUBLIC -> "addPublicNote"
             NoteVisibility.UNLISTED -> "addUnlistedNote"
         },
-        listOf(Utf8String(content))
+        listOf(Utf8String(content)),
+        txSpeed
     )
 
     fun getNumberOfPublicNotes(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfPublicNotes")

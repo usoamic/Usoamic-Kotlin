@@ -1,5 +1,6 @@
 package io.usoamic.usoamickt.core
 
+import io.usoamic.usoamickt.enumcls.TxSpeed
 import io.usoamic.usoamickt.model.Purchase
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Address
@@ -10,14 +11,15 @@ import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
 open class Purchases constructor(fileName: String, filePath: String, contractAddress: String, node: String) : Notes(fileName, filePath, contractAddress, node) {
-    fun makePurchase(password: String, appId: String, purchaseId: String, cost: BigInteger): String = executeTransaction(
+    fun makePurchase(password: String, appId: String, purchaseId: String, cost: BigInteger, txSpeed: TxSpeed = TxSpeed.Auto): String = executeTransaction(
         password,
         "makePurchase",
         listOf(
             Utf8String(appId),
             Utf8String(purchaseId),
             Uint256(cost)
-        )
+        ),
+        txSpeed
     )
 
     fun getPurchaseByAddress(address: String, id: BigInteger): Purchase {

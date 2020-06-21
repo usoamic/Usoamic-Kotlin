@@ -1,5 +1,7 @@
 package io.usoamic.usoamickt.core
 
+import io.usoamic.usoamickt.enumcls.TxSpeed
+import io.usoamic.usoamickt.util.DefaultGasProvider
 import org.web3j.abi.FunctionEncoder
 import org.web3j.abi.FunctionReturnDecoder
 import org.web3j.abi.TypeReference
@@ -26,8 +28,6 @@ open class TransactionManager(
     filePath,
     node
 ) {
-    private val DEFINED_GAS_PRICE = BigInteger.valueOf(35_000_000_000)
-
     protected fun <T : Any?> executeCallSingleValueReturn(function: Function): T? {
         val values = executeCall(function)
         return if (values.isNotEmpty()) (values[0].value as T) else null
@@ -68,16 +68,16 @@ open class TransactionManager(
         return FunctionReturnDecoder.decode(ethCall.value, function.outputParameters)
     }
 
-    protected fun executeTransaction(password: String, name: String, inputParameters: List<Type<out Any>>): String {
+    protected fun executeTransaction(password: String, name: String, inputParameters: List<Type<out Any>>, txSpeed: TxSpeed): String {
         val function = Function(
             name,
             inputParameters,
             emptyList()
         )
-        return executeTransactionFunctionPassValue(password, function)
+        return executeTransactionFunctionPassValue(password, function, txSpeed)
     }
 
-    protected fun executeTransactionFunctionPassValue(password: String, function: Function): String {
+    protected fun executeTransactionFunctionPassValue(password: String, function: Function, txSpeed: TxSpeed): String {
         val credentials = getCredentials(password)
         val nonce = getNonce(credentials.address)
         val encodedFunction = FunctionEncoder.encode(function)
@@ -92,7 +92,7 @@ open class TransactionManager(
 
         val rawTransaction = RawTransaction.createTransaction(
             nonce,
-            getGasPrice(),
+            getGasPrice(txSpeed),
             estimateGas.amountUsed,
             contractAddress,
             encodedFunction
@@ -101,13 +101,13 @@ open class TransactionManager(
         return sendTransaction(rawTransaction, credentials)
     }
 
-    fun transferEth(password: String, to: String, value: BigInteger): String {
+    fun transferEth(password: String, to: String, value: BigInteger, txSpeed: TxSpeed): String {
         val credentials = getCredentials(password)
         val nonce = getNonce(credentials.address)
 
         val rawTransaction = RawTransaction.createEtherTransaction(
             nonce,
-            getGasPrice(),
+            getGasPrice(txSpeed),
             GAS_LIMIT,
             to,
             value
@@ -132,9 +132,19 @@ open class TransactionManager(
     }
 
     fun getGasPrice(): BigInteger {
-        val nGasPrice = web3j.ethGasPrice().send().gasPrice
-        val dGasPrice = DEFINED_GAS_PRICE
-        return nGasPrice.max(dGasPrice)
+        return web3j.ethGasPrice().send().gasPrice
+    }
+
+    fun getGasPrice(txSpeed: TxSpeed): BigInteger {
+        return when(txSpeed) {
+            TxSpeed.Auto -> getGasPrice()
+            TxSpeed.GP20 -> DefaultGasProvider.GAS_PRICE_20
+            TxSpeed.GP40 -> DefaultGasProvider.GAS_PRICE_40
+            TxSpeed.GP60 -> DefaultGasProvider.GAS_PRICE_60
+            TxSpeed.GP80 -> DefaultGasProvider.GAS_PRICE_80
+            TxSpeed.GP100 -> DefaultGasProvider.GAS_PRICE_100
+            TxSpeed.GP120 -> DefaultGasProvider.GAS_PRICE_120
+        }
     }
 
     private fun sendTransaction(rawTransaction: RawTransaction, credentials: Credentials): String {
