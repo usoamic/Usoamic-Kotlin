@@ -6,10 +6,12 @@ object DirectoryUtils {
     private const val DIRECTORY = "Usoamic"
     private const val LINUX_DIRECTORY = ".usoamic"
 
+    @JvmStatic
     fun getDefaultKeyDirectory(): String {
         return getDefaultKeyDirectory(System.getProperty("os.name"))
     }
 
+    @JvmStatic
     fun getTestnetKeyDirectory(): String {
         return String.format(
             "%s%stestnet%skeystore",
@@ -19,6 +21,7 @@ object DirectoryUtils {
         )
     }
 
+    @JvmStatic
     fun getMainnetKeyDirectory(): String {
         return String.format(
             "%s%skeystore",
