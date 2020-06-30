@@ -14,9 +14,8 @@ object DirectoryUtils {
     @JvmStatic
     fun getTestnetKeyDirectory(): String {
         return String.format(
-            "%s%stestnet%skeystore",
+            "%s%stestnet",
             getDefaultKeyDirectory(),
-            File.separator,
             File.separator
         )
     }
@@ -24,7 +23,7 @@ object DirectoryUtils {
     @JvmStatic
     fun getMainnetKeyDirectory(): String {
         return String.format(
-            "%s%skeystore",
+            "%s%smainnet",
             getDefaultKeyDirectory(),
             File.separator
         )
