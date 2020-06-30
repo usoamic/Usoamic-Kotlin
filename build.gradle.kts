@@ -4,6 +4,7 @@ object Version {
     const val dagger = "2.27"
     const val gson = "2.8.5"
     const val web3j = "4.6.0"
+    const val validateUtilKt = "16304cc35d"
     const val javaxAnnotationApi = "1.3.2"
     const val daggerCompiler = "2.27"
     const val kotlinTestJunit5 = "1.3.50"
@@ -33,6 +34,7 @@ dependencies {
     implementation("com.google.dagger", "dagger", Version.dagger)
     implementation("com.google.code.gson", "gson", Version.gson)
     implementation("org.web3j", "core", Version.web3j)
+    api("com.github.usoamic", "validateutilkt", Version.validateUtilKt)
     implementation("javax.annotation", "javax.annotation-api", Version.javaxAnnotationApi)
     kapt("com.google.dagger", "dagger-compiler", Version.daggerCompiler)
 
