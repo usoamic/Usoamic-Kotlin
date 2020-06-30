@@ -29,13 +29,13 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    implementation(kotlin("stdlib-jdk8"))
-    implementation("com.google.dagger", "dagger", Version.dagger)
-    implementation("com.google.code.gson", "gson", Version.gson)
-    implementation("org.web3j", "core", Version.web3j)
-    implementation("com.github.usoamic", "validateutilkt", Version.validateUtilKt)
-    implementation("javax.annotation", "javax.annotation-api", Version.javaxAnnotationApi)
+    api(kotlin("stdlib"))
+    api(kotlin("stdlib-jdk8"))
+    api("com.google.dagger", "dagger", Version.dagger)
+    api("com.google.code.gson", "gson", Version.gson)
+    api("org.web3j", "core", Version.web3j)
+    api("com.github.usoamic", "validateutilkt", Version.validateUtilKt)
+    api("javax.annotation", "javax.annotation-api", Version.javaxAnnotationApi)
     kapt("com.google.dagger", "dagger-compiler", Version.daggerCompiler)
 
     testImplementation("org.jetbrains.kotlin", "kotlin-test-junit5", Version.kotlinTestJunit5)
