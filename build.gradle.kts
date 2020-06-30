@@ -4,7 +4,6 @@ object Version {
     const val dagger = "2.27"
     const val gson = "2.8.5"
     const val web3j = "4.6.0"
-    const val validateUtilKt = "16304cc35d"
     const val javaxAnnotationApi = "1.3.2"
     const val daggerCompiler = "2.27"
     const val kotlinTestJunit5 = "1.3.50"
@@ -29,13 +28,12 @@ repositories {
 }
 
 dependencies {
-    api(kotlin("stdlib"))
-    api(kotlin("stdlib-jdk8"))
-    api("com.google.dagger", "dagger", Version.dagger)
-    api("com.google.code.gson", "gson", Version.gson)
-    api("org.web3j", "core", Version.web3j)
-    api("com.github.usoamic", "validateutilkt", Version.validateUtilKt)
-    api("javax.annotation", "javax.annotation-api", Version.javaxAnnotationApi)
+    implementation(kotlin("stdlib"))
+    implementation(kotlin("stdlib-jdk8"))
+    implementation("com.google.dagger", "dagger", Version.dagger)
+    implementation("com.google.code.gson", "gson", Version.gson)
+    implementation("org.web3j", "core", Version.web3j)
+    implementation("javax.annotation", "javax.annotation-api", Version.javaxAnnotationApi)
     kapt("com.google.dagger", "dagger-compiler", Version.daggerCompiler)
 
     testImplementation("org.jetbrains.kotlin", "kotlin-test-junit5", Version.kotlinTestJunit5)
