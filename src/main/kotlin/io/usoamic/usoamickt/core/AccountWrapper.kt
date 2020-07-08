@@ -15,15 +15,15 @@ import java.math.BigInteger
 
 open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) :
     EthereumCore(fileName, filePath, node) {
-    private lateinit var _account: Account
+    private var _account: Account? = null
     private val accountFile get() = Account.initFile(filePath, fileName)
     private val account: Account
         get() {
-            if (!::_account.isInitialized) {
+            if (_account == null) {
                 val json = Files.readString(accountFile)
                 _account = Account.fromJson(json)
             }
-            return _account
+            return _account as Account
         }
 
     val hasAccount: Boolean
@@ -45,6 +45,7 @@ open class AccountWrapper(private val fileName: String, private val filePath: St
         if (!account.file.delete() || !accountFile.delete()) {
             throw FileNotFoundException()
         }
+        _account = null
         return true
     }
 
