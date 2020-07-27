@@ -8,8 +8,6 @@ import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
-// bool exist, uint256 txId, address from, address to, uint256 value, uint256 timestamp
-
 open class TransactionExplorer constructor(fileName: String, filePath: String, contractAddress: String, node: String) : Purchases(fileName, filePath, contractAddress, node) {
     fun getTransaction(txId: BigInteger): Transaction {
         val function = Function(
@@ -24,6 +22,33 @@ open class TransactionExplorer constructor(fileName: String, filePath: String, c
                 object: TypeReference<Uint256>() {}
             )
         )
+        return prepareTransaction(function)
+    }
+
+    fun getTransactionByAddress(owner: String, txId: BigInteger): Transaction {
+        val function = Function(
+            "getTransactionByAddress",
+            listOf(
+                Address(owner),
+                Uint256(txId)
+            ),
+            listOf(
+                object: TypeReference<Bool>() {},
+                object: TypeReference<Uint256>() {},
+                object: TypeReference<Address>() {},
+                object: TypeReference<Address>() {},
+                object: TypeReference<Uint256>() {},
+                object: TypeReference<Uint256>() {}
+            )
+        )
+        return prepareTransaction(function)
+    }
+
+    fun getNumberOfTransactions(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfTransactions")
+
+    fun getNumberOfTransactionsByAddress(owner: String): BigInteger? = executeCallUint256ValueReturn("getNumberOfTransactionsByAddress", listOf(Address(owner)))
+
+    private fun prepareTransaction(function: Function): Transaction {
         val result = executeCall(function)
         return Transaction.Builder()
             .setExist(result[0].value as Boolean)
@@ -34,8 +59,4 @@ open class TransactionExplorer constructor(fileName: String, filePath: String, c
             .setTimestamp(result[5].value as BigInteger)
             .build()
     }
-
-    fun getNumberOfTransactions(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfTransactions")
-
-    fun getNumberOfTransactionsByAddress(owner: String): BigInteger? = executeCallUint256ValueReturn("getNumberOfTransactionsByAddress", listOf(Address(owner)))
-}
+ }
