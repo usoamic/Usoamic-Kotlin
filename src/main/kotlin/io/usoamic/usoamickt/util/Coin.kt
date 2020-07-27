@@ -28,4 +28,8 @@ class Coin private constructor(value: BigDecimal) {
     fun toBigDecimal(): BigDecimal {
         return value
     }
+
+    fun toPlainString(): String {
+        return value.toPlainString()
+    }
 }
