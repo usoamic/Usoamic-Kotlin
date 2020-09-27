@@ -53,7 +53,7 @@ open class AccountWrapper(private val fileName: String, private val filePath: St
         return getEthBalance(address)
     }
 
-    fun getConvertedBalance(unit: Convert.Unit = Convert.Unit.WEI): BigDecimal {
+    fun getConvertedBalance(unit: Convert.Unit = Convert.Unit.ETHER): BigDecimal {
         return Convert.fromWei(getEthBalance().toString(), unit)
     }
 
