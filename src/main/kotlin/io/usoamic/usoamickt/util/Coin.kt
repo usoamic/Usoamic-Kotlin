@@ -17,7 +17,7 @@ class Coin private constructor(value: BigDecimal) {
         fun fromSat(value: BigInteger): Coin = Coin(value.toBigDecimal(DECIMALS))
         fun fromCoin(value: String): Coin = Coin(BigDecimal(value))
         fun fromCoin(value: BigDecimal): Coin = Coin(value)
-        public const val DECIMALS: Int = 8
+        const val DECIMALS: Int = 8
         val SAT_PER_COIN: BigDecimal = BigDecimal.TEN.pow(DECIMALS)
     }
 
@@ -27,5 +27,9 @@ class Coin private constructor(value: BigDecimal) {
 
     fun toBigDecimal(): BigDecimal {
         return value
+    }
+
+    fun toPlainString(): String {
+        return value.toPlainString()
     }
 }

@@ -98,4 +98,11 @@ class UsoamicTest {
         val version = usoamic.getVersion()
         require(version == TestConfig.VERSION)
     }
+
+    @Test
+    fun getGasPrice() {
+        val price = usoamic.getGasPrice()
+        println("price = $price")
+        require(price >= BigInteger.valueOf(1_000_000_000))
+    }
 }

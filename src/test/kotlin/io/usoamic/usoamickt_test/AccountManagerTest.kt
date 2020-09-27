@@ -1,8 +1,8 @@
 package io.usoamic.usoamickt_test
 
 import io.usoamic.usoamickt.core.Usoamic
-import io.usoamic.usoamickt.exception.InvalidMnemonicPhraseException
 import io.usoamic.usoamickt_test.other.TestConfig
+import io.usoamic.validateutilkt.error.InvalidMnemonicPhraseError
 import org.junit.jupiter.api.RepeatedTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -41,14 +41,14 @@ class AccountManagerTest {
 
     @Test
     fun accountTestWhenMnemonicPhraseIsEmpty() {
-        assertThrows<InvalidMnemonicPhraseException> {
+        assertThrows<InvalidMnemonicPhraseError> {
             usoamic.importMnemonic(TestConfig.PASSWORD, "")
         }
     }
 
     @Test
     fun accountTestWhenMnemonicPhraseIsInvalid() {
-        assertThrows<InvalidMnemonicPhraseException> {
+        assertThrows<InvalidMnemonicPhraseError> {
             usoamic.importMnemonic(TestConfig.PASSWORD, "culture into")
         }
     }

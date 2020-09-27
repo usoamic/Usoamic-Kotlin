@@ -1,6 +1,7 @@
 package io.usoamic.usoamickt_test
 
 import io.usoamic.usoamickt.core.Usoamic
+import io.usoamic.usoamickt.enumcls.TxSpeed
 import io.usoamic.usoamickt.util.Coin
 import io.usoamic.usoamickt_test.other.TestConfig
 import org.junit.jupiter.api.Test
@@ -21,7 +22,7 @@ class SwapTest {
     @Test
     fun depositEthTest() {
         val value = Convert.toWei("0.1", Convert.Unit.ETHER).toBigInteger()
-        val txHash = usoamic.transferEth(TestConfig.PASSWORD, TestConfig.CONTRACT_ADDRESS, value)
+        val txHash = usoamic.transferEth(TestConfig.PASSWORD, TestConfig.CONTRACT_ADDRESS, value, TxSpeed.Auto)
         usoamic.waitTransactionReceipt(txHash) {
             assert(it.status == "0x0")
         }
@@ -93,7 +94,7 @@ class SwapTest {
             val newAccountTokenBalance = usoamic.getUsoBalance()
             val newContractBalance = usoamic.getEthBalance(TestConfig.CONTRACT_ADDRESS)
 
-            assert(accountTokenBalance!!.subtract(newAccountTokenBalance).compareTo(value) == 0)
+            assert(accountTokenBalance.subtract(newAccountTokenBalance).compareTo(value) == 0)
 
             val ethValue = value.multiply(swapRate)
 

@@ -1,6 +1,7 @@
 package io.usoamic.usoamickt.core
 
 import io.usoamic.usoamickt.enumcls.NoteVisibility
+import io.usoamic.usoamickt.enumcls.TxSpeed
 import io.usoamic.usoamickt.model.Note
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.*
@@ -10,38 +11,31 @@ import org.web3j.abi.datatypes.generated.Uint8
 import java.math.BigInteger
 
 open class Notes constructor(fileName: String, filePath: String, contractAddress: String, node: String) : Ideas(fileName, filePath, contractAddress, node) {
-    @Throws(Exception::class)
     fun addPublicNote(password: String, content: String): String = addNote(password, NoteVisibility.PUBLIC, content)
 
-    @Throws(Exception::class)
     fun addUnlistedNote(password: String, content: String): String = addNote(password, NoteVisibility.UNLISTED, content)
 
-    @Throws(Exception::class)
-    private fun addNote(password: String, noteVisibility: NoteVisibility, content: String): String = executeTransaction(
+    private fun addNote(password: String, noteVisibility: NoteVisibility, content: String, txSpeed: TxSpeed = TxSpeed.Auto): String = executeTransaction(
         password,
         when(noteVisibility) {
             NoteVisibility.PUBLIC -> "addPublicNote"
             NoteVisibility.UNLISTED -> "addUnlistedNote"
         },
-        listOf(Utf8String(content))
+        listOf(Utf8String(content)),
+        txSpeed
     )
 
-    @Throws(Exception::class)
     fun getNumberOfPublicNotes(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfPublicNotes")
 
-    @Throws(Exception::class)
     fun getNumberOfNotesByAuthor(address: String): BigInteger? = executeCallUint256ValueReturn(
         "getNumberOfNotesByAuthor",
         listOf(Address(address))
     )
 
-    @Throws(Exception::class)
     fun getLastNoteId(): BigInteger? = getNumberOfPublicNotes()!!.subtract(BigInteger.ONE)
 
-    @Throws(Exception::class)
     fun getLastNoteIdByAddress(address: String): BigInteger? = getNumberOfNotesByAuthor(address)!!.subtract(BigInteger.ONE)
 
-    @Throws(Exception::class)
     fun getNoteByAuthor(author: String, noteId: BigInteger): Note =
         getAndPrepareNote(
             "getNoteByAuthor",
@@ -51,10 +45,8 @@ open class Notes constructor(fileName: String, filePath: String, contractAddress
             )
         )
 
-    @Throws(Exception::class)
     fun getNote(noteRefId: BigInteger): Note = getAndPrepareNote("getNote", listOf(Uint256(noteRefId)))
 
-    @Throws(Exception::class)
     private fun getAndPrepareNote(name: String, inputParameters: List<Type<out Any>>): Note {
         val function = Function(
             name,
