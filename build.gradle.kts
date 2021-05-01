@@ -7,20 +7,20 @@ object Version {
     const val validateUtilKt = "1.0.0"
     const val javaxAnnotationApi = "1.3.2"
     const val daggerCompiler = "2.27"
-    const val kotlinTestJunit5 = "1.3.50"
+    const val kotlinTestJunit5 = "1.4.32"
     const val junitJupiter = "5.5.0"
 }
 
 plugins {
     java
     maven
-    kotlin("jvm") version "1.3.72"
-    kotlin("kapt") version "1.3.72"
+    kotlin("jvm") version "1.4.32"
+    kotlin("kapt") version "1.4.32"
 }
 
 allprojects {
     group = "io.usoamic"
-    version = "1.2.1"
+    version = "1.2.2"
 }
 
 repositories {
@@ -33,8 +33,8 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.google.dagger", "dagger", Version.dagger)
     implementation("com.google.code.gson", "gson", Version.gson)
-    api("org.web3j", "core", Version.web3j)
-    api("com.github.usoamic", "validateutilkt", Version.validateUtilKt)
+    implementation("org.web3j", "core", Version.web3j)
+    implementation("com.github.usoamic", "validateutilkt", Version.validateUtilKt)
     implementation("javax.annotation", "javax.annotation-api", Version.javaxAnnotationApi)
     kapt("com.google.dagger", "dagger-compiler", Version.daggerCompiler)
 
@@ -53,7 +53,7 @@ configure<JavaPluginConvention> {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
@@ -64,9 +64,9 @@ tasks {
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = "11"
 }
 val compileTestKotlin: KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = "11"
 }
