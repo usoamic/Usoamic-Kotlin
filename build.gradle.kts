@@ -1,9 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 object Version {
+    private const val isAndroid = true
     const val dagger = "2.27"
     const val gson = "2.8.5"
-    const val web3j = "4.6.0"
+    val web3j get() = if(isAndroid) "4.6.0-android" else "4.6.0"
     const val validateUtilKt = "1.0.0"
     const val javaxAnnotationApi = "1.3.2"
     const val daggerCompiler = "2.27"
