@@ -1,12 +1,12 @@
 package io.usoamic.usoamickt.model
 
-import io.usoamic.usoamickt.enumcls.NoteVisibility
+import io.usoamic.usoamickt.enumcls.NoteType
 import java.math.BigInteger
 
 data class Note constructor(
     val isExist: Boolean,
     val noteId: BigInteger,
-    val visibility: NoteVisibility,
+    val type: NoteType,
     val noteRefId: BigInteger,
     val content: String,
     val author: String,
@@ -15,7 +15,7 @@ data class Note constructor(
     class Builder {
         private var isExist: Boolean = false
         private lateinit var noteId: BigInteger
-        private lateinit var visibility: NoteVisibility
+        private lateinit var type: NoteType
         private lateinit var noteRefId: BigInteger
         private lateinit var content: String
         private lateinit var author: String
@@ -29,8 +29,8 @@ data class Note constructor(
             this.noteId = noteId
         }
 
-        fun setVisibility(visibility: NoteVisibility) = apply {
-            this.visibility = visibility
+        fun setVisibility(type: NoteType) = apply {
+            this.type = type
         }
 
         fun setNoteRefId(refId: BigInteger) = apply {
@@ -52,7 +52,7 @@ data class Note constructor(
         fun build() = Note(
             isExist,
             noteId,
-            visibility,
+            type,
             noteRefId,
             content,
             author,
