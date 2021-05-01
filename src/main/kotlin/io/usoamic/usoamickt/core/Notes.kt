@@ -12,16 +12,18 @@ import java.math.BigInteger
 
 open class Notes constructor(fileName: String, filePath: String, contractAddress: String, node: String) :
     Ideas(fileName, filePath, contractAddress, node) {
-    fun addPublicNote(password: String, content: String): String = addNote(
+    fun addPublicNote(password: String, content: String, txSpeed: TxSpeed = TxSpeed.Auto): String = addNote(
         password = password,
         noteType = NoteType.PUBLIC,
-        content = content
+        content = content,
+        txSpeed = txSpeed
     )
 
-    fun addUnlistedNote(password: String, content: String): String = addNote(
+    fun addUnlistedNote(password: String, content: String, txSpeed: TxSpeed = TxSpeed.Auto): String = addNote(
         password = password,
         noteType = NoteType.UNLISTED,
-        content = content
+        content = content,
+        txSpeed = txSpeed
     )
 
     private fun addNote(
