@@ -1,26 +1,27 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 object Version {
+    private const val isAndroid = true
     const val dagger = "2.27"
     const val gson = "2.8.5"
-    const val web3j = "4.6.0"
+    val web3j get() = if(isAndroid) "4.6.0-android" else "4.6.0"
     const val validateUtilKt = "1.0.0"
     const val javaxAnnotationApi = "1.3.2"
     const val daggerCompiler = "2.27"
-    const val kotlinTestJunit5 = "1.3.50"
+    const val kotlinTestJunit5 = "1.4.32"
     const val junitJupiter = "5.5.0"
 }
 
 plugins {
     java
     maven
-    kotlin("jvm") version "1.3.72"
-    kotlin("kapt") version "1.3.72"
+    kotlin("jvm") version "1.4.32"
+    kotlin("kapt") version "1.4.32"
 }
 
 allprojects {
     group = "io.usoamic"
-    version = "1.2.1"
+    version = "1.2.2"
 }
 
 repositories {

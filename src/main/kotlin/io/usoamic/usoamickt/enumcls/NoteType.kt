@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt.enumcls
 
-enum class NoteVisibility {
+enum class NoteType {
     PUBLIC,
     UNLISTED
 }

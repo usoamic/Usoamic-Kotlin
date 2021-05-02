@@ -1,7 +1,7 @@
 package io.usoamic.usoamickt_test
 
 import io.usoamic.usoamickt.core.Usoamic
-import io.usoamic.usoamickt.enumcls.NoteVisibility
+import io.usoamic.usoamickt.enumcls.NoteType
 import io.usoamic.usoamickt.model.Note
 import io.usoamic.usoamickt_test.other.TestConfig
 import org.junit.jupiter.api.Test
@@ -20,19 +20,19 @@ class NotesTest {
 
     @Test
     fun addPublicNoteTest() {
-        addNoteTest(NoteVisibility.PUBLIC)
+        addNoteTest(NoteType.PUBLIC)
     }
 
     @Test
     fun addUnlistedNoteTest() {
-        addNoteTest(NoteVisibility.UNLISTED)
+        addNoteTest(NoteType.UNLISTED)
     }
 
-    private fun addNoteTest(noteVisibility: NoteVisibility) {
+    private fun addNoteTest(noteType: NoteType) {
         val content = generateNoteContent()
-        val addNoteTxHash = when (noteVisibility) {
-            NoteVisibility.PUBLIC -> usoamic.addPublicNote(TestConfig.PASSWORD, content)
-            NoteVisibility.UNLISTED -> usoamic.addUnlistedNote(TestConfig.PASSWORD, content)
+        val addNoteTxHash = when (noteType) {
+            NoteType.PUBLIC -> usoamic.addPublicNote(TestConfig.PASSWORD, content)
+            NoteType.UNLISTED -> usoamic.addUnlistedNote(TestConfig.PASSWORD, content)
         }
 
         usoamic.waitTransactionReceipt(addNoteTxHash) {
@@ -43,9 +43,9 @@ class NotesTest {
             assert(note.isExist)
             assert(note.content == content)
             assert(note.author == author)
-            assert(note.visibility == noteVisibility)
+            assert(note.type == noteType)
 
-            if(noteVisibility == NoteVisibility.PUBLIC) {
+            if(noteType == NoteType.PUBLIC) {
                 val publicNoteId = usoamic.getLastNoteId()!!
                 val commonNote = usoamic.getNote(publicNoteId)
                 assert(commonNote == note)
