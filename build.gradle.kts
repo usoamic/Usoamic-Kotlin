@@ -8,20 +8,20 @@ object Version {
     const val validateUtilKt = "1.0.0"
     const val javaxAnnotationApi = "1.3.2"
     const val daggerCompiler = "2.27"
-    const val kotlinTestJunit5 = "1.3.50"
+    const val kotlinTestJunit5 = "1.4.32"
     const val junitJupiter = "5.5.0"
 }
 
 plugins {
     java
     maven
-    kotlin("jvm") version "1.3.72"
-    kotlin("kapt") version "1.3.72"
+    kotlin("jvm") version "1.4.32"
+    kotlin("kapt") version "1.4.32"
 }
 
 allprojects {
     group = "io.usoamic"
-    version = "1.2.1"
+    version = "1.2.2"
 }
 
 repositories {
