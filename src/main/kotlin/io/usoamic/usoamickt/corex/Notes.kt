@@ -8,41 +8,37 @@ import org.web3j.abi.datatypes.*
 import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.abi.datatypes.generated.Uint8
+import org.web3j.crypto.Credentials
 import java.math.BigInteger
 
 open class Notes(
-    fileName: String,
-    filePath: String,
-    contractAddress:
-    String,
+    contractAddress: String,
     node: String
 ) : Ideas(
-    fileName = fileName,
-    filePath = filePath,
     contractAddress = contractAddress,
     node = node
 ) {
-    fun addPublicNote(password: String, content: String, txSpeed: TxSpeed = TxSpeed.Auto): String = addNote(
-        password = password,
+    fun addPublicNote(credentials: Credentials, content: String, txSpeed: TxSpeed = TxSpeed.Auto): String = addNote(
+        credentials = credentials,
         noteType = NoteType.PUBLIC,
         content = content,
         txSpeed = txSpeed
     )
 
-    fun addUnlistedNote(password: String, content: String, txSpeed: TxSpeed = TxSpeed.Auto): String = addNote(
-        password = password,
+    fun addUnlistedNote(credentials: Credentials, content: String, txSpeed: TxSpeed = TxSpeed.Auto): String = addNote(
+        credentials = credentials,
         noteType = NoteType.UNLISTED,
         content = content,
         txSpeed = txSpeed
     )
 
     private fun addNote(
-        password: String,
+        credentials: Credentials,
         noteType: NoteType,
         content: String,
         txSpeed: TxSpeed = TxSpeed.Auto
     ): String = executeTransaction(
-        password = password,
+        credentials = credentials,
         name = when (noteType) {
             NoteType.PUBLIC -> "addPublicNote"
             NoteType.UNLISTED -> "addUnlistedNote"
@@ -53,20 +49,29 @@ open class Notes(
         txSpeed = txSpeed
     )
 
-    fun getNumberOfPublicNotes(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfPublicNotes")
+    fun getNumberOfPublicNotes(addressOfRequester: String): BigInteger? = executeCallEmptyPassValueAndUint256Return(
+        name = "getNumberOfPublicNotes",
+        addressOfRequester = addressOfRequester
+    )
 
     fun getNumberOfNotesByAuthor(address: String): BigInteger? = executeCallUint256ValueReturn(
         name = "getNumberOfNotesByAuthor",
+        addressOfRequester = address,
         inputParameters = listOf(
             Address(address)
         )
     )
 
-    fun getLastNoteId(): BigInteger = getNumberOfPublicNotes()!!.subtract(BigInteger.ONE)
+    fun getLastNoteId(addressOfRequester: String): BigInteger = getNumberOfPublicNotes(addressOfRequester)!!.subtract(BigInteger.ONE)
 
-    fun getLastNoteIdByAddress(address: String): BigInteger = getNumberOfNotesByAuthor(address)!!.subtract(BigInteger.ONE)
+    fun getLastNoteIdByAddress(address: String): BigInteger =
+        getNumberOfNotesByAuthor(address)!!.subtract(BigInteger.ONE)
 
-    fun getNoteByAuthor(author: String, noteId: BigInteger): Note = getAndPrepareNote(
+    fun getNoteByAuthor(
+        author: String,
+        noteId: BigInteger
+    ): Note = getAndPrepareNote(
+        addressOfRequester = author,
         name = "getNoteByAuthor",
         inputParameters = listOf(
             Address(author),
@@ -74,7 +79,11 @@ open class Notes(
         )
     )
 
-    fun getNote(noteRefId: BigInteger): Note = getAndPrepareNote(
+    fun getNote(
+        addressOfRequester: String,
+        noteRefId: BigInteger
+    ): Note = getAndPrepareNote(
+        addressOfRequester = addressOfRequester,
         name = "getNote",
         inputParameters = listOf(
             Uint256(
@@ -83,21 +92,27 @@ open class Notes(
         )
     )
 
-    private fun getAndPrepareNote(name: String, inputParameters: List<Type<out Any>>): Note {
-        val function = Function(
-            name,
-            inputParameters,
-            listOf(
-                object : TypeReference<Bool>() {},
-                object : TypeReference<Uint256>() {},
-                object : TypeReference<Uint8>() {},
-                object : TypeReference<Uint256>() {},
-                object : TypeReference<Utf8String>() {},
-                object : TypeReference<Address>() {},
-                object : TypeReference<Uint256>() {}
+    private fun getAndPrepareNote(
+        addressOfRequester: String,
+        name: String,
+        inputParameters: List<Type<out Any>>
+    ): Note {
+        val result = executeCall(
+            addressOfRequester = addressOfRequester,
+            function = Function(
+                name,
+                inputParameters,
+                listOf(
+                    object : TypeReference<Bool>() {},
+                    object : TypeReference<Uint256>() {},
+                    object : TypeReference<Uint8>() {},
+                    object : TypeReference<Uint256>() {},
+                    object : TypeReference<Utf8String>() {},
+                    object : TypeReference<Address>() {},
+                    object : TypeReference<Uint256>() {}
+                )
             )
         )
-        val result = executeCall(function)
         val noteTypeId = result[2].value as BigInteger
 
         return Note.Builder()

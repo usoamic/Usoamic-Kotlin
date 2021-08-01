@@ -7,12 +7,7 @@ import org.web3j.protocol.http.HttpService
 import java.math.BigInteger
 
 open class EthereumCore(
-    fileName: String,
-    filePath: String,
     node: String
-) : AccountManager(
-    fileName = fileName,
-    filePath = filePath
 ) {
     protected val web3j: Web3j = Web3j.build(HttpService(node))
 

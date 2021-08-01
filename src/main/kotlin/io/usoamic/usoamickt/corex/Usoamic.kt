@@ -9,68 +9,63 @@ import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Address
 import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
+import org.web3j.crypto.Credentials
 import java.math.BigInteger
 
 class Usoamic(
-    fileName: String,
-    filePath: String,
     contractAddress: String,
     node: String
 ) : Swap(
-    fileName = fileName,
-    filePath = filePath,
     contractAddress = contractAddress,
     node = node
 ) {
-    constructor(fileName: String, networkType: NetworkType, nodeProvider: NodeProvider) : this(
-        fileName,
-        "",
+    constructor(networkType: NetworkType, nodeProvider: NodeProvider) : this(
         Contract.forNetwork(networkType),
         Node.by(networkType, nodeProvider)
     )
 
-    constructor(fileName: String, filePath: String, networkType: NetworkType, nodeProvider: NodeProvider) : this(
-        fileName,
-        filePath,
-        Contract.forNetwork(networkType),
-        Node.by(networkType, nodeProvider)
+    fun balanceOf(address: String): BigInteger? = executeCallUint256ValueReturn(
+        name = "balanceOf",
+        addressOfRequester = address,
+        inputParameters = listOf(
+            Address(address)
+        )
     )
 
+    fun burn(
+        credentials: Credentials,
+        value: BigInteger,
+        txSpeed: TxSpeed = TxSpeed.Auto
+    ): String = executeTransaction(
+        credentials = credentials,
+        name = "burn",
+        inputParameters = listOf(Uint256(value)),
+        txSpeed = txSpeed
+    )
 
-    fun getUsoBalance(): BigInteger? {
-        return balanceOf(address)
-    }
+    fun transferUso(
+        credentials: Credentials,
+        to: String,
+        value: BigInteger,
+        txSpeed: TxSpeed = TxSpeed.Auto
+    ): String = executeTransaction(
+        credentials = credentials,
+        name = "transfer",
+        inputParameters = listOf(
+            Address(to),
+            Uint256(value)
+        ),
+        txSpeed = txSpeed
+    )
 
+    fun getSupply(addressOfRequester: String): BigInteger? = executeCallEmptyPassValueAndUint256Return(
+        name = "getSupply",
+        addressOfRequester = addressOfRequester
+    )
 
-    fun balanceOf(address: String): BigInteger? = executeCallUint256ValueReturn("balanceOf", listOf(Address(address)))
-
-
-    fun burn(password: String, value: BigInteger, txSpeed: TxSpeed = TxSpeed.Auto): String =
-        executeTransaction(
-            password,
-            "burn",
-            listOf(Uint256(value)),
-            txSpeed
-        )
-
-
-    fun transferUso(password: String, to: String, value: BigInteger, txSpeed: TxSpeed = TxSpeed.Auto): String =
-        executeTransaction(
-            password,
-            "transfer",
-            listOf(
-                Address(to),
-                Uint256(value)
-            ),
-            txSpeed
-        )
-
-
-    fun getSupply(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getSupply")
-
-
-    fun getVersion(): String? = executeCallEmptyPassValueAndSingleValueReturn(
-        "getVersion",
-        listOf(object : TypeReference<Utf8String>() {})
+    fun getVersion(addressOfRequester: String): String? = executeCallEmptyPassValueAndSingleValueReturn(
+        name = "getVersion",
+        addressOfRequester = addressOfRequester,
+        outputParameters = listOf(object : TypeReference<Utf8String>() {})
     )
 }

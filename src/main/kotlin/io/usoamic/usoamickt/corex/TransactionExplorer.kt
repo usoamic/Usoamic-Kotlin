@@ -9,57 +9,70 @@ import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
 open class TransactionExplorer(
-    fileName: String,
-    filePath: String,
     contractAddress: String,
     node: String
 ) : Purchases(
-    fileName = fileName,
-    filePath = filePath,
     contractAddress = contractAddress,
     node = node
 ) {
-    fun getTransaction(txId: BigInteger): Transaction {
-        val function = Function(
-            "getTransaction",
-            listOf(Uint256(txId)),
-            listOf(
-                object: TypeReference<Bool>() {},
-                object: TypeReference<Uint256>() {},
-                object: TypeReference<Address>() {},
-                object: TypeReference<Address>() {},
-                object: TypeReference<Uint256>() {},
-                object: TypeReference<Uint256>() {}
+    fun getTransaction(addressOfRequester: String, txId: BigInteger): Transaction {
+        return prepareTransaction(
+            addressOfRequester = addressOfRequester,
+            function = Function(
+                "getTransaction",
+                listOf(Uint256(txId)),
+                listOf(
+                    object : TypeReference<Bool>() {},
+                    object : TypeReference<Uint256>() {},
+                    object : TypeReference<Address>() {},
+                    object : TypeReference<Address>() {},
+                    object : TypeReference<Uint256>() {},
+                    object : TypeReference<Uint256>() {}
+                )
             )
         )
-        return prepareTransaction(function)
     }
 
     fun getTransactionByAddress(owner: String, txId: BigInteger): Transaction {
-        val function = Function(
-            "getTransactionByAddress",
-            listOf(
-                Address(owner),
-                Uint256(txId)
-            ),
-            listOf(
-                object: TypeReference<Bool>() {},
-                object: TypeReference<Uint256>() {},
-                object: TypeReference<Address>() {},
-                object: TypeReference<Address>() {},
-                object: TypeReference<Uint256>() {},
-                object: TypeReference<Uint256>() {}
+        return prepareTransaction(
+            addressOfRequester = owner,
+            function = Function(
+                "getTransactionByAddress",
+                listOf(
+                    Address(owner),
+                    Uint256(txId)
+                ),
+                listOf(
+                    object : TypeReference<Bool>() {},
+                    object : TypeReference<Uint256>() {},
+                    object : TypeReference<Address>() {},
+                    object : TypeReference<Address>() {},
+                    object : TypeReference<Uint256>() {},
+                    object : TypeReference<Uint256>() {}
+                )
             )
         )
-        return prepareTransaction(function)
     }
 
-    fun getNumberOfTransactions(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getNumberOfTransactions")
+    fun getNumberOfTransactions(addressOfRequester: String): BigInteger? = executeCallEmptyPassValueAndUint256Return(
+        name = "getNumberOfTransactions",
+        addressOfRequester = addressOfRequester
+    )
 
-    fun getNumberOfTransactionsByAddress(owner: String): BigInteger? = executeCallUint256ValueReturn("getNumberOfTransactionsByAddress", listOf(Address(owner)))
+    fun getNumberOfTransactionsByAddress(owner: String): BigInteger? = executeCallUint256ValueReturn(
+        name = "getNumberOfTransactionsByAddress",
+        addressOfRequester = owner,
+        inputParameters = listOf(Address(owner))
+    )
 
-    private fun prepareTransaction(function: Function): Transaction {
-        val result = executeCall(function)
+    private fun prepareTransaction(
+        addressOfRequester: String,
+        function: Function
+    ): Transaction {
+        val result = executeCall(
+            addressOfRequester = addressOfRequester,
+            function = function
+        )
         return Transaction.Builder()
             .setExist(result[0].value as Boolean)
             .setTxId(result[1].value as BigInteger)
@@ -69,4 +82,4 @@ open class TransactionExplorer(
             .setTimestamp(result[5].value as BigInteger)
             .build()
     }
- }
+}

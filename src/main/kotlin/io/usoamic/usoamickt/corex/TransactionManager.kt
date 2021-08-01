@@ -1,8 +1,8 @@
 package io.usoamic.usoamickt.corex
 
 import io.usoamic.usoamickt.enumcls.TxSpeed
+import io.usoamic.usoamickt.extensions.encode
 import io.usoamic.usoamickt.util.DefaultGasProvider
-import org.web3j.abi.FunctionEncoder
 import org.web3j.abi.FunctionReturnDecoder
 import org.web3j.abi.TypeReference
 import org.web3j.abi.datatypes.Function
@@ -19,68 +19,95 @@ import org.web3j.utils.Numeric
 import java.math.BigInteger
 
 open class TransactionManager(
-    fileName: String,
-    filePath: String,
     private val contractAddress: String,
     node: String
-) : AccountWrapper(
-    fileName = fileName,
-    filePath = filePath,
+) : EthereumCore(
     node = node
 ) {
-    protected fun <T : Any?> executeCallSingleValueReturn(function: Function): T? {
-        val values = executeCall(function)
+    val gasPrice: BigInteger get() = web3j.ethGasPrice().send().gasPrice
+
+    protected fun <T : Any?> executeCallSingleValueReturn(
+        addressOfRequester: String,
+        function: Function
+    ): T? {
+        val values = executeCall(
+            addressOfRequester = addressOfRequester,
+            function = function
+        )
         return if (values.isNotEmpty()) (values[0].value as T) else null
     }
 
     protected fun <T : Any?> executeCallEmptyPassValueAndSingleValueReturn(
+        addressOfRequester: String,
         name: String,
         outputParameters: List<TypeReference<*>>
-    ): T? {
-        val function = Function(
+    ): T? = executeCallSingleValueReturn(
+        addressOfRequester = addressOfRequester,
+        function = Function(
             name,
             emptyList(),
             outputParameters
         )
-        return executeCallSingleValueReturn(function)
-    }
+    )
 
-    protected fun <T : Any?> executeCallEmptyPassValueAndUint256Return(name: String): T? =
-        executeCallUint256ValueReturn(name, emptyList())
+    protected fun <T : Any?> executeCallEmptyPassValueAndUint256Return(
+        addressOfRequester: String,
+        name: String
+    ): T? = executeCallUint256ValueReturn(
+        name = name,
+        addressOfRequester = addressOfRequester,
+        inputParameters = emptyList()
+    )
 
-    protected fun <T : Any?> executeCallUint256ValueReturn(name: String, inputParameters: List<Type<out Any>>): T? {
-        val function = Function(
+    protected fun <T : Any?> executeCallUint256ValueReturn(
+        addressOfRequester: String,
+        name: String,
+        inputParameters: List<Type<out Any>>
+    ): T? = executeCallSingleValueReturn(
+        addressOfRequester = addressOfRequester,
+        function = Function(
             name,
             inputParameters,
             listOf(object : TypeReference<Uint256>() {})
         )
-        return executeCallSingleValueReturn(function)
-    }
+    )
 
-    protected fun executeCall(function: Function): MutableList<Type<Any>> {
-        val encodedFunction = FunctionEncoder.encode(function)
+    protected fun executeCall(
+        addressOfRequester: String,
+        function: Function
+    ): MutableList<Type<Any>> {
+        val encodedFunction = function.encode()
 
         val ethCall = web3j.ethCall(
-            Transaction.createEthCallTransaction(address, contractAddress, encodedFunction),
+            Transaction.createEthCallTransaction(addressOfRequester, contractAddress, encodedFunction),
             DefaultBlockParameterName.LATEST
         ).send()
 
         return FunctionReturnDecoder.decode(ethCall.value, function.outputParameters)
     }
 
-    protected fun executeTransaction(password: String, name: String, inputParameters: List<Type<out Any>>, txSpeed: TxSpeed): String {
-        val function = Function(
+    protected fun executeTransaction(
+        credentials: Credentials,
+        name: String,
+        inputParameters: List<Type<out Any>>,
+        txSpeed: TxSpeed
+    ): String = executeTransactionFunctionPassValue(
+        credentials = credentials,
+        function = Function(
             name,
             inputParameters,
             emptyList()
-        )
-        return executeTransactionFunctionPassValue(password, function, txSpeed)
-    }
+        ),
+        txSpeed = txSpeed
+    )
 
-    protected fun executeTransactionFunctionPassValue(password: String, function: Function, txSpeed: TxSpeed): String {
-        val credentials = getCredentials(password)
-        val nonce = getNonce(credentials.address)
-        val encodedFunction = FunctionEncoder.encode(function)
+    protected fun executeTransactionFunctionPassValue(
+        credentials: Credentials,
+        function: Function,
+        txSpeed: TxSpeed
+    ): String {
+        val nonce = getNonce(credentials)
+        val encodedFunction = function.encode()
 
         val transaction = Transaction.createEthCallTransaction(
             credentials.address,
@@ -101,9 +128,13 @@ open class TransactionManager(
         return sendTransaction(rawTransaction, credentials)
     }
 
-    fun transferEth(password: String, to: String, value: BigInteger, txSpeed: TxSpeed): String {
-        val credentials = getCredentials(password)
-        val nonce = getNonce(credentials.address)
+    fun transferEth(
+        credentials: Credentials,
+        to: String,
+        value: BigInteger,
+        txSpeed: TxSpeed
+    ): String {
+        val nonce = getNonce(credentials)
 
         val rawTransaction = RawTransaction.createEtherTransaction(
             nonce,
@@ -116,7 +147,10 @@ open class TransactionManager(
         return sendTransaction(rawTransaction, credentials)
     }
 
-    fun waitTransactionReceipt(txHash: String, callback: (receipt: TransactionReceipt) -> Unit) {
+    fun waitTransactionReceipt(
+        txHash: String,
+        callback: (receipt: TransactionReceipt) -> Unit
+    ) {
         while (true) {
             val transactionReceipt = web3j.ethGetTransactionReceipt(txHash).send()
             val result = transactionReceipt.result
@@ -131,23 +165,20 @@ open class TransactionManager(
 
     }
 
-    fun getGasPrice(): BigInteger {
-        return web3j.ethGasPrice().send().gasPrice
+    fun getGasPrice(txSpeed: TxSpeed): BigInteger = when (txSpeed) {
+        TxSpeed.Auto -> gasPrice
+        TxSpeed.GP20 -> DefaultGasProvider.GAS_PRICE_20
+        TxSpeed.GP40 -> DefaultGasProvider.GAS_PRICE_40
+        TxSpeed.GP60 -> DefaultGasProvider.GAS_PRICE_60
+        TxSpeed.GP80 -> DefaultGasProvider.GAS_PRICE_80
+        TxSpeed.GP100 -> DefaultGasProvider.GAS_PRICE_100
+        TxSpeed.GP120 -> DefaultGasProvider.GAS_PRICE_120
     }
 
-    fun getGasPrice(txSpeed: TxSpeed): BigInteger {
-        return when(txSpeed) {
-            TxSpeed.Auto -> getGasPrice()
-            TxSpeed.GP20 -> DefaultGasProvider.GAS_PRICE_20
-            TxSpeed.GP40 -> DefaultGasProvider.GAS_PRICE_40
-            TxSpeed.GP60 -> DefaultGasProvider.GAS_PRICE_60
-            TxSpeed.GP80 -> DefaultGasProvider.GAS_PRICE_80
-            TxSpeed.GP100 -> DefaultGasProvider.GAS_PRICE_100
-            TxSpeed.GP120 -> DefaultGasProvider.GAS_PRICE_120
-        }
-    }
-
-    private fun sendTransaction(rawTransaction: RawTransaction, credentials: Credentials): String {
+    private fun sendTransaction(
+        rawTransaction: RawTransaction,
+        credentials: Credentials
+    ): String {
         val signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials)
         val hexValue = Numeric.toHexString(signedMessage)
 
@@ -155,9 +186,9 @@ open class TransactionManager(
         return transactionResponse.transactionHash
     }
 
-    private fun getNonce(address: String): BigInteger {
+    private fun getNonce(credentials: Credentials): BigInteger {
         val ethGetTransactionCount =
-            web3j.ethGetTransactionCount(address, DefaultBlockParameterName.LATEST).sendAsync().get()
+            web3j.ethGetTransactionCount(credentials.address, DefaultBlockParameterName.LATEST).sendAsync().get()
         return ethGetTransactionCount.transactionCount
     }
 }
