@@ -1,4 +1,4 @@
-package io.usoamic.usoamickt.corex
+package io.usoamic.usoamickt.account.impl.corex
 
 import com.google.gson.Gson
 import io.usoamic.usoamickt.model.Account
@@ -13,7 +13,7 @@ import org.web3j.crypto.WalletUtils
 import java.io.File
 import java.io.FileWriter
 
-open class AccountManager(
+open class AccountManagerImpl(
     private val fileName: String,
     private val filePath: String
 ) {
