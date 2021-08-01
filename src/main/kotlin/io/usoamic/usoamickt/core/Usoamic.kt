@@ -11,6 +11,7 @@ import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
+@Deprecated(CoreDeprecatedData.message)
 class Usoamic constructor(fileName: String, filePath: String, contractAddress: String, node: String) :
     Swap(fileName, filePath, contractAddress, node) {
     constructor(fileName: String, networkType: NetworkType, nodeProvider: NodeProvider) : this(

@@ -6,6 +6,7 @@ import org.web3j.protocol.core.methods.response.EthBlock
 import org.web3j.protocol.http.HttpService
 import java.math.BigInteger
 
+@Deprecated(CoreDeprecatedData.message)
 open class EthereumCore(fileName: String, filePath: String, node: String) :
     AccountManager(fileName, filePath) {
     protected val web3j: Web3j = Web3j.build(HttpService(node))

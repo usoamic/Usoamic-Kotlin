@@ -12,6 +12,7 @@ import org.web3j.abi.datatypes.generated.Uint256
 import org.web3j.abi.datatypes.generated.Uint8
 import java.math.BigInteger
 
+@Deprecated(CoreDeprecatedData.message)
 open class Ideas constructor(fileName: String, filePath: String, contractAddress: String, node: String) :
     Owner(fileName, filePath, contractAddress, node) {
 

@@ -13,6 +13,7 @@ import org.web3j.crypto.WalletUtils
 import java.io.File
 import java.io.FileWriter
 
+@Deprecated(CoreDeprecatedData.message)
 open class AccountManager(private val fileName: String, private val filePath: String) {
     fun importPrivateKey(password: String, privateKey: String): String {
         if(!WalletUtils.isValidPrivateKey(privateKey)) {

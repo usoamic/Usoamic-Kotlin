@@ -10,6 +10,7 @@ import org.web3j.abi.datatypes.Utf8String
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
+@Deprecated(CoreDeprecatedData.message)
 open class Purchases constructor(fileName: String, filePath: String, contractAddress: String, node: String) : Notes(fileName, filePath, contractAddress, node) {
     fun makePurchase(password: String, appId: String, purchaseId: String, cost: BigInteger, txSpeed: TxSpeed = TxSpeed.Auto): String = executeTransaction(
         password,

@@ -13,6 +13,7 @@ import java.io.FileNotFoundException
 import java.math.BigDecimal
 import java.math.BigInteger
 
+@Deprecated(CoreDeprecatedData.message)
 open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) :
     EthereumCore(fileName, filePath, node) {
     private var _account: Account? = null

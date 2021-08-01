@@ -6,6 +6,7 @@ import org.web3j.abi.datatypes.Bool
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
+@Deprecated(CoreDeprecatedData.message)
 open class Swap constructor(fileName: String, filePath: String, contractAddress: String, node: String) :
     TransactionExplorer(fileName, filePath, contractAddress, node) {
     fun withdrawEth(password: String, value: BigInteger, txSpeed: TxSpeed = TxSpeed.Auto): String = executeTransaction(

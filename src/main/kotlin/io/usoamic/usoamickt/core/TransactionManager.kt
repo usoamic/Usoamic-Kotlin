@@ -18,6 +18,7 @@ import org.web3j.tx.Transfer.GAS_LIMIT
 import org.web3j.utils.Numeric
 import java.math.BigInteger
 
+@Deprecated(CoreDeprecatedData.message)
 open class TransactionManager(
     fileName: String,
     filePath: String,

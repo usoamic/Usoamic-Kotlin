@@ -8,6 +8,7 @@ import org.web3j.abi.datatypes.Function
 import org.web3j.abi.datatypes.generated.Uint256
 import java.math.BigInteger
 
+@Deprecated(CoreDeprecatedData.message)
 open class TransactionExplorer constructor(fileName: String, filePath: String, contractAddress: String, node: String) : Purchases(fileName, filePath, contractAddress, node) {
     fun getTransaction(txId: BigInteger): Transaction {
         val function = Function(
