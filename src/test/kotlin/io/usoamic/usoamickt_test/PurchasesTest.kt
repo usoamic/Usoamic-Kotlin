@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt_test
 
-import io.usoamic.usoamickt.core.Usoamic
+import io.usoamic.usoamickt.account.api.UsoamicAccount
 import io.usoamic.usoamickt.util.Coin
 import io.usoamic.usoamickt_test.other.TestConfig
 import org.junit.jupiter.api.Test
@@ -10,7 +10,7 @@ import kotlin.random.Random
 
 class PurchasesTest {
     @Inject
-    lateinit var usoamic: Usoamic
+    lateinit var usoamic: UsoamicAccount
 
     init {
         BaseUnitTest.componentTest.inject(this)

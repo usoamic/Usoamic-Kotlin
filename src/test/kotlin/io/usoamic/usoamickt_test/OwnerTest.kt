@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt_test
 
-import io.usoamic.usoamickt.core.Usoamic
+import io.usoamic.usoamickt.account.api.UsoamicAccount
 import io.usoamic.usoamickt_test.other.TestConfig
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class OwnerTest {
     @Inject
-    lateinit var usoamic: Usoamic
+    lateinit var usoamic: UsoamicAccount
 
     init {
         BaseUnitTest.componentTest.inject(this)

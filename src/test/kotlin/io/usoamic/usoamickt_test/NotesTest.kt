@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt_test
 
-import io.usoamic.usoamickt.core.Usoamic
+import io.usoamic.usoamickt.account.api.UsoamicAccount
 import io.usoamic.usoamickt.enumcls.NoteType
 import io.usoamic.usoamickt.model.Note
 import io.usoamic.usoamickt_test.other.TestConfig
@@ -12,7 +12,7 @@ import kotlin.random.Random
 
 class NotesTest {
     @Inject
-    lateinit var usoamic: Usoamic
+    lateinit var usoamic: UsoamicAccount
 
     init {
         BaseUnitTest.componentTest.inject(this)

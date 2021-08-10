@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt_test
 
-import io.usoamic.usoamickt.core.Usoamic
+import io.usoamic.usoamickt.account.api.UsoamicAccount
 import io.usoamic.usoamickt.enumcls.IdeaStatus
 import io.usoamic.usoamickt.enumcls.VoteType
 import io.usoamic.usoamickt.model.Vote
@@ -15,7 +15,7 @@ import kotlin.random.Random
 
 class IdeasTest {
     @Inject
-    lateinit var usoamic: Usoamic
+    lateinit var usoamic: UsoamicAccount
 
     init {
         BaseUnitTest.componentTest.inject(this)

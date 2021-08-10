@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt_test
 
-import io.usoamic.usoamickt.core.Usoamic
+import io.usoamic.usoamickt.account.api.UsoamicAccount
 import io.usoamic.usoamickt_test.other.TestConfig
 import io.usoamic.validateutilkt.error.InvalidMnemonicPhraseError
 import org.junit.jupiter.api.RepeatedTest
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class AccountManagerTest {
     @Inject
-    lateinit var usoamic: Usoamic
+    lateinit var usoamic: UsoamicAccount
 
     init {
         BaseUnitTest.componentTest.inject(this)

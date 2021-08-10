@@ -1,6 +1,6 @@
 package io.usoamic.usoamickt_test
 
-import io.usoamic.usoamickt.core.Usoamic
+import io.usoamic.usoamickt.account.api.UsoamicAccount
 import io.usoamic.usoamickt.enumcls.TxSpeed
 import io.usoamic.usoamickt.util.Coin
 import io.usoamic.usoamickt_test.other.TestConfig
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class SwapTest {
     @Inject
-    lateinit var usoamic: Usoamic
+    lateinit var usoamic: UsoamicAccount
 
     init {
         BaseUnitTest.componentTest.inject(this)
