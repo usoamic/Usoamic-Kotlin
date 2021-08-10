@@ -59,7 +59,6 @@ class Usoamic constructor(fileName: String, filePath: String, contractAddress: S
 
     fun getSupply(): BigInteger? = executeCallEmptyPassValueAndUint256Return("getSupply")
 
-
     fun getVersion(): String? = executeCallEmptyPassValueAndSingleValueReturn(
         "getVersion",
         listOf(object : TypeReference<Utf8String>() {})

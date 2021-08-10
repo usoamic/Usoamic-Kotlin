@@ -12,7 +12,7 @@ open class AccountWrapperImpl(
     private val filePath: String
 ) : AccountManagerImpl(
     fileName = fileName,
-    filePath = filePath,
+    filePath = filePath
 ) {
     private var _account: Account? = null
     private val accountFile get() = Account.initFile(filePath, fileName)

@@ -8,10 +8,12 @@ import java.math.BigInteger
 
 open class AccountWrapperImpl(
     private val usoamic: Usoamic
-) :
-    EthereumCoreImpl(usoamic), AccountWrapper {
+) : EthereumCoreImpl(usoamic),
+    AccountWrapper {
+
     override val hasAccount: Boolean
         get() = usoamic.hasAccount
+
     override val address: String
         get() = usoamic.address
 
