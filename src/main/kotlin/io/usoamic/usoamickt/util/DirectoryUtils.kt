@@ -1,6 +1,7 @@
 package io.usoamic.usoamickt.util
 
 import java.io.File
+import java.util.*
 
 object DirectoryUtils {
     private const val DIRECTORY = "Usoamic"
@@ -30,7 +31,7 @@ object DirectoryUtils {
     }
 
     private fun getDefaultKeyDirectory(osName1: String): String {
-        val osName = osName1.toLowerCase()
+        val osName = osName1.lowercase(Locale.getDefault())
         return when {
             osName.startsWith("mac") -> {
                 String.format(
