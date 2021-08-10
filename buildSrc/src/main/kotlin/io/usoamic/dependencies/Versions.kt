@@ -12,8 +12,8 @@ object Versions {
     }
 
     object DI {
-        const val dagger = "2.27"
-        const val daggerCompiler = "2.27"
+        const val dagger = "2.37"
+        const val daggerCompiler = "2.37"
     }
 
     object Cryptocurrency {
@@ -21,7 +21,7 @@ object Versions {
     }
 
     object Test {
-        const val kotlinTestJunit = "1.5.20"
+        const val kotlinTestJunit = "1.4.32"
         const val junitJupiter = "5.5.0"
     }
 
