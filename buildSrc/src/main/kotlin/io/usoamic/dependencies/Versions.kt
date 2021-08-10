@@ -21,7 +21,7 @@ object Versions {
     }
 
     object Test {
-        const val kotlinTestJunit = "1.4.32"
+        const val kotlinTestJunit = "1.5.21"
         const val junitJupiter = "5.5.0"
     }
 
