@@ -2,7 +2,7 @@ package io.usoamic.dependencies
 
 object Dependencies {
     object Usoamic {
-        const val validateUtilKt = "com.github.usoamic:validateutilkt:${Versions.Usoamic.validateUtilKt}"
+        const val validateUtilKt = "com.github.usoamic:validateutilkt:v${Versions.Usoamic.validateUtilKt}"
     }
 
     object Java {
