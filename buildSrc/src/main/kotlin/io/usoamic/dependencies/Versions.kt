@@ -1,7 +1,7 @@
 package io.usoamic.dependencies
 
 object Versions {
-    private const val isAndroid = true
+    private const val isAndroid = false
 
     object Usoamic {
         const val validateUtilKt = "1.0.1-3"
