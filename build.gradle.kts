@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import io.usoamic.dependencies.Dependencies
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
@@ -22,7 +22,6 @@ dependencies {
      * Implementation
      */
     implementation(Dependencies.Kotlin.stdLibJDK)
-    implementation(Dependencies.Kotlin.stdLibJDK8)
     implementation(Dependencies.DI.dagger)
     implementation(Dependencies.DI.daggerCompiler)
     implementation(Dependencies.Other.gson)
