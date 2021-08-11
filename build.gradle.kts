@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
+    maven
     kotlin("jvm") version "1.5.21"
     kotlin("kapt") version "1.5.21"
 }
