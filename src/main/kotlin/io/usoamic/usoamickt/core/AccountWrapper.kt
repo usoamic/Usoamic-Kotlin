@@ -3,9 +3,6 @@ package io.usoamic.usoamickt.core
 import io.usoamic.usoamickt.model.Account
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.WalletUtils
-import org.web3j.protocol.Web3j
-import org.web3j.protocol.core.DefaultBlockParameterName
-import org.web3j.protocol.http.HttpService
 import org.web3j.utils.Convert
 import org.web3j.utils.Files
 import java.io.File
@@ -21,7 +18,7 @@ open class AccountWrapper(private val fileName: String, private val filePath: St
         get() {
             if (_account == null) {
                 val json = Files.readString(accountFile)
-                _account = Account.fromJson(json)
+                _account = Account.parse(json)
             }
             return _account as Account
         }
