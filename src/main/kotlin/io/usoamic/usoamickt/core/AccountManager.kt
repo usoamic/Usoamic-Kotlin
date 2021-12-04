@@ -15,7 +15,7 @@ import java.io.FileWriter
 
 open class AccountManager(private val fileName: String, private val filePath: String) {
     fun importPrivateKey(password: String, privateKey: String): String {
-        if(!WalletUtils.isValidPrivateKey(privateKey)) {
+        if (!WalletUtils.isValidPrivateKey(privateKey)) {
             throw InvalidPrivateKeyError()
         }
         val credentials = Credentials.create(privateKey)
@@ -23,7 +23,7 @@ open class AccountManager(private val fileName: String, private val filePath: St
     }
 
     fun importMnemonic(password: String, mnemonic: String): String {
-        if(!MnemonicUtils.validateMnemonic(mnemonic)) {
+        if (!MnemonicUtils.validateMnemonic(mnemonic)) {
             throw InvalidMnemonicPhraseError()
         }
 
@@ -36,16 +36,27 @@ open class AccountManager(private val fileName: String, private val filePath: St
         val credentials = Credentials.create(keyPair)
 
         val directory = File(filePath)
-        if(!directory.exists()) {
+        if (!directory.exists()) {
             directory.mkdir()
         }
-        val walletFileName = WalletUtils.generateWalletFile(password, keyPair, directory, false)
-        val account = Account(credentials.address, directory.path, walletFileName, Timestamp.CURRENT)
 
-        FileWriter("$filePath${File.separator}$fileName").use {
-            Gson().toJson(account, it)
+        val accountFile = Account.initFile(filePath, fileName)
+
+        if (accountFile.exists()) {
+            val account = Account.read(accountFile)
+            return account.name
+        } else {
+            val account = Account(
+                address = credentials.address,
+                path = directory.path,
+                name = WalletUtils.generateWalletFile(password, keyPair, directory, false),
+                timestamp = Timestamp.CURRENT
+            )
+
+            FileWriter("$filePath${File.separator}$fileName").use {
+                Gson().toJson(account, it)
+            }
+            return account.name
         }
-
-        return walletFileName
     }
 }

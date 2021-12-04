@@ -27,14 +27,11 @@ class Usoamic constructor(fileName: String, filePath: String, contractAddress: S
         Node.by(networkType, nodeProvider)
     )
 
-
     fun getUsoBalance(): BigInteger? {
         return balanceOf(address)
     }
 
-
     fun balanceOf(address: String): BigInteger? = executeCallUint256ValueReturn("balanceOf", listOf(Address(address)))
-
 
     fun burn(password: String, value: BigInteger, txSpeed: TxSpeed = TxSpeed.Auto): String =
         executeTransaction(

@@ -2,6 +2,7 @@ package io.usoamic.usoamickt.model
 
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
+import org.web3j.utils.Files
 import java.io.File
 import java.math.BigInteger
 
@@ -23,6 +24,11 @@ data class Account(
 
         fun fromJson(json: String): Account {
             return Gson().fromJson(json, Account::class.java)
+        }
+
+        fun read(file: File): Account {
+            val json = Files.readString(file)
+            return fromJson(json)
         }
 
         fun initFile(filePath: String, fileName: String): File = File(
