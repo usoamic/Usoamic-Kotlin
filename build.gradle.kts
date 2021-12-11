@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 object Version {
-    private const val isAndroid = true
+    private const val isAndroid = false
     const val dagger = "2.27"
     const val gson = "2.8.5"
     val web3j get() = if(isAndroid) "4.6.0-android" else "4.6.0"
