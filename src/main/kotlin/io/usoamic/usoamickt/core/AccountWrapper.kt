@@ -1,11 +1,9 @@
 package io.usoamic.usoamickt.core
 
 import io.usoamic.usoamickt.model.Account
+import io.usoamic.usoamickt.util.AccountUtils
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.WalletUtils
-import org.web3j.protocol.Web3j
-import org.web3j.protocol.core.DefaultBlockParameterName
-import org.web3j.protocol.http.HttpService
 import org.web3j.utils.Convert
 import org.web3j.utils.Files
 import java.io.File
@@ -16,12 +14,12 @@ import java.math.BigInteger
 open class AccountWrapper(private val fileName: String, private val filePath: String, node: String) :
     EthereumCore(fileName, filePath, node) {
     private var _account: Account? = null
-    private val accountFile get() = Account.initFile(filePath, fileName)
+    private val accountFile get() = AccountUtils.initFile(filePath, fileName)
     private val account: Account
         get() {
             if (_account == null) {
                 val json = Files.readString(accountFile)
-                _account = Account.fromJson(json)
+                _account = Account.parse(json)
             }
             return _account as Account
         }

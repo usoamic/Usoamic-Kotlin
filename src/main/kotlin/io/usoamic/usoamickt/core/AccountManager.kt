@@ -1,7 +1,8 @@
 package io.usoamic.usoamickt.core
 
-import com.google.gson.Gson
 import io.usoamic.usoamickt.model.Account
+import io.usoamic.usoamickt.util.AccountUtils
+import io.usoamic.usoamickt.util.Files
 import io.usoamic.usoamickt.util.Timestamp
 import io.usoamic.validateutilkt.error.InvalidMnemonicPhraseError
 import io.usoamic.validateutilkt.error.InvalidPrivateKeyError
@@ -11,11 +12,13 @@ import org.web3j.crypto.Hash.sha256
 import org.web3j.crypto.MnemonicUtils
 import org.web3j.crypto.WalletUtils
 import java.io.File
-import java.io.FileWriter
 
-open class AccountManager(private val fileName: String, private val filePath: String) {
+open class AccountManager(
+    private val fileName: String,
+    private val filePath: String
+) {
     fun importPrivateKey(password: String, privateKey: String): String {
-        if(!WalletUtils.isValidPrivateKey(privateKey)) {
+        if (!WalletUtils.isValidPrivateKey(privateKey)) {
             throw InvalidPrivateKeyError()
         }
         val credentials = Credentials.create(privateKey)
@@ -23,7 +26,7 @@ open class AccountManager(private val fileName: String, private val filePath: St
     }
 
     fun importMnemonic(password: String, mnemonic: String): String {
-        if(!MnemonicUtils.validateMnemonic(mnemonic)) {
+        if (!MnemonicUtils.validateMnemonic(mnemonic)) {
             throw InvalidMnemonicPhraseError()
         }
 
@@ -35,17 +38,57 @@ open class AccountManager(private val fileName: String, private val filePath: St
     private fun import(password: String, keyPair: ECKeyPair): String {
         val credentials = Credentials.create(keyPair)
 
-        val directory = File(filePath)
-        if(!directory.exists()) {
-            directory.mkdir()
-        }
-        val walletFileName = WalletUtils.generateWalletFile(password, keyPair, directory, false)
-        val account = Account(credentials.address, directory.path, walletFileName, Timestamp.CURRENT)
-
-        FileWriter("$filePath${File.separator}$fileName").use {
-            Gson().toJson(account, it)
+        val walletDir = File(filePath)
+        if (!walletDir.exists()) {
+            walletDir.mkdir()
         }
 
-        return walletFileName
+        val accountFile = AccountUtils.initFile(filePath, fileName)
+
+        val account = if (accountFile.exists()) {
+            readAccount(
+                accountFile = accountFile
+            )
+        } else {
+            generateAccount(
+                address = credentials.address,
+                password = password,
+                keyPair = keyPair,
+                walletDir = walletDir,
+                accountFile = accountFile
+            )
+        }
+
+        return account.name
+    }
+
+    private fun readAccount(
+        accountFile: File
+    ): Account {
+        return Account.parse(
+            json = Files.readString(accountFile)
+        )
+    }
+
+    private fun generateAccount(
+        address: String,
+        password: String,
+        keyPair: ECKeyPair,
+        walletDir: File,
+        accountFile: File
+    ): Account {
+        val account = Account(
+            address = address,
+            path = walletDir.path,
+            name = WalletUtils.generateWalletFile(password, keyPair, walletDir, false),
+            timestamp = Timestamp.CURRENT
+        )
+
+        Files.writeString(
+            file = accountFile,
+            str = account.toJson()
+        )
+
+        return account
     }
 }
